@@ -9,7 +9,10 @@ const Templates: CollectionConfig = {
     defaultColumns: ['name', 'author', 'tier', 'status', 'updatedAt'],
   },
   access: {
-    read: () => true,
+    read: ({ req: { user } }) => !!user,
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
   },
   fields: [
     // --- Identidad ---

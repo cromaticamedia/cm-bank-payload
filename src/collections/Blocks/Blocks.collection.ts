@@ -10,7 +10,10 @@ const Blocks: CollectionConfig = {
     defaultColumns: ['name', 'category', 'status', 'updatedAt'],
   },
   access: {
-    read: () => true, // público para que el CLI pueda leer sin auth
+    read: ({ req: { user } }) => !!user,
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
   },
   fields: [
     // --- Identidad del bloque ---
