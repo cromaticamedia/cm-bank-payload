@@ -7,6 +7,7 @@ import sharp from 'sharp'
 import Blocks from '@/collections/Blocks'
 import Users from '@/collections/Users'
 import Media from '@/collections/Media'
+import Templates from '@/collections/Templates'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -18,8 +19,14 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        Logo: '@/components/dashboard/CompanyLogo#default',
+        Icon: '@/components/dashboard/CompanyIcon#default',
+      },
+    },
   },
-  collections: [Users, Media, Blocks],
+  collections: [Users, Media, Blocks, Templates],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

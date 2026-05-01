@@ -1,5 +1,6 @@
 // src/collections/Blocks.ts
 import type { CollectionConfig } from 'payload'
+import AuthorField from '@/fields/author'
 
 const Blocks: CollectionConfig = {
   slug: 'blocks',
@@ -37,6 +38,7 @@ const Blocks: CollectionConfig = {
         description: 'Qué hace este bloque y cuándo usarlo',
       },
     },
+    ...AuthorField,
     {
       name: 'category',
       type: 'select',

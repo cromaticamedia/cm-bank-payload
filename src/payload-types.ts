@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     blocks: Block;
+    templates: Template;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     blocks: BlocksSelect<false> | BlocksSelect<true>;
+    templates: TemplatesSelect<false> | TemplatesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -183,6 +185,12 @@ export interface Block {
    * Qué hace este bloque y cuándo usarlo
    */
   description?: string | null;
+  authorType?: ('registered' | 'external') | null;
+  author?: (number | null) | User;
+  /**
+   * Nombre del autor si no está registrado en Payload
+   */
+  authorName?: string | null;
   category:
     | 'hero'
     | 'cards'
@@ -232,6 +240,76 @@ export interface Block {
   createdAt: string;
 }
 /**
+ * Figma templates available for Cromatica clients
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates".
+ */
+export interface Template {
+  id: number;
+  name: string;
+  /**
+   * URL-friendly name, ej: travel-agency-pro
+   */
+  slug: string;
+  description: string;
+  authorType?: ('registered' | 'external') | null;
+  author?: (number | null) | User;
+  /**
+   * Nombre del autor si no está registrado en Payload
+   */
+  authorName?: string | null;
+  category: 'brochure' | 'ecommerce' | 'portfolio' | 'saas' | 'blog' | 'landing' | 'other';
+  tier: 'free' | 'pro' | 'enterprise';
+  status: 'draft' | 'published' | 'deprecated';
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  features?: {
+    darkMode?: boolean | null;
+    responsive?: boolean | null;
+    animations?: boolean | null;
+    i18n?: boolean | null;
+    cms?: boolean | null;
+    pagesCount?: number | null;
+    blocksCount?: number | null;
+  };
+  figma: {
+    /**
+     * URL del iframe embed de Figma. Formato: https://www.figma.com/embed?embed_host=share&url=...
+     */
+    embedUrl: string;
+    /**
+     * Link directo al archivo de Figma para abrir en el app
+     */
+    fileUrl?: string | null;
+    /**
+     * Link al prototipo interactivo si existe
+     */
+    previewUrl?: string | null;
+  };
+  /**
+   * Imagen principal del template, se muestra en el listado
+   */
+  thumbnail: number | Media;
+  screenshots?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * URL del deploy de demo del template
+   */
+  demoUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -266,6 +344,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blocks';
         value: number | Block;
+      } | null)
+    | ({
+        relationTo: 'templates';
+        value: number | Template;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -357,6 +439,9 @@ export interface BlocksSelect<T extends boolean = true> {
   name?: T;
   label?: T;
   description?: T;
+  authorType?: T;
+  author?: T;
+  authorName?: T;
   category?: T;
   status?: T;
   files?:
@@ -379,6 +464,56 @@ export interface BlocksSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates_select".
+ */
+export interface TemplatesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  authorType?: T;
+  author?: T;
+  authorName?: T;
+  category?: T;
+  tier?: T;
+  status?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  features?:
+    | T
+    | {
+        darkMode?: T;
+        responsive?: T;
+        animations?: T;
+        i18n?: T;
+        cms?: T;
+        pagesCount?: T;
+        blocksCount?: T;
+      };
+  figma?:
+    | T
+    | {
+        embedUrl?: T;
+        fileUrl?: T;
+        previewUrl?: T;
+      };
+  thumbnail?: T;
+  screenshots?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  demoUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }
