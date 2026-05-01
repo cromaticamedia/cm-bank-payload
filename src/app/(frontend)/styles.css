@@ -1,17 +1,340 @@
-:root {
-  --font-mono: 'Roboto Mono', monospace;
+/* ─────────────────────────────────────────────
+   IMPORTS — siempre primero, antes de todo
+───────────────────────────────────────────── */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+/* @import 'shadcn/tailwind.css'; */
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─────────────────────────────────────────────
+   @theme — design tokens primitivos
+   
+   QUÉ VA AQUÍ: variables que Tailwind convierte
+   en utilidades (bg-primary-400, shadow-md...).
+   Solo valores: colores, fuentes, espaciado,
+   radios, sombras, tamaños de texto.
+   
+   QUÉ NO VA AQUÍ: clases CSS, keyframes,
+   estilos de componentes.
+───────────────────────────────────────────── */
+@theme {
+  /* Primary */
+  --color-primary-100: var(--project-primary-100);
+  --color-primary-200: var(--project-primary-200);
+  --color-primary-300: var(--project-primary-300);
+  --color-primary-400: var(--project-primary-400);
+  --color-primary-500: var(--project-primary-500);
+  --color-primary-600: var(--project-primary-600);
+  --color-primary-700: var(--project-primary-700);
+  --color-primary-800: var(--project-primary-800);
+  --color-primary-900: var(--project-primary-900);
+  --color-primary-1000: var(--project-primary-1000);
+
+  /* Secondary */
+  --color-secondary-100: var(--project-secondary-100);
+  --color-secondary-200: var(--project-secondary-200);
+  --color-secondary-300: var(--project-secondary-300);
+  --color-secondary-400: var(--project-secondary-400);
+  --color-secondary-500: var(--project-secondary-500);
+  --color-secondary-600: var(--project-secondary-600);
+  --color-secondary-700: var(--project-secondary-700);
+  --color-secondary-800: var(--project-secondary-800);
+  --color-secondary-900: var(--project-secondary-900);
+  --color-secondary-1000: var(--project-secondary-1000);
+
+  /* Tertiary */
+  --color-tertiary-100: var(--project-tertiary-100);
+  --color-tertiary-200: var(--project-tertiary-200);
+  --color-tertiary-300: var(--project-tertiary-300);
+  --color-tertiary-400: var(--project-tertiary-400);
+  --color-tertiary-500: var(--project-tertiary-500);
+  --color-tertiary-600: var(--project-tertiary-600);
+  --color-tertiary-700: var(--project-tertiary-700);
+  --color-tertiary-800: var(--project-tertiary-800);
+  --color-tertiary-900: var(--project-tertiary-900);
+  --color-tertiary-1000: var(--project-tertiary-1000);
+
+  /* Neutral */
+  --color-neutral-100: var(--project-neutral-100);
+  --color-neutral-200: var(--project-neutral-200);
+  --color-neutral-300: var(--project-neutral-300);
+  --color-neutral-400: var(--project-neutral-400);
+  --color-neutral-500: var(--project-neutral-500);
+  --color-neutral-600: var(--project-neutral-600);
+  --color-neutral-700: var(--project-neutral-700);
+  --color-neutral-800: var(--project-neutral-800);
+  --color-neutral-900: var(--project-neutral-900);
+  --color-neutral-1000: var(--project-neutral-1000);
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --font-primary: var(--project-font-primary), sans-serif;
+  --font-secondary: var(--project-font-secondary), sans-serif;
+  --font-body: var(--project-font-body), system-ui, sans-serif;
+
+  --text-size-8: 64px;
+  --text-size-7: 48px;
+  --text-size-6: 32px;
+  --text-size-5: 24px;
+  --text-size-4: 20px;
+  --text-size-3: 16px;
+  --text-size-2: 14px;
+  --text-size-1: 12px;
+
+  --radius-sm: 5px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  --shadow-xs: var(--project-shadow-sm, 0px 2px 4px 1px rgba(0, 0, 0, 0.15));
+  --shadow-sm: var(--project-shadow-sm, 0px 4px 4px 0px rgba(0, 0, 0, 0.25));
+  --shadow-md: var(--project-shadow-md, 0px 4px 4px 0px rgba(0, 0, 0, 0.45));
+  --shadow-lg: var(--project-shadow-lg, 0px 4px 48px 4px rgba(0, 0, 0, 0.85));
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 32px;
+  --spacing-4xl: 48px;
+  --spacing-5xl: 64px;
+  --spacing-6xl: 80px;
+
+  --max-width-layout-sm: 1080px;
+  --max-width-layout-md: 1280px;
+  --max-width-layout-lg: 1440px;
+  --max-width-layout-xl: 1600px;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 }
 
-* {
+/* ─────────────────────────────────────────────
+   @theme inline — tokens de shadcn/ui
+   
+   QUÉ VA AQUÍ: variables que shadcn necesita
+   expuestas como clases de Tailwind
+   (bg-background, text-foreground...).
+   El "inline" las resuelve en compilación.
+   
+   QUÉ NO VA AQUÍ: tus tokens de proyecto,
+   esos van en el @theme de arriba.
+───────────────────────────────────────────── */
+@theme inline {
+  --font-heading: var(--font-mono);
+  --font-mono: var(--font-mono);
+  --color-text: var(--project-text-color);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+/* ─────────────────────────────────────────────
+   :root y .dark — valores concretos del proyecto
+   
+   QUÉ VA AQUÍ: los valores reales de las
+   variables --project-* y los tokens de shadcn.
+   Este bloque es el que cambia entre proyectos.
+   
+   QUÉ NO VA AQUÍ: clases CSS ni keyframes.
+───────────────────────────────────────────── */
+:root {
+  /* Primary */
+  --project-primary-100: #001c3b;
+  --project-primary-200: #003060;
+  --project-primary-300: #004787;
+  --project-primary-400: #005fb0;
+  --project-primary-500: #0077dc;
+  --project-primary-600: #3291fc;
+  --project-primary-700: #73adff;
+  --project-primary-800: #a6cbff;
+  --project-primary-900: #d5e3ff;
+  --project-primary-1000: #ebf1ff;
+
+  /* Secondary */
+  --project-secondary-100: #001d32;
+  --project-secondary-200: #003352;
+  --project-secondary-300: #004b74;
+  --project-secondary-400: #006399;
+  --project-secondary-500: #007dbf;
+  --project-secondary-600: #0098e6;
+  --project-secondary-700: #4ab3ff;
+  --project-secondary-800: #94ccff;
+  --project-secondary-900: #cde5ff;
+  --project-secondary-1000: #e7f2ff;
+
+  /* Tertiary */
+  --project-tertiary-100: #2f1500;
+  --project-tertiary-200: #4e2600;
+  --project-tertiary-300: #6f3900;
+  --project-tertiary-400: #914c00;
+  --project-tertiary-500: #b66100;
+  --project-tertiary-600: #dc7600;
+  --project-tertiary-700: #fd8f24;
+  --project-tertiary-800: #ffb77f;
+  --project-tertiary-900: #ffdcc4;
+  --project-tertiary-1000: #ffede3;
+
+  /* Neutral */
+  --project-neutral-100: #000000;
+  --project-neutral-200: #181c20;
+  --project-neutral-300: #2d3135;
+  --project-neutral-400: #43474c;
+  --project-neutral-500: #5b5f63;
+  --project-neutral-600: #74777c;
+  --project-neutral-700: #8d9196;
+  --project-neutral-800: #a8abb0;
+  --project-neutral-900: #c3c7cc;
+  --project-neutral-1000: #ffffff;
+
+  --project-font-primary: var(--font-microgramma);
+  --project-font-secondary: var(--font-michroma);
+  --project-font-body: var(--font-space-grotesk);
+
+  --gradient-primary: linear-gradient(to right, #00a6fb, #006494);
+  --gradient-background: linear-gradient(135deg, #001522 0%, #00293c 50%, #003554 100%);
+
+  --glass-card: rgba(0, 41, 60, 0.5);
+  --glass-navbar: rgba(0, 21, 34, 0.5);
+  --border-glass: rgba(157, 202, 254, 0.34);
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  --project-text-color: var(--color-black);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+
+  --project-text-color: var(--color-white);
+}
+
+/* ─────────────────────────────────────────────
+   BASE STYLES — reset global
+   
+   QUÉ VA AQUÍ: estilos de elementos HTML
+   nativos (html, body, img, a, svg...).
+   Van fuera de @layer para mantener el mismo
+   comportamiento que tenían en el original.
+   
+   QUÉ NO VA AQUÍ: clases de componentes,
+   @utility, animaciones.
+───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
-  font-size: 18px;
-  line-height: 32px;
-
-  background: rgb(0, 0, 0);
+  font-size: 16px;
+  line-height: 24px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 html,
@@ -21,17 +344,11 @@ body,
 }
 
 body {
-  font-family: system-ui;
-  font-size: 18px;
-  line-height: 32px;
-
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
   margin: 0;
-  color: rgb(1000, 1000, 1000);
-
-  @media (max-width: 1024px) {
-    font-size: 15px;
-    line-height: 24px;
-  }
+  color: var(--color-text);
 }
 
 img {
@@ -40,45 +357,12 @@ img {
   display: block;
 }
 
-h1 {
-  margin: 40px 0;
-  font-size: 64px;
-  line-height: 70px;
-  font-weight: bold;
-
-  @media (max-width: 1024px) {
-    margin: 24px 0;
-    font-size: 42px;
-    line-height: 42px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 38px;
-    line-height: 38px;
-  }
-
-  @media (max-width: 400px) {
-    font-size: 32px;
-    line-height: 32px;
-  }
-}
-
-p {
-  margin: 24px 0;
-
-  @media (max-width: 1024px) {
-    margin: calc(var(--base) * 0.75) 0;
-  }
-}
-
 a {
   color: currentColor;
-
   &:focus {
     opacity: 0.8;
     outline: none;
   }
-
   &:active {
     opacity: 0.7;
     outline: none;
@@ -89,76 +373,239 @@ svg {
   vertical-align: middle;
 }
 
-.home {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100vh;
-  padding: 45px;
-  max-width: 1024px;
-  margin: 0 auto;
+/* ─────────────────────────────────────────────
+   @layer base — utilidades base de shadcn
+   
+   QUÉ VA AQUÍ: solo las 3 reglas que shadcn
+   necesita en @layer base. Van separadas del
+   reset de arriba para no cambiar su
+   especificidad original.
+───────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-mono;
+  }
+  button {
+    @apply outline-none focus:outline-none focus-visible:outline-none;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   KEYFRAMES — definiciones puras de animación
+   
+   QUÉ VA AQUÍ: solo @keyframes y @property.
+   Van a nivel raíz para estar disponibles
+   globalmente.
+   
+   REGLA CRÍTICA: un nombre único por keyframe.
+   Nunca repetir el mismo nombre — el segundo
+   pisa al primero silenciosamente.
+   
+   NUEVA ANIMACIÓN: define su @property y
+   @keyframes aquí, y la clase CSS en la
+   sección de componentes más abajo.
+───────────────────────────────────────────── */
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+    overflow: hidden;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    overflow: hidden;
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    overflow: hidden;
+  }
+  to {
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bgFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes borderRotate {
+  from {
+    --border-angle: 0deg;
+  }
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+@property --border-glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes borderGlowRotate {
+  to {
+    --border-glow-angle: 360deg;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   @utility — utilidades simples
+   
+   QUÉ VA AQUÍ: clases sin pseudo-elementos
+   ni selectores anidados. Tailwind las trata
+   como utilidades propias.
+   
+   QUÉ NO VA AQUÍ: clases con ::before/::after
+   — esas van en la sección de componentes.
+───────────────────────────────────────────── */
+
+@utility animate-fade-up {
+  animation: fadeUp 1s ease-out both;
+}
+
+@utility animate-fade-up-1 {
+  animation: fadeUp 0.5s ease-out both;
+}
+
+@utility bg-gradient-dark {
+  background: linear-gradient(
+    to left,
+    color-mix(in srgb, var(--color-neutral-100) 100%, var(--color-neutral-100)),
+    color-mix(in srgb, var(--color-secondary-100) 100%, var(--color-secondary-100))
+  );
+}
+
+@utility bg-gradient-light {
+  background: linear-gradient(to left, var(--color-neutral-1000), var(--color-secondary-900));
+}
+
+/* ─────────────────────────────────────────────
+   CLASES DE COMPONENTE — clases con pseudo-elementos
+   
+   QUÉ VA AQUÍ: clases que usan ::before,
+   ::after, o selectores anidados complejos.
+   No pueden ser @utility porque Tailwind v4
+   no soporta pseudo-elementos en @utility.
+   
+   Se usan igual en JSX: className="animate-border-glow"
+   
+   NUEVA ANIMACIÓN: agrega su @property y
+   @keyframes arriba, y la clase aquí.
+───────────────────────────────────────────── */
+
+/* Borde fino giratorio — usar directo en el elemento */
+.animate-border-spin {
+  position: relative;
   overflow: hidden;
+}
 
-  @media (max-width: 400px) {
-    padding: 24px;
-  }
+.animate-border-spin::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 70%,
+    var(--color-primary-400) 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  animation: borderRotate 3s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
 
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
+/* Punto grueso con glow — usar en un div WRAPPER alrededor del botón,
+   nunca directo en el botón porque colisiona con sus ::before/::after */
+.animate-border-glow {
+  position: relative;
+  overflow: visible;
+  display: inline-flex;
+  border-radius: 4px;
+  isolation: isolate;
+}
 
-    h1 {
-      text-align: center;
-    }
-  }
+.animate-border-glow::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--border-glow-angle),
+    transparent 0%,
+    transparent 72%,
+    color-mix(in srgb, var(--color-primary-400) 15%, transparent) 82%,
+    color-mix(in srgb, var(--color-primary-400) 55%, transparent) 90%,
+    var(--color-primary-400) 96%,
+    white 100%
+  );
+  animation: borderGlowRotate 2.8s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
 
-  .links {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.animate-border-glow::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--border-glow-angle),
+    transparent 0%,
+    transparent 72%,
+    color-mix(in srgb, var(--color-primary-400) 30%, transparent) 88%,
+    color-mix(in srgb, var(--color-primary-400) 70%, transparent) 96%,
+    var(--color-primary-400) 100%
+  );
+  filter: blur(7px);
+  animation: borderGlowRotate 2.8s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
 
-    a {
-      text-decoration: none;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-    }
-
-    .admin {
-      color: rgb(0, 0, 0);
-      background: rgb(1000, 1000, 1000);
-      border: 1px solid rgb(0, 0, 0);
-    }
-
-    .docs {
-      color: rgb(1000, 1000, 1000);
-      background: rgb(0, 0, 0);
-      border: 1px solid rgb(1000, 1000, 1000);
-    }
-  }
-
-  .footer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    @media (max-width: 1024px) {
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    p {
-      margin: 0;
-    }
-
-    .codeLink {
-      text-decoration: none;
-      padding: 0 0.5rem;
-      background: rgb(60, 60, 60);
-      border-radius: 4px;
-    }
-  }
+/* Texto con gradiente — va aquí y no en @utility porque
+   usa múltiples propiedades que forman un efecto visual conjunto */
+.text-gradient {
+  background: linear-gradient(90deg, #22c55e, #00a6fb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
