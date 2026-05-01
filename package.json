@@ -1,7 +1,8 @@
 {
-  "name": "",
+  "name": "cm-bank-blocks",
   "version": "1.0.0",
-  "description": "A blank template to get started with Payload 3.0",
+  "description": "A project meant to work as a block bank for reusable blocks.",
+  "author": "Leonardo Risco",
   "license": "MIT",
   "type": "module",
   "scripts": {
