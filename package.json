@@ -1,5 +1,5 @@
 {
-  "name": "cm-bank-blocks",
+  "name": "cm-bank-payload",
   "version": "1.0.0",
   "description": "A project meant to work as a block bank for reusable blocks.",
   "author": "Leonardo Risco",
