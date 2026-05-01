@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    blocks: Block;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    blocks: BlocksSelect<false> | BlocksSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -162,6 +164,74 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Block bank — reusable blocks for Cromatica templates
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blocks".
+ */
+export interface Block {
+  id: number;
+  /**
+   * Slug del bloque, ej: travel-cards, hero-split, perks-grid
+   */
+  name: string;
+  /**
+   * Nombre legible, ej: Travel Cards, Hero Split
+   */
+  label: string;
+  /**
+   * Qué hace este bloque y cuándo usarlo
+   */
+  description?: string | null;
+  category:
+    | 'hero'
+    | 'cards'
+    | 'perks'
+    | 'cta'
+    | 'testimonials'
+    | 'gallery'
+    | 'form'
+    | 'navigation'
+    | 'footer'
+    | 'other';
+  status: 'draft' | 'stable' | 'deprecated';
+  files: {
+    /**
+     * Contenido del archivo .block.ts
+     */
+    blockTs: string;
+    /**
+     * Contenido del componente React
+     */
+    componentTsx: string;
+    /**
+     * Datos de ejemplo para el preview del dashboard
+     */
+    mockData?: string | null;
+  };
+  /**
+   * Screenshot del bloque renderizado
+   */
+  preview?: (number | null) | Media;
+  /**
+   * Dependencias que el CLI debe instalar al agregar este bloque
+   */
+  dependencies?:
+    | {
+        package: string;
+        id?: string | null;
+      }[]
+    | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -192,6 +262,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'blocks';
+        value: number | Block;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -274,6 +348,39 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blocks_select".
+ */
+export interface BlocksSelect<T extends boolean = true> {
+  name?: T;
+  label?: T;
+  description?: T;
+  category?: T;
+  status?: T;
+  files?:
+    | T
+    | {
+        blockTs?: T;
+        componentTsx?: T;
+        mockData?: T;
+      };
+  preview?: T;
+  dependencies?:
+    | T
+    | {
+        package?: T;
+        id?: T;
+      };
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
