@@ -11,6 +11,7 @@ const Users: CollectionConfig = {
     create: ({ req: { user } }) => !!user,
     update: ({ req: { user } }) => !!user,
     delete: ({ req: { user } }) => !!user,
+    admin: ({ req: { user } }) => !!user,
   },
   fields: [],
 }

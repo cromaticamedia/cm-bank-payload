@@ -185,10 +185,8 @@ export interface Block {
    * Qué hace este bloque y cuándo usarlo
    */
   description?: string | null;
-  authorType?: ('registered' | 'external') | null;
-  author?: (number | null) | User;
   /**
-   * Nombre del autor si no está registrado en Payload
+   * Nombre del autor
    */
   authorName?: string | null;
   category:
@@ -253,10 +251,8 @@ export interface Template {
    */
   slug: string;
   description: string;
-  authorType?: ('registered' | 'external') | null;
-  author?: (number | null) | User;
   /**
-   * Nombre del autor si no está registrado en Payload
+   * Nombre del autor
    */
   authorName?: string | null;
   category: 'brochure' | 'ecommerce' | 'portfolio' | 'saas' | 'blog' | 'landing' | 'other';
@@ -439,8 +435,6 @@ export interface BlocksSelect<T extends boolean = true> {
   name?: T;
   label?: T;
   description?: T;
-  authorType?: T;
-  author?: T;
   authorName?: T;
   category?: T;
   status?: T;
@@ -475,8 +469,6 @@ export interface TemplatesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   description?: T;
-  authorType?: T;
-  author?: T;
   authorName?: T;
   category?: T;
   tier?: T;
