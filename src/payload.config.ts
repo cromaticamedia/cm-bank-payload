@@ -39,21 +39,21 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // s3Storage({
-    //   collections: {
-    //     media: true,
-    //   },
-    //   bucket: process.env.SUPABASE_STORAGE_BUCKET || 'media',
-    //   config: {
-    //     endpoint: process.env.SUPABASE_STORAGE_ENDPOINT || '',
-    //     credentials: {
-    //       accessKeyId: process.env.SUPABASE_STORAGE_ACCESS_KEY || '',
-    //       secretAccessKey: process.env.SUPABASE_STORAGE_SECRET_KEY || '',
-    //     },
-    //     region: 'sa-east-1',
-    //     forcePathStyle: true,
-    //   },
-    //   acl: 'public-read',
-    // }),
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.SUPABASE_STORAGE_BUCKET || 'Media',
+      config: {
+        endpoint: process.env.SUPABASE_STORAGE_ENDPOINT || '',
+        credentials: {
+          accessKeyId: process.env.SUPABASE_STORAGE_ACCESS_KEY || '',
+          secretAccessKey: process.env.SUPABASE_STORAGE_SECRET_KEY || '',
+        },
+        region: 'sa-east-1',
+        forcePathStyle: true,
+      },
+      acl: 'public-read',
+    }),
   ],
 })
