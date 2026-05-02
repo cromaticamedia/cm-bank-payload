@@ -7,14 +7,13 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import Blocks from '@/collections/Blocks'
 import Users from '@/collections/Users'
-import Media from '@/collections/Media'
+import Medias from '@/collections/Medias'
 import Templates from '@/collections/Templates'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
     user: Users.slug,
     importMap: {
@@ -27,7 +26,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, Blocks, Templates],
+  collections: [Users, Medias, Blocks, Templates],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -40,20 +39,21 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    s3Storage({
-      collections: {
-        media: true,
-      },
-      bucket: process.env.SUPABASE_STORAGE_BUCKET || 'media',
-      config: {
-        endpoint: process.env.SUPABASE_STORAGE_ENDPOINT || '',
-        credentials: {
-          accessKeyId: process.env.SUPABASE_STORAGE_ACCESS_KEY || '',
-          secretAccessKey: process.env.SUPABASE_STORAGE_SECRET_KEY || '',
-        },
-        region: 'sa-east-1',
-        forcePathStyle: true,
-      },
-    }),
+    // s3Storage({
+    //   collections: {
+    //     media: true,
+    //   },
+    //   bucket: process.env.SUPABASE_STORAGE_BUCKET || 'media',
+    //   config: {
+    //     endpoint: process.env.SUPABASE_STORAGE_ENDPOINT || '',
+    //     credentials: {
+    //       accessKeyId: process.env.SUPABASE_STORAGE_ACCESS_KEY || '',
+    //       secretAccessKey: process.env.SUPABASE_STORAGE_SECRET_KEY || '',
+    //     },
+    //     region: 'sa-east-1',
+    //     forcePathStyle: true,
+    //   },
+    //   acl: 'public-read',
+    // }),
   ],
 })
