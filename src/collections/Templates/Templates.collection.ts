@@ -9,7 +9,7 @@ const Templates: CollectionConfig = {
     defaultColumns: ['name', 'author', 'tier', 'status', 'updatedAt'],
   },
   access: {
-    read: ({ req: { user } }) => !!user,
+    read: () => true,
     create: ({ req: { user } }) => !!user,
     update: ({ req: { user } }) => !!user,
     delete: ({ req: { user } }) => !!user,
@@ -28,7 +28,20 @@ const Templates: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        description: 'URL-friendly name, ej: travel-agency-pro',
+        description: 'URL-friendly name, e.g: travel-agency-pro',
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value }) =>
+            value
+              ?.toLowerCase()
+              .trim()
+              .replace(/([a-z])([A-Z])/g, '$1-$2')
+              .replace(/[\s_]+/g, '-')
+              .replace(/[^a-z0-9-]/g, '')
+              .replace(/-+/g, '-')
+              .replace(/^-|-$/g, ''),
+        ],
       },
     },
     {

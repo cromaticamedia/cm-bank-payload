@@ -1,0 +1,55 @@
+import { logos } from '@/lib/logos'
+
+export default function InitialLoading() {
+  return (
+    <section className="flex flex-col items-center justify-center min-h-screen min-w-screen bg-gradient-dark relative overflow-hidden">
+      {/* Grid Background */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,166,251,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,166,251,0.03) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+        }}
+      />
+      {/* Logo */}
+      <div className="relative z-10 flex flex-col items-center gap-12">
+        <img src={logos.dark} alt="Cromatica Media" width={300} className="hidden dark:block" />
+        {/* Loading Bar */}
+        <div className="flex flex-col items-center gap-4">
+          <span className="font-space text-md font-bold tracking-[2px] uppercase text-white animate-pulse">
+            Loading
+          </span>
+          <div className="w-48 h-0.5 bg-primary-400/10 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full"
+              style={{
+                background: 'linear-gradient(to right, #00a6fb, #3694ff)',
+                animation: 'progressSlide 1.8s ease-in-out infinite',
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        @keyframes logoGlow {
+          0%, 100% { box-shadow: 0 0 40px rgba(0,166,251,0.25); }
+          50% { box-shadow: 0 0 60px rgba(0,166,251,0.4); }
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        @keyframes progressSlide {
+          0% { width: 0%; margin-left: 0; }
+          50% { width: 60%; margin-left: 20%; }
+          100% { width: 0%; margin-left: 100%; }
+        }
+      `,
+        }}
+      />
+    </section>
+  )
+}

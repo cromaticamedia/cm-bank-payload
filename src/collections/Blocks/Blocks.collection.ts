@@ -1,4 +1,3 @@
-// src/collections/Blocks.ts
 import type { CollectionConfig } from 'payload'
 import AuthorField from '@/fields/author'
 
@@ -10,7 +9,7 @@ const Blocks: CollectionConfig = {
     defaultColumns: ['name', 'category', 'status', 'updatedAt'],
   },
   access: {
-    read: ({ req: { user } }) => !!user,
+    read: () => true,
     create: ({ req: { user } }) => !!user,
     update: ({ req: { user } }) => !!user,
     delete: ({ req: { user } }) => !!user,
@@ -23,7 +22,20 @@ const Blocks: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        description: 'Slug del bloque, ej: travel-cards, hero-split, perks-grid',
+        description: 'Block slug — auto-converted to kebab-case. e.g: hero-split, perks-grid',
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value }) =>
+            value
+              ?.toLowerCase()
+              .trim()
+              .replace(/([a-z])([A-Z])/g, '$1-$2')
+              .replace(/[\s_]+/g, '-')
+              .replace(/[^a-z0-9-]/g, '')
+              .replace(/-+/g, '-')
+              .replace(/^-|-$/g, ''),
+        ],
       },
     },
     {

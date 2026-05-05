@@ -272,7 +272,7 @@ export interface FolderInterface {
 export interface Block {
   id: number;
   /**
-   * Slug del bloque, ej: travel-cards, hero-split, perks-grid
+   * Block slug — auto-converted to kebab-case. e.g: hero-split, perks-grid
    */
   name: string;
   /**
@@ -347,7 +347,7 @@ export interface Template {
   id: number;
   name: string;
   /**
-   * URL-friendly name, ej: travel-agency-pro
+   * URL-friendly name, e.g: travel-agency-pro
    */
   slug: string;
   description: string;
