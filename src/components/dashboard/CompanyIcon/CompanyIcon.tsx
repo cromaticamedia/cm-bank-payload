@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { logos } from '@/config/logos'
+import { logos } from '@/lib/logos'
 
 export default function CompanyIcon() {
   const [isDark, setIsDark] = useState(false)

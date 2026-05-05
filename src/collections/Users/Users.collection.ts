@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { ROLES, type Role } from '@/config/roles'
+import { ROLES, type Role } from '@/catalogs/roles'
 import { isAdmin, isAuthenticated } from '@/hooks/useAuth'
 
 const Users: CollectionConfig = {

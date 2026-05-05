@@ -1,5 +1,4 @@
 import { cn } from '@/utils/styles'
-import { layoutWidth } from '@/config/theme'
 
 type GridLinesProps = {
   className?: string
@@ -7,6 +6,7 @@ type GridLinesProps = {
 }
 
 export default function GridLines({ className, children }: GridLinesProps) {
+  const layoutWidth = 'w-[95%] md:w-9/10 max-w-layout-lg'
   return (
     <div className={cn('relative w-full', className)}>
       <div

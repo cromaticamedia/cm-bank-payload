@@ -1,4 +1,4 @@
-import { logos } from '@/config/logos'
+import { logos } from '@/lib/logos'
 
 export default function CompanyLogo() {
   return (
