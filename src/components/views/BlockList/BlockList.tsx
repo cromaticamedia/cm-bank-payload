@@ -1,5 +1,6 @@
 import LayoutContainer from '@/components/atoms/LayoutContainer'
 import Typography from '@/components/atoms/Typography'
+import PageHeader from '@/components/molecules/PageHeader'
 import { useTranslations } from '@/hooks/useTranslations'
 import type { LocaleCode } from '@/config/locales'
 import type { Media } from '@/payload-types'
@@ -20,26 +21,8 @@ const BlockList = ({ locale, blocks }: BlockListProps) => {
   return (
     <main className="w-full flex items-center">
       <LayoutContainer className="flex-col gap-10">
-        {/* Header */}
-        <div className="flex flex-col gap-4 pt-5">
-          <span className="text-primary-500 text-xs font-mono uppercase tracking-widest">
-            {t.eyebrow}
-          </span>
-          <Typography
-            text={t.title}
-            variant="label2"
-            htmlTag="h1"
-            className="font-primary text-neutral-100 dark:text-neutral-1000"
-          />
-          <Typography
-            text={subtitle}
-            variant="label6"
-            htmlTag="p"
-            className="text-neutral-600 dark:text-neutral-800"
-          />
-        </div>
+        <PageHeader tagline={t.eyebrow} title={t.title} subtitle={subtitle} />
 
-        {/* Grid */}
         {blocks.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
             <span className="text-6xl">📦</span>
@@ -59,7 +42,6 @@ const BlockList = ({ locale, blocks }: BlockListProps) => {
                   href={`/${locale}/blocks/${block.name}`}
                   className="group flex flex-col gap-3 p-5 bg-neutral-900 dark:bg-neutral-300/50 border border-neutral-800 dark:border-neutral-700/50 rounded-xl hover:border-primary-500/50 hover:bg-neutral-800 dark:hover:bg-neutral-300 transition-all duration-200"
                 >
-                  {/* Preview */}
                   <div className="w-full aspect-video bg-neutral-800 dark:bg-neutral-400/30 rounded-lg overflow-hidden group-hover:ring-1 group-hover:ring-primary-500/30 transition-all">
                     {preview?.url ? (
                       <Image
@@ -80,7 +62,6 @@ const BlockList = ({ locale, blocks }: BlockListProps) => {
                     )}
                   </div>
 
-                  {/* Info */}
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
                       <Typography
@@ -101,7 +82,6 @@ const BlockList = ({ locale, blocks }: BlockListProps) => {
                     )}
                   </div>
 
-                  {/* Footer */}
                   <div className="flex items-center justify-between mt-auto pt-2 border-t border-neutral-800 dark:border-neutral-700/50">
                     <Typography
                       text={block.name as string}
