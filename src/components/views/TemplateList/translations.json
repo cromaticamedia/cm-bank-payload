@@ -1,0 +1,26 @@
+{
+  "en": {
+    "eyebrow": "Block Bank",
+    "title": "Templates",
+    "subtitle_one": "published template available",
+    "subtitle_many": "published templates available",
+    "empty": "No templates available yet.",
+    "noPreview": "No preview",
+    "darkMode": "Dark mode",
+    "responsive": "Responsive",
+    "i18n": "i18n",
+    "pages": "pages"
+  },
+  "es": {
+    "eyebrow": "Block Bank",
+    "title": "Templates",
+    "subtitle_one": "template publicado disponible",
+    "subtitle_many": "templates publicados disponibles",
+    "empty": "No hay templates disponibles aún.",
+    "noPreview": "Sin preview",
+    "darkMode": "Modo oscuro",
+    "responsive": "Responsive",
+    "i18n": "i18n",
+    "pages": "páginas"
+  }
+}

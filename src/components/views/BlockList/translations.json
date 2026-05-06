@@ -1,0 +1,18 @@
+{
+  "en": {
+    "eyebrow": "Block Bank",
+    "title": "Blocks",
+    "subtitle_one": "stable block available",
+    "subtitle_many": "stable blocks available",
+    "empty": "No blocks available yet.",
+    "noPreview": "No preview"
+  },
+  "es": {
+    "eyebrow": "Block Bank",
+    "title": "Bloques",
+    "subtitle_one": "bloque estable disponible",
+    "subtitle_many": "bloques estables disponibles",
+    "empty": "No hay bloques disponibles aún.",
+    "noPreview": "Sin preview"
+  }
+}

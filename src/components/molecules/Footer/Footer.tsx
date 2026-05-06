@@ -5,15 +5,20 @@ import Typography from '@/components/atoms/Typography'
 import { Button } from '@/components/atoms/Button'
 import LangSelector from '@/components/molecules/LangSelector'
 import ThemeToggle from '@/components/molecules/ThemeToggle'
+import { useTranslations } from '@/hooks/useTranslations'
 import type { LocaleCode } from '@/config/locales'
+import translations from './translations.json'
 
 interface FooterProps {
   locale: LocaleCode
 }
 
 const Footer = ({ locale }: FooterProps) => {
+  const t = useTranslations(translations, locale)
+  const year = new Date().getFullYear()
+
   return (
-    <footer className="w-full border-t border-neutral-300/20 dark:border-neutral-700/30 bg-neutral-1000 dark:bg-neutral-200">
+    <footer className="w-full bg-linear-to-l from-neutral-900/20 to-neutral-1000 dark:from-neutral-200/80 dark:to-neutral-400/80 shadow-md">
       <LayoutContainer className="flex-col gap-8 py-10 lg:py-12">
         {/* Top section */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between gap-8 w-full">
@@ -46,9 +51,8 @@ const Footer = ({ locale }: FooterProps) => {
                 className="font-secondary text-neutral-100 dark:text-neutral-1000"
               />
             </Link>
-
             <Typography
-              text="Reusable blocks and templates repository for the Cromatica team and clients."
+              text={t.description}
               variant="label6"
               htmlTag="p"
               className="text-neutral-600 dark:text-neutral-800 text-center lg:text-start"
@@ -58,25 +62,25 @@ const Footer = ({ locale }: FooterProps) => {
           {/* CENTER: Navigation */}
           <nav className="flex flex-col items-center lg:items-start gap-3">
             <Typography
-              text="Navigation"
+              text={t.navigation}
               variant="label6"
               className="text-neutral-500 dark:text-neutral-800 uppercase tracking-widest font-mono"
             />
             <Link href={`/${locale}/blocks`}>
-              <Button text="Blocks" variant="link" size="sm" />
+              <Button text={t.blocks} variant="link" size="sm" />
             </Link>
             <Link href={`/${locale}/templates`}>
-              <Button text="Templates" variant="link" size="sm" />
+              <Button text={t.templates} variant="link" size="sm" />
             </Link>
             <Link href="/admin">
-              <Button text="Dashboard" variant="link" size="sm" />
+              <Button text={t.dashboard} variant="link" size="sm" />
             </Link>
           </nav>
 
           {/* RIGHT: Preferences */}
           <div className="flex flex-col items-center lg:items-start gap-3">
             <Typography
-              text="Preferences"
+              text={t.preferences}
               variant="label6"
               className="text-neutral-500 dark:text-neutral-800 uppercase tracking-widest font-mono"
             />
@@ -93,12 +97,12 @@ const Footer = ({ locale }: FooterProps) => {
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 w-full">
           <Typography
-            text={`© ${new Date().getFullYear()} Cromatica Media. All rights reserved.`}
+            text={`© ${year} ${t.rights}`}
             variant="p"
             className="text-neutral-600 dark:text-neutral-800"
           />
           <Typography
-            text="Built with Payload CMS + Next.js"
+            text={t.builtWith}
             variant="p"
             className="text-neutral-600 dark:text-neutral-800 font-mono"
           />

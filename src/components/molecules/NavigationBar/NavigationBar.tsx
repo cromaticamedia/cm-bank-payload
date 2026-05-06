@@ -13,7 +13,7 @@ interface NavigationBarProps {
 
 const NavigationBar = ({ locale }: NavigationBarProps) => {
   return (
-    <nav className="w-full flex items-center sticky top-0 z-50 animate-nav-enter bg-neutral-1000 dark:bg-neutral-200 backdrop-blur-xs">
+    <nav className="w-full flex items-center sticky top-0 z-50 animate-nav-enter bg-linear-to-l from-neutral-900/20 to-neutral-1000 dark:from-neutral-200/80 dark:to-neutral-400/80 dark:shadow-md backdrop-blur-md">
       <LayoutContainer className="items-center justify-between">
         {/* Logo */}
         <Link href={`/${locale}`} className="flex items-center gap-2.5 w-fit">

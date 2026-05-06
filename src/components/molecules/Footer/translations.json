@@ -1,0 +1,22 @@
+{
+  "en": {
+    "description": "Reusable blocks and templates repository for the Cromatica team and clients.",
+    "navigation": "Navigation",
+    "blocks": "Blocks",
+    "templates": "Templates",
+    "dashboard": "Dashboard",
+    "preferences": "Preferences",
+    "rights": "Cromatica Media. All rights reserved.",
+    "builtWith": "Built with Payload CMS + Next.js"
+  },
+  "es": {
+    "description": "Repositorio de bloques y templates reutilizables para el equipo y clientes de Cromatica.",
+    "navigation": "Navegación",
+    "blocks": "Bloques",
+    "templates": "Templates",
+    "dashboard": "Dashboard",
+    "preferences": "Preferencias",
+    "rights": "Cromatica Media. Todos los derechos reservados.",
+    "builtWith": "Construido con Payload CMS + Next.js"
+  }
+}
