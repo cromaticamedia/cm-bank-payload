@@ -1,0 +1,40 @@
+import type { ConfiguratorSchema } from '@/components/organism/ConfiguratorForm/schema'
+
+export const TIER_DEFAULTS: Record<string, Partial<ConfiguratorSchema>> = {
+  launch: {
+    tier: 'launch',
+    locales: ['en'],
+    defaultLocale: 'en',
+    allowDarkMode: false,
+    selectedNavigation: 'nav-simple',
+    selectedFooter: 'footer-simple',
+    allowPostsCollection: false,
+    allowOurTeamCollection: false,
+    isSinglePage: true,
+    crmProvider: 'none',
+  },
+  growth: {
+    tier: 'growth',
+    locales: ['en', 'es'],
+    defaultLocale: 'en',
+    allowDarkMode: true,
+    selectedNavigation: 'nav-simple',
+    selectedFooter: 'footer-simple',
+    allowPostsCollection: true,
+    allowOurTeamCollection: false,
+    isSinglePage: false,
+    crmProvider: 'none',
+  },
+  scale: {
+    tier: 'scale',
+    locales: ['en', 'es', 'pt'],
+    defaultLocale: 'en',
+    allowDarkMode: true,
+    selectedNavigation: 'nav-mega',
+    selectedFooter: 'footer-mega',
+    allowPostsCollection: true,
+    allowOurTeamCollection: true,
+    isSinglePage: false,
+    crmProvider: 'none',
+  },
+}

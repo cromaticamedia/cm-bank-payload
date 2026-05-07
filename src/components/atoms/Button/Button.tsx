@@ -54,7 +54,7 @@ const buttonVariants = cva(
         ].join(' '),
         secondary: '',
         outlined:
-          'bg-white/10 backdrop-blur-md ring-2 ring-black dark:ring-white ring-inset hover:bg-neutral-100 hover:text-neutral-1000 hover:ring-neutral-1000 hover:dark:ring-neutral-1000 shadow-none hover:dark:bg-neutral-1000 hover:dark:text-neutral-100',
+          'bg-white/10 backdrop-blur-md ring-2 ring-black dark:ring-white ring-inset hover:bg-neutral-100 hover:text-neutral-1000 hover:dark:ring-neutral-1000 shadow-none hover:dark:bg-neutral-1000 hover:dark:text-neutral-100',
         link: ' shadow-none hover:text-primary-500 hover:dark:text-secondary-700 w-auto relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current hover:after:w-full after:transition-all after:duration-300 p-0 md:p-0 gap-0 pb-1 lg:pb-1.5',
         clean: 'shadow-none hover:text-primary-200 w-fit p-0 gap-1',
       },
@@ -109,6 +109,7 @@ function Button({
         isIcon
           ? iconVariants({ iconVariant, iconSize, className })
           : buttonVariants({ size, variant, className }),
+        iconRightSide && 'pl-3 lg:pl-4',
       )}
       {...props}
     >

@@ -1,4 +1,4 @@
-import TemplateList from '@/components/views/TemplateList/TemplateList'
+import TemplatesView from '@/components/views/TemplatesView'
 import { queryTemplates } from '@/queries/templates'
 import type { LocaleCode } from '@/config/locales'
 import type { Metadata } from 'next'
@@ -17,5 +17,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function TemplatesPage({ params }: Props) {
   const { locale } = await params
   const templates = await queryTemplates()
-  return <TemplateList locale={locale as LocaleCode} templates={templates} />
+  return <TemplatesView locale={locale as LocaleCode} templates={templates} />
 }

@@ -14,7 +14,7 @@ interface BlockListProps {
   blocks: Awaited<ReturnType<typeof queryBlocks>>
 }
 
-const BlockList = ({ locale, blocks }: BlockListProps) => {
+const BlocksView = ({ locale, blocks }: BlockListProps) => {
   const t = useTranslations(translations, locale)
   const subtitle = `${blocks.length} ${blocks.length === 1 ? t.subtitle_one : t.subtitle_many}`
 
@@ -102,4 +102,4 @@ const BlockList = ({ locale, blocks }: BlockListProps) => {
   )
 }
 
-export default BlockList
+export default BlocksView

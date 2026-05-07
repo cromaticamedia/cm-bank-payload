@@ -20,7 +20,7 @@ interface TemplateListProps {
   templates: Awaited<ReturnType<typeof queryTemplates>>
 }
 
-const TemplateList = ({ locale, templates }: TemplateListProps) => {
+const TemplatesView = ({ locale, templates }: TemplateListProps) => {
   const t = useTranslations(translations, locale)
   const subtitle = `${templates.length} ${templates.length === 1 ? t.subtitle_one : t.subtitle_many}`
 
@@ -139,4 +139,4 @@ const TemplateList = ({ locale, templates }: TemplateListProps) => {
   )
 }
 
-export default TemplateList
+export default TemplatesView

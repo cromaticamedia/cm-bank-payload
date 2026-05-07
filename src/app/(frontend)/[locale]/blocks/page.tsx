@@ -1,4 +1,4 @@
-import BlockList from '@/components/views/BlockList'
+import BlocksView from '@/components/views/BlocksView'
 import { queryBlocks } from '@/queries/blocks'
 import type { LocaleCode } from '@/config/locales'
 import type { Metadata } from 'next'
@@ -17,5 +17,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BlocksPage({ params }: Props) {
   const { locale } = await params
   const blocks = await queryBlocks()
-  return <BlockList locale={locale as LocaleCode} blocks={blocks} />
+  return <BlocksView locale={locale as LocaleCode} blocks={blocks} />
 }

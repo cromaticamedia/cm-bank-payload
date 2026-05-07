@@ -24,23 +24,26 @@ const Footer = ({ locale }: FooterProps) => {
         <div className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between gap-8 w-full">
           {/* LEFT: Brand */}
           <div className="flex flex-col items-center lg:items-start gap-4 lg:w-1/3">
-            <Link href={`/${locale}`} className="flex items-center gap-2.5">
-              <div className="relative w-8 h-8">
-                <div className="dark:hidden">
+            <Link
+              href={`/${locale}`}
+              className="flex items-center gap-2.5 w-fit hover:scale-110 transition-transform duration-200 cursor-pointer"
+            >
+              <div className="relative w-15 h-15">
+                <div className="dark:hidden mt-2">
                   <Image
                     src="/c-light.png"
                     alt="Cromatica"
-                    width={32}
-                    height={32}
+                    width={50}
+                    height={50}
                     className="object-contain"
                   />
                 </div>
-                <div className="hidden dark:block">
+                <div className="hidden dark:block mt-2">
                   <Image
                     src="/c-dark.png"
                     alt="Cromatica"
-                    width={32}
-                    height={32}
+                    width={50}
+                    height={50}
                     className="object-contain"
                   />
                 </div>
@@ -75,6 +78,9 @@ const Footer = ({ locale }: FooterProps) => {
             <Link href="/admin">
               <Button text={t.dashboard} variant="link" size="sm" />
             </Link>
+            <Link href={`/${locale}/configurator`}>
+              <Button text="Configurator" variant="link" size="sm" />
+            </Link>
           </nav>
 
           {/* RIGHT: Preferences */}
@@ -84,9 +90,9 @@ const Footer = ({ locale }: FooterProps) => {
               variant="label6"
               className="text-neutral-500 dark:text-neutral-800 uppercase tracking-widest font-mono"
             />
-            <div className="flex items-center gap-3">
-              <ThemeToggle />
+            <div className="flex flex-col items-start gap-3">
               <LangSelector locale={locale} />
+              <ThemeToggle />
             </div>
           </div>
         </div>
