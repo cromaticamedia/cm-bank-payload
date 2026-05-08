@@ -26,7 +26,7 @@ const TemplatesView = ({ locale, templates }: TemplateListProps) => {
 
   return (
     <main className="w-full flex items-center">
-      <LayoutContainer className="flex-col gap-10">
+      <LayoutContainer className="flex-col gap-6">
         <PageHeader tagline={t.eyebrow} title={t.title} subtitle={subtitle} />
 
         {templates.length === 0 ? (

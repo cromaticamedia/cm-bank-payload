@@ -79,7 +79,7 @@ interface ButtonProps {
   iconSize?: IconSizes
   iconVariant?: IconVariants
   isIcon?: boolean
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 function Button({

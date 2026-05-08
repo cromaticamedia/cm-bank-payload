@@ -17,6 +17,7 @@ import { Button } from '@/components/atoms/Button'
 import Typography from '@/components/atoms/Typography'
 import translations from './translations.json'
 import type { LocaleCode } from '@/config/locales'
+import { toast } from 'sonner'
 
 interface ConfiguratorFormProps {
   locale: LocaleCode
@@ -167,14 +168,16 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
   const onSubmit = (data: ConfiguratorSchema) => {
     const config = generateProjectConfig(data)
     setGeneratedConfig(config)
+    toast.success(t.output.generated, { description: 'project.config.ts' })
   }
 
   const handleCopy = useCallback(async () => {
     if (!generatedConfig) return
     await navigator.clipboard.writeText(generatedConfig)
     setCopied(true)
+    toast.success(t.output.copiedButton, { description: 'project.config.ts' })
     setTimeout(() => setCopied(false), 2000)
-  }, [generatedConfig])
+  }, [generatedConfig, t])
 
   return (
     <FormProvider {...methods}>
@@ -353,7 +356,7 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
 
         {/* ── Output ───────────────────────────────────────────────── */}
         {generatedConfig && (
-          <div className="flex flex-col gap-3 flex-1 lg:sticky lg:top-20 lg:self-start">
+          <div className="flex flex-col gap-3 flex-1 md:sticky lg:top-20 lg:self-start">
             <div className="flex items-center justify-between">
               <Typography
                 text="project.config.ts"

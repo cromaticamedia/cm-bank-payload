@@ -85,7 +85,8 @@
     "output": {
       "generateButton": "Generate config",
       "copyButton": "Copy",
-      "copiedButton": "Copied!"
+      "copiedButton": "Copied to clipboard.",
+      "generated": "project.config.ts generated."
     }
   },
   "es": {
@@ -180,7 +181,8 @@
     "output": {
       "generateButton": "Generar config",
       "copyButton": "Copiar",
-      "copiedButton": "¡Copiado!"
+      "copiedButton": "Copiado al clipboard.",
+      "generated": "project.config.ts generado."
     }
   }
 }

@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { toast } from 'sonner'
 import { useState } from 'react'
 import Typography from '@/components/atoms/Typography'
 import { CardHeader, CardBody, CardFooter } from '@/components/atoms/Card'
@@ -10,6 +11,8 @@ import type { Media } from '@/payload-types'
 import type { queryBlocksPaginated } from '@/queries/blocks'
 import { Separator } from '@/components/atoms/Separator'
 import { cn } from '@/utils/styles'
+import { useTranslations } from '@/hooks/useTranslations'
+import translations from './translations.json'
 
 type Block = Awaited<ReturnType<typeof queryBlocksPaginated>>['docs'][number]
 
@@ -29,12 +32,16 @@ const STATUS_STYLES: Record<string, string> = {
 }
 
 export default function BlockCard({ block, locale, noPreviewLabel }: BlockCardProps) {
+  const t = useTranslations(translations, locale as 'en' | 'es')
   const preview = block.preview as Media | null
   const installCommand = `npx cm-template-website add block ${block.name}`
   const [imageLoaded, setImageLoaded] = useState(false)
 
-  const handleCopy = () => {
+  const handleCopy = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     navigator.clipboard.writeText(installCommand)
+    toast.success(t.copied, { description: installCommand })
   }
 
   return (

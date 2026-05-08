@@ -16,7 +16,7 @@ const Home = async ({ locale }: HomeProps) => {
 
   return (
     <main className="w-full flex flex-col relative overflow-hidden">
-      <LayoutContainer className="relative z-10 flex-col gap-8 py-8">
+      <LayoutContainer className="relative z-10 flex-col gap-6 py-8">
         <PageHeader tagline={t.tagline} title={t.title} subtitle={t.subtitle} />
         {/* ── Stat cards ─────────────────────────────────────────── */}
         <div className="grid grid-cols-2 gap-4">
