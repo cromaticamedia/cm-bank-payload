@@ -9,7 +9,10 @@
     "emptySubtitle": "Stable blocks will appear here once they are published.",
     "noPreview": "No preview",
     "prevPage": "Previous",
-    "nextPage": "Next"
+    "nextPage": "Next",
+    "actions": "Actions",
+    "addBlock": "Add block",
+    "refresh": "Refresh"
   },
   "es": {
     "eyebrow": "Banco de Bloques",
@@ -21,6 +24,9 @@
     "emptySubtitle": "Los bloques estables aparecerán aquí una vez que sean publicados.",
     "noPreview": "Sin preview",
     "prevPage": "Anterior",
-    "nextPage": "Siguiente"
+    "nextPage": "Siguiente",
+    "actions": "Acciones",
+    "addBlock": "Agregar bloque",
+    "refresh": "Actualizar"
   }
 }

@@ -1,6 +1,8 @@
 export const logos = {
   dark: '/logo-dark-cropped.png',
   light: '/logo-light-cropped.png',
+  darkIsotype: '/c-dark-625x625.png',
+  lightIsotype: '/c-light-625x625.png',
   darkIsotypeIcon: '/c-dark.png',
   lightIsotypeIcon: '/c-light.png',
 } as const

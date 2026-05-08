@@ -6,6 +6,7 @@ import { cn } from '@/utils/styles'
 import { useState } from 'react'
 import { useTranslations } from '@/hooks/useTranslations'
 import translations from './translations.json'
+import NavLink from '@/components/atoms/NavLink'
 import PreferencesContent from '@/components/molecules/PreferencesContent'
 import type { LocaleCode } from '@/config/locales'
 import {
@@ -68,7 +69,7 @@ export default function BottomBar({ locale, theme, onApplyTheme }: BottomBarProp
 
       <nav className="fixed bottom-0 left-0 right-0 z-40 flex lg:hidden items-center justify-around border-t border-neutral-900 dark:border-neutral-300 bg-neutral-1000 dark:bg-neutral-200 h-17 pt-2 px-2">
         {items.map((item) => (
-          <Link
+          <NavLink
             key={item.href}
             href={item.href}
             className={cn(
@@ -80,7 +81,7 @@ export default function BottomBar({ locale, theme, onApplyTheme }: BottomBarProp
           >
             {item.icon}
             <span>{item.label}</span>
-          </Link>
+          </NavLink>
         ))}
 
         {/* Preferences button */}

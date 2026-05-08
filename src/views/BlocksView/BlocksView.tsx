@@ -1,8 +1,22 @@
+'use client'
+
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import LayoutContainer from '@/components/atoms/LayoutContainer'
 import Typography from '@/components/atoms/Typography'
 import PageHeader from '@/components/molecules/PageHeader'
 import BlockCard from '@/components/molecules/BlockCard/BlockCard'
+import { useLoading } from '@/hooks/useLoading'
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from '@/components/atoms/DropDown/DropDown'
+import { StackPlusIcon, ArrowClockwiseIcon } from '@phosphor-icons/react'
+import { Button } from '@/components/atoms/Button'
 import { useTranslations } from '@/hooks/useTranslations'
 import type { LocaleCode } from '@/config/locales'
 import type { queryBlocksPaginated } from '@/queries/blocks'
@@ -16,13 +30,50 @@ interface BlocksViewProps {
 
 const BlocksView = ({ locale, data, currentPage }: BlocksViewProps) => {
   const t = useTranslations(translations, locale)
+  const router = useRouter()
+  const { startLoading, stopLoading } = useLoading()
   const { docs: blocks, totalDocs, totalPages, hasPrevPage, hasNextPage } = data
   const subtitle = `${totalDocs} ${totalDocs === 1 ? t.subtitle_one : t.subtitle_many}`
 
   return (
-    <main className="w-full flex items-center">
+    <main className="w-full">
       <LayoutContainer className="flex-col gap-6">
-        <PageHeader tagline={t.eyebrow} title={t.title} subtitle={subtitle} />
+        {/* ── Header + Actions ─────────────────────────────────── */}
+        <div className="flex items-start justify-between gap-4">
+          <PageHeader tagline={t.eyebrow} title={t.title} subtitle={subtitle} />
+          <div className="pt-5 shrink-0">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button iconVariant="outlined" iconSize="md" icon="DotsThreeVerticalIcon" isIcon />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>{t.actions}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/admin/collections/blocks/create"
+                    target="_blank"
+                    className="flex items-center gap-2"
+                  >
+                    <StackPlusIcon size={14} />
+                    {t.addBlock}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    startLoading()
+                    router.refresh()
+                    setTimeout(() => stopLoading(), 1500)
+                  }}
+                  className="flex items-center gap-2"
+                >
+                  <ArrowClockwiseIcon size={14} />
+                  {t.refresh}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
 
         {blocks.length === 0 ? (
           // ── Empty state ──────────────────────────────────────────
@@ -87,7 +138,7 @@ const BlocksView = ({ locale, data, currentPage }: BlocksViewProps) => {
   )
 }
 
-// ── PaginationLink ──────────────────────────────────────────────────────────
+// ── PaginationLink ────────────────────────────────────────────────────────────
 function PaginationLink({
   href,
   label,
