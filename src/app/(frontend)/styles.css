@@ -491,16 +491,18 @@ svg {
 @utility bg-gradient-dark {
   background: linear-gradient(
     120deg,
-    color-mix(in srgb, var(--color-neutral-100) 95%, transparent),
-    color-mix(in srgb, var(--color-primary-100) 100%, transparent)
+    color-mix(in srgb, var(--color-secondary-200) 100%, transparent),
+    color-mix(in srgb, var(--color-neutral-100) 100%, transparent),
+    color-mix(in srgb, var(--color-neutral-200) 100%, transparent)
   );
 }
 
 @utility bg-gradient-light {
   background: linear-gradient(
     120deg,
-    var(--color-neutral-1000),
-    color-mix(in srgb, var(--color-secondary-900) 100%, transparent)
+    color-mix(in srgb, var(--color-neutral-1000) 100%, transparent),
+    color-mix(in srgb, var(--color-secondary-900) 100%, transparent),
+    color-mix(in srgb, var(--color-primary-600) 20%, transparent)
   );
 }
 

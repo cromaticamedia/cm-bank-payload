@@ -1,0 +1,36 @@
+{
+  "en": {
+    "tagline": "Block Bank",
+    "backToBlocks": "Back to Blocks",
+    "createdBy": "Created by",
+    "install": "Install command",
+    "copied": "Copied!",
+    "copy": "Copy",
+    "tabs": {
+      "component": "Component.tsx",
+      "schema": "block.ts",
+      "mock": "Mock Data"
+    },
+    "dependencies": "Dependencies",
+    "tags": "Tags",
+    "noDependencies": "No dependencies",
+    "noTags": "No tags"
+  },
+  "es": {
+    "tagline": "Block Bank",
+    "backToBlocks": "Volver a Bloques",
+    "createdBy": "Creado por",
+    "install": "Comando de instalación",
+    "copied": "¡Copiado!",
+    "copy": "Copiar",
+    "tabs": {
+      "component": "Component.tsx",
+      "schema": "block.ts",
+      "mock": "Mock Data"
+    },
+    "dependencies": "Dependencias",
+    "tags": "Tags",
+    "noDependencies": "Sin dependencias",
+    "noTags": "Sin tags"
+  }
+}
