@@ -22,7 +22,7 @@ export default function NavSection({ label, items, collapsed, isActive }: NavSec
         <Typography
           text={label}
           htmlTag="p"
-          className="px-2 text-[10px] uppercase text-neutral-400 dark:text-neutral-700"
+          className="px-2 text-[10px] uppercase text-neutral-400 dark:text-neutral-700 tracking-[0.1em]"
         />
       )}
       {items.map((item) => (

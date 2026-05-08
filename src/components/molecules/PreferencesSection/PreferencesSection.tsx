@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useRef, useState, useEffect } from 'react'
 import { cn } from '@/utils/styles'
 import { Separator } from '@/components/atoms/Separator'
+import { useTranslations } from '@/hooks/useTranslations'
+import translations from './translations.json'
 import {
   SlidersHorizontal,
   Sun,
@@ -35,10 +37,10 @@ export default function PreferencesSection({
   theme,
   onApplyTheme,
 }: PreferencesSectionProps) {
+  const t = useTranslations(translations, locale)
   const [prefsOpen, setPrefsOpen] = useState(false)
   const popoverRef = useRef<HTMLDivElement>(null)
 
-  // Agrega este useEffect en PreferencesSection
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
@@ -62,23 +64,23 @@ export default function PreferencesSection({
         )}
       >
         <SlidersHorizontal size={18} weight="regular" className="shrink-0" />
-        {!collapsed && <span className="whitespace-nowrap">Preferences</span>}
+        {!collapsed && <span className="whitespace-nowrap">{t.preferences}</span>}
       </button>
 
       {prefsOpen && (
         <div className="absolute bottom-full mb-2 left-0.5 w-64 rounded-sm border border-neutral-900 dark:border-neutral-300 bg-white dark:bg-neutral-200 shadow-xl p-4 flex flex-col gap-4 z-50">
           {/* Theme */}
           <div className="flex flex-col gap-2">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-1.5">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-1.5 dark:text-neutral-800">
               <PaletteIcon size={14} weight="bold" />
-              Theme
+              {t.theme}
             </span>
             <div className="flex gap-2">
               {(
                 [
-                  { value: 'light', icon: <Sun size={14} weight="bold" />, label: 'Light' },
-                  { value: 'dark', icon: <Moon size={14} weight="bold" />, label: 'Dark' },
-                  { value: 'system', icon: <Monitor size={14} weight="bold" />, label: 'System' },
+                  { value: 'light', icon: <Sun size={14} weight="bold" />, label: t.light },
+                  { value: 'dark', icon: <Moon size={14} weight="bold" />, label: t.dark },
+                  { value: 'system', icon: <Monitor size={14} weight="bold" />, label: t.system },
                 ] as const
               ).map(({ value, icon, label }) => (
                 <button
@@ -100,9 +102,9 @@ export default function PreferencesSection({
 
           {/* Language */}
           <div className="flex flex-col gap-2">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-1.5">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-800 flex items-center gap-1.5">
               <TranslateIcon size={14} weight="bold" />
-              Language
+              {t.language}
             </span>
             <div className="flex flex-col gap-1">
               {AVAILABLE_LOCALES.map(({ code, label }) => {

@@ -57,6 +57,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={cn(MiChroma.variable, Microgramma.variable, SpaceGrotesk.variable)}
       suppressHydrationWarning
     >

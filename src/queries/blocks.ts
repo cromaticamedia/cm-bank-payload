@@ -71,3 +71,37 @@ export const queryBlocksByCategory = cache(async (category: string) => {
 
   return result.docs
 })
+
+export const queryBlocksPaginated = cache(async (page: number = 1) => {
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'blocks',
+    limit: 9,
+    page,
+    pagination: true,
+    where: {
+      status: { equals: 'stable' },
+    },
+    select: {
+      name: true,
+      label: true,
+      description: true,
+      category: true,
+      status: true,
+      preview: true,
+      tags: true,
+      dependencies: true,
+      authorName: true,
+    },
+  })
+
+  return {
+    docs: result.docs,
+    totalPages: result.totalPages,
+    totalDocs: result.totalDocs,
+    page: result.page ?? 1,
+    hasPrevPage: result.hasPrevPage,
+    hasNextPage: result.hasNextPage,
+  }
+})

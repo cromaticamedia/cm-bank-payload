@@ -1,0 +1,26 @@
+{
+  "en": {
+    "eyebrow": "Block Bank",
+    "title": "Blocks",
+    "subtitle_one": "stable block available",
+    "subtitle_many": "stable blocks available",
+    "empty": "No blocks available yet.",
+    "emptyTitle": "No blocks yet",
+    "emptySubtitle": "Stable blocks will appear here once they are published.",
+    "noPreview": "No preview",
+    "prevPage": "Previous",
+    "nextPage": "Next"
+  },
+  "es": {
+    "eyebrow": "Banco de Bloques",
+    "title": "Bloques",
+    "subtitle_one": "bloque estable disponible",
+    "subtitle_many": "bloques estables disponibles",
+    "empty": "No hay bloques disponibles aún.",
+    "emptyTitle": "Aún no hay bloques",
+    "emptySubtitle": "Los bloques estables aparecerán aquí una vez que sean publicados.",
+    "noPreview": "Sin preview",
+    "prevPage": "Anterior",
+    "nextPage": "Siguiente"
+  }
+}

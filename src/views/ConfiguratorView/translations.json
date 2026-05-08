@@ -1,0 +1,12 @@
+{
+  "en": {
+    "tagline": "Configurator",
+    "title": "Project Configurator",
+    "subtitle": "Generate a project.config.ts file ready to paste into src/config/project.config.ts inside of cm-template-website."
+  },
+  "es": {
+    "tagline": "Configurador",
+    "title": "Configurador Web",
+    "subtitle": "Genera un archivo project.config.ts listo para pegar en src/config/project.config.ts dentro de cm-template-website."
+  }
+}

@@ -9,11 +9,11 @@ import { cn } from '@/utils/styles'
 
 const switchVariants = cva(
   [
-    'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent',
+    'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent border border-px border-neutral-900',
     'transition-colors outline-none',
     'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
     'disabled:cursor-not-allowed disabled:opacity-50',
-    'data-[state=checked]:bg-primary/90 data-[state=unchecked]:bg-input',
+    'data-[state=checked]:bg-neutral-400 data-[state=unchecked]:bg-input',
   ],
   {
     variants: {
@@ -28,7 +28,7 @@ const switchVariants = cva(
 )
 
 const thumbVariants = cva(
-  ['pointer-events-none block rounded-full bg-white', 'transition-transform'],
+  ['pointer-events-none block rounded-full bg-neutral-1000', 'transition-transform'],
   {
     variants: {
       size: {

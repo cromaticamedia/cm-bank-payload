@@ -3,6 +3,8 @@
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { useFormContext } from 'react-hook-form'
 import { cn } from '@/utils/styles'
+import type { Icon as PhosphorIconType } from '@phosphor-icons/react'
+import Icon from '@/components/atoms/Icon'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -11,6 +13,7 @@ type RadioOption = {
   value: string
   description?: string
   disabled?: boolean
+  icon?: PhosphorIconType['name']
 }
 
 type RadioGroupProps = {
@@ -87,10 +90,19 @@ const RadioGroup = ({
               </RadioGroupPrimitive.Indicator>
             </RadioGroupPrimitive.Item>
 
-            <div className="flex flex-col gap-0.5">
-              <span className="text-sm font-medium text-neutral-100 dark:text-neutral-1000">
-                {option.label}
-              </span>
+            <div className="flex flex-col gap-0.5 flex-1">
+              <div className="flex items-center gap-1.5">
+                {option.icon && (
+                  <Icon
+                    name={option.icon}
+                    className="text-neutral-400 dark:text-neutral-600 shrink-0"
+                    size={14}
+                  />
+                )}
+                <span className="text-sm font-medium text-neutral-100 dark:text-neutral-1000">
+                  {option.label}
+                </span>
+              </div>
               {option.description && (
                 <span className="text-xs text-neutral-500 dark:text-neutral-600">
                   {option.description}

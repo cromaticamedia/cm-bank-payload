@@ -1,0 +1,186 @@
+{
+  "en": {
+    "sections": {
+      "project": "Project",
+      "languages": "Languages",
+      "theme": "Theme",
+      "menus": "Menus",
+      "collections": "Collections",
+      "crm": "CRM Connection"
+    },
+    "project": {
+      "nameLabel": "Project name",
+      "nameDescription": "Only lowercase letters, numbers and hyphens. e.g: my-client-project",
+      "namePlaceholder": "my-client-project",
+      "tierLabel": "Tier",
+      "tiers": {
+        "launch": {
+          "label": "Launch",
+          "description": "$400 — 1 route, 5 blocks, 1 language, no dark mode"
+        },
+        "growth": {
+          "label": "Growth",
+          "description": "$800 — 5 routes, 25 blocks, 2 languages, dark mode, blog"
+        },
+        "scale": {
+          "label": "Scale",
+          "description": "$1,200 — 10 routes, 40 blocks, 3+ languages, mega menu"
+        }
+      }
+    },
+    "languages": {
+      "activeLocalesLabel": "Active locales",
+      "defaultLocaleLabel": "Default locale",
+      "defaultLocaleDescription": "The locale shown when no language prefix is in the URL"
+    },
+    "theme": {
+      "darkModeLabel": "Dark mode",
+      "darkModeDescription": "Allow users to toggle between light and dark mode"
+    },
+    "menus": {
+      "singlePageLabel": "Single page",
+      "singlePageDescription": "Site has only one route — no multi-page navigation needed",
+      "navigationLabel": "Navigation type",
+      "navigations": {
+        "simple": {
+          "label": "Simple navigation",
+          "description": "Standard navbar without dropdown menus"
+        },
+        "mega": {
+          "label": "Mega menu navigation",
+          "description": "Supports dropdown menus and nested links — Scale only"
+        }
+      },
+      "footerLabel": "Footer type",
+      "footers": {
+        "simple": { "label": "Simple footer", "description": "Compact footer with basic links" },
+        "mega": {
+          "label": "Mega footer",
+          "description": "Full footer with link groups and brand section — Scale only"
+        }
+      }
+    },
+    "collections": {
+      "postsLabel": "Blog / Posts",
+      "postsDescription": "Enable the Posts collection for blog support",
+      "teamLabel": "Our Team",
+      "teamDescription": "Enable the Our Team collection to showcase team members"
+    },
+    "crm": {
+      "providerLabel": "CRM Provider",
+      "providers": {
+        "none": { "label": "None", "description": "No CRM integration" },
+        "brevo": { "label": "Brevo", "description": "Connect form submissions to a Brevo list" },
+        "hubspot": {
+          "label": "HubSpot",
+          "description": "Connect form submissions to a HubSpot form"
+        }
+      },
+      "brevoListIdLabel": "Brevo List ID",
+      "brevoListIdDescription": "The ID of the Brevo list where contacts will be added",
+      "brevoListIdPlaceholder": "12345",
+      "hubspotPortalIdLabel": "HubSpot Portal ID",
+      "hubspotFormIdLabel": "HubSpot Form ID"
+    },
+    "output": {
+      "generateButton": "Generate config",
+      "copyButton": "Copy",
+      "copiedButton": "Copied!"
+    }
+  },
+  "es": {
+    "sections": {
+      "project": "Proyecto",
+      "languages": "Idiomas",
+      "theme": "Tema",
+      "menus": "Menús",
+      "collections": "Colecciones",
+      "crm": "Conexión CRM"
+    },
+    "project": {
+      "nameLabel": "Nombre del proyecto",
+      "nameDescription": "Solo letras minúsculas, números y guiones. ej: mi-proyecto-cliente",
+      "namePlaceholder": "mi-proyecto-cliente",
+      "tierLabel": "Tier",
+      "tiers": {
+        "launch": {
+          "label": "Launch",
+          "description": "$400 — 1 ruta, 5 bloques, 1 idioma, sin dark mode"
+        },
+        "growth": {
+          "label": "Growth",
+          "description": "$800 — 5 rutas, 25 bloques, 2 idiomas, dark mode, blog"
+        },
+        "scale": {
+          "label": "Scale",
+          "description": "$1,200 — 10 rutas, 40 bloques, 3+ idiomas, mega menú"
+        }
+      }
+    },
+    "languages": {
+      "activeLocalesLabel": "Idiomas activos",
+      "defaultLocaleLabel": "Idioma por defecto",
+      "defaultLocaleDescription": "El idioma que se muestra cuando no hay prefijo de idioma en la URL"
+    },
+    "theme": {
+      "darkModeLabel": "Modo oscuro",
+      "darkModeDescription": "Permite a los usuarios alternar entre modo claro y oscuro"
+    },
+    "menus": {
+      "singlePageLabel": "Página única",
+      "singlePageDescription": "El sitio tiene solo una ruta — no se necesita navegación multi-página",
+      "navigationLabel": "Tipo de navegación",
+      "navigations": {
+        "simple": {
+          "label": "Navegación simple",
+          "description": "Navbar estándar sin menús desplegables"
+        },
+        "mega": {
+          "label": "Mega menú",
+          "description": "Soporta menús desplegables y enlaces anidados — Solo Scale"
+        }
+      },
+      "footerLabel": "Tipo de footer",
+      "footers": {
+        "simple": {
+          "label": "Footer simple",
+          "description": "Footer compacto con enlaces básicos"
+        },
+        "mega": {
+          "label": "Mega footer",
+          "description": "Footer completo con grupos de enlaces y sección de marca — Solo Scale"
+        }
+      }
+    },
+    "collections": {
+      "postsLabel": "Blog / Posts",
+      "postsDescription": "Habilita la colección de Posts para soporte de blog",
+      "teamLabel": "Nuestro Equipo",
+      "teamDescription": "Habilita la colección Nuestro Equipo para mostrar miembros del equipo"
+    },
+    "crm": {
+      "providerLabel": "Proveedor CRM",
+      "providers": {
+        "none": { "label": "Ninguno", "description": "Sin integración CRM" },
+        "brevo": {
+          "label": "Brevo",
+          "description": "Conecta envíos de formularios a una lista de Brevo"
+        },
+        "hubspot": {
+          "label": "HubSpot",
+          "description": "Conecta envíos de formularios a un formulario de HubSpot"
+        }
+      },
+      "brevoListIdLabel": "ID de Lista Brevo",
+      "brevoListIdDescription": "El ID de la lista de Brevo donde se agregarán los contactos",
+      "brevoListIdPlaceholder": "12345",
+      "hubspotPortalIdLabel": "ID de Portal HubSpot",
+      "hubspotFormIdLabel": "ID de Formulario HubSpot"
+    },
+    "output": {
+      "generateButton": "Generar config",
+      "copyButton": "Copiar",
+      "copiedButton": "¡Copiado!"
+    }
+  }
+}

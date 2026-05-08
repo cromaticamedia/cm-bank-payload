@@ -2,11 +2,12 @@
 
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { configuratorSchema, type ConfiguratorSchema } from './schema'
 import { AVAILABLE_LOCALES } from '@/catalogs/locales'
 import { TIER_DEFAULTS } from '@/catalogs/websites-tier-defaults'
 import { generateProjectConfig } from './generate-config'
+import { useTranslations } from '@/hooks/useTranslations'
 import Input from '@/components/atoms/Input'
 import Switch from '@/components/atoms/Switch'
 import RadioGroup from '@/components/atoms/RadioGroup/RadioGroup'
@@ -14,16 +15,15 @@ import CodeViewer from '@/components/molecules/CodeViewer'
 import { Chip } from '@/components/atoms/Chip'
 import { Button } from '@/components/atoms/Button'
 import Typography from '@/components/atoms/Typography'
+import translations from './translations.json'
+import type { LocaleCode } from '@/config/locales'
 
-const SectionLabel = ({ text }: { text: string }) => (
-  <Typography
-    text={text}
-    variant="span"
-    className="text-primary-500 font-mono uppercase tracking-widest"
-  />
-)
+interface ConfiguratorFormProps {
+  locale: LocaleCode
+}
 
-const ConfiguratorForm = () => {
+const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
+  const t = useTranslations(translations, locale)
   const [generatedConfig, setGeneratedConfig] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
 
@@ -54,37 +54,127 @@ const ConfiguratorForm = () => {
   const locales = watch('locales')
   const crmProvider = watch('crmProvider')
 
-  const handleTierChange = (value: string) => {
-    const defaults = TIER_DEFAULTS[value]
-    if (!defaults) return
-    Object.entries(defaults).forEach(([key, val]) => {
-      setValue(key as keyof ConfiguratorSchema, val as never, { shouldValidate: false })
-    })
-  }
+  const tierOptions = useMemo(
+    () => [
+      {
+        label: t.project.tiers.launch.label,
+        value: 'launch',
+        description: t.project.tiers.launch.description,
+        icon: 'RocketLaunchIcon' as const,
+      },
+      {
+        label: t.project.tiers.growth.label,
+        value: 'growth',
+        description: t.project.tiers.growth.description,
+        icon: 'TrendUpIcon' as const,
+      },
+      {
+        label: t.project.tiers.scale.label,
+        value: 'scale',
+        description: t.project.tiers.scale.description,
+        icon: 'ChartLineUpIcon' as const,
+      },
+    ],
+    [t],
+  )
 
-  const handleLocaleToggle = (code: string) => {
-    const current = locales ?? []
-    const next = current.includes(code as never)
-      ? current.filter((l) => l !== code)
-      : [...current, code as never]
-    setValue('locales', next as never, { shouldValidate: true })
-    const defaultLocale = methods.getValues('defaultLocale')
-    if (!next.includes(defaultLocale as never) && next.length > 0) {
-      setValue('defaultLocale', next[0] as never, { shouldValidate: true })
-    }
-  }
+  const navigationOptions = useMemo(
+    () => [
+      {
+        label: t.menus.navigations.simple.label,
+        value: 'nav-simple',
+        description: t.menus.navigations.simple.description,
+        icon: 'NavigationArrowIcon' as const,
+      },
+      {
+        label: t.menus.navigations.mega.label,
+        value: 'nav-mega',
+        description: t.menus.navigations.mega.description,
+        icon: 'SquaresFourIcon' as const,
+      },
+    ],
+    [t],
+  )
+
+  const footerOptions = useMemo(
+    () => [
+      {
+        label: t.menus.footers.simple.label,
+        value: 'footer-simple',
+        description: t.menus.footers.simple.description,
+        icon: 'MinusIcon' as const,
+      },
+      {
+        label: t.menus.footers.mega.label,
+        value: 'footer-mega',
+        description: t.menus.footers.mega.description,
+        icon: 'RowsIcon' as const,
+      },
+    ],
+    [t],
+  )
+
+  const crmOptions = useMemo(
+    () => [
+      {
+        label: t.crm.providers.none.label,
+        value: 'none',
+        description: t.crm.providers.none.description,
+        icon: 'ProhibitIcon' as const,
+      },
+      {
+        label: t.crm.providers.brevo.label,
+        value: 'brevo',
+        description: t.crm.providers.brevo.description,
+        icon: 'EnvelopeIcon' as const,
+      },
+      {
+        label: t.crm.providers.hubspot.label,
+        value: 'hubspot',
+        description: t.crm.providers.hubspot.description,
+        icon: 'GlobeStandIcon' as const,
+      },
+    ],
+    [t],
+  )
+
+  const handleTierChange = useCallback(
+    (value: string) => {
+      const defaults = TIER_DEFAULTS[value]
+      if (!defaults) return
+      Object.entries(defaults).forEach(([key, val]) => {
+        setValue(key as keyof ConfiguratorSchema, val as never, { shouldValidate: false })
+      })
+    },
+    [setValue],
+  )
+
+  const handleLocaleToggle = useCallback(
+    (code: string) => {
+      const current = locales ?? []
+      const next = current.includes(code as never)
+        ? current.filter((l) => l !== code)
+        : [...current, code as never]
+      setValue('locales', next as never, { shouldValidate: true })
+      const defaultLocale = methods.getValues('defaultLocale')
+      if (!next.includes(defaultLocale as never) && next.length > 0) {
+        setValue('defaultLocale', next[0] as never, { shouldValidate: true })
+      }
+    },
+    [locales, setValue, methods],
+  )
 
   const onSubmit = (data: ConfiguratorSchema) => {
     const config = generateProjectConfig(data)
     setGeneratedConfig(config)
   }
 
-  const handleCopy = async () => {
+  const handleCopy = useCallback(async () => {
     if (!generatedConfig) return
     await navigator.clipboard.writeText(generatedConfig)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
-  }
+  }, [generatedConfig])
 
   return (
     <FormProvider {...methods}>
@@ -93,42 +183,39 @@ const ConfiguratorForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 flex-1">
           {/* Project */}
           <section className="flex flex-col gap-4">
-            <SectionLabel text="Project" />
+            <Typography
+              text={t.sections.project}
+              variant="span"
+              className="text-primary-500 font-mono uppercase tracking-widest"
+            />
             <Input
               name="name"
-              label="Project name"
-              description="Only lowercase letters, numbers and hyphens. e.g: my-client-project"
-              placeholder="my-client-project"
+              icon="SuitcaseIcon"
+              label={t.project.nameLabel}
+              description={t.project.nameDescription}
+              placeholder={t.project.namePlaceholder}
             />
             <RadioGroup
               name="tier"
-              label="Tier"
+              label={t.project.tierLabel}
               onValueChange={handleTierChange}
-              options={[
-                {
-                  label: 'Launch',
-                  value: 'launch',
-                  description: '$400 — 1 route, 5 blocks, 1 language, no dark mode',
-                },
-                {
-                  label: 'Growth',
-                  value: 'growth',
-                  description: '$800 — 5 routes, 25 blocks, 2 languages, dark mode, blog',
-                },
-                {
-                  label: 'Scale',
-                  value: 'scale',
-                  description: '$1,200 — 10 routes, 40 blocks, 3+ languages, mega menu',
-                },
-              ]}
+              options={tierOptions}
             />
           </section>
 
           {/* Languages */}
           <section className="flex flex-col gap-4">
-            <SectionLabel text="Languages" />
+            <Typography
+              text={t.sections.languages}
+              variant="span"
+              className="text-primary-500 font-mono uppercase tracking-widest"
+            />
             <div className="flex flex-col gap-2">
-              <Typography text="Active locales" variant="label6" className="font-medium" />
+              <Typography
+                text={t.languages.activeLocalesLabel}
+                variant="label6"
+                className="font-medium"
+              />
               <div className="flex flex-wrap gap-2">
                 {AVAILABLE_LOCALES.map(({ code, label }) => {
                   const isActive = locales?.includes(code as never)
@@ -158,10 +245,11 @@ const ConfiguratorForm = () => {
             </div>
             <RadioGroup
               name="defaultLocale"
-              label="Default locale"
-              description="The locale shown when no language prefix is in the URL"
+              label={t.languages.defaultLocaleLabel}
+              description={t.languages.defaultLocaleDescription}
               options={(locales ?? []).map((code) => ({
                 label: AVAILABLE_LOCALES.find((l) => l.code === code)?.label ?? code,
+                icon: 'TranslateIcon',
                 value: code,
               }))}
             />
@@ -169,106 +257,84 @@ const ConfiguratorForm = () => {
 
           {/* Theme */}
           <section className="flex flex-col gap-4">
-            <SectionLabel text="Theme" />
+            <Typography
+              text={t.sections.theme}
+              variant="span"
+              className="text-primary-500 font-mono uppercase tracking-widest"
+            />
             <Switch
               name="allowDarkMode"
-              label="Dark mode"
-              description="Allow users to toggle between light and dark mode"
+              label={t.theme.darkModeLabel}
+              description={t.theme.darkModeDescription}
             />
           </section>
 
           {/* Menus */}
           <section className="flex flex-col gap-4">
-            <SectionLabel text="Menus" />
+            <Typography
+              text={t.sections.menus}
+              variant="span"
+              className="text-primary-500 font-mono uppercase tracking-widest"
+            />
             <Switch
               name="isSinglePage"
-              label="Single page"
-              description="Site has only one route — no multi-page navigation needed"
+              label={t.menus.singlePageLabel}
+              description={t.menus.singlePageDescription}
             />
             <RadioGroup
               name="selectedNavigation"
-              label="Navigation type"
-              options={[
-                {
-                  label: 'Simple navigation',
-                  value: 'nav-simple',
-                  description: 'Standard navbar without dropdown menus',
-                },
-                {
-                  label: 'Mega menu navigation',
-                  value: 'nav-mega',
-                  description: 'Supports dropdown menus and nested links — Scale only',
-                },
-              ]}
+              label={t.menus.navigationLabel}
+              options={navigationOptions}
             />
-            <RadioGroup
-              name="selectedFooter"
-              label="Footer type"
-              options={[
-                {
-                  label: 'Simple footer',
-                  value: 'footer-simple',
-                  description: 'Compact footer with basic links',
-                },
-                {
-                  label: 'Mega footer',
-                  value: 'footer-mega',
-                  description: 'Full footer with link groups and brand section — Scale only',
-                },
-              ]}
-            />
+            <RadioGroup name="selectedFooter" label={t.menus.footerLabel} options={footerOptions} />
           </section>
 
           {/* Collections */}
           <section className="flex flex-col gap-4">
-            <SectionLabel text="Collections" />
+            <Typography
+              text={t.sections.collections}
+              variant="span"
+              className="text-primary-500 font-mono uppercase tracking-widest"
+            />
             <Switch
               name="allowPostsCollection"
-              label="Blog / Posts"
-              description="Enable the Posts collection for blog support"
+              label={t.collections.postsLabel}
+              description={t.collections.postsDescription}
             />
             <Switch
               name="allowOurTeamCollection"
-              label="Our Team"
-              description="Enable the Our Team collection to showcase team members"
+              label={t.collections.teamLabel}
+              description={t.collections.teamDescription}
             />
           </section>
 
           {/* CRM */}
           <section className="flex flex-col gap-4">
-            <SectionLabel text="CRM Connection" />
-            <RadioGroup
-              name="crmProvider"
-              label="CRM Provider"
-              options={[
-                { label: 'None', value: 'none', description: 'No CRM integration' },
-                {
-                  label: 'Brevo',
-                  value: 'brevo',
-                  description: 'Connect form submissions to a Brevo list',
-                },
-                {
-                  label: 'HubSpot',
-                  value: 'hubspot',
-                  description: 'Connect form submissions to a HubSpot form',
-                },
-              ]}
+            <Typography
+              text={t.sections.crm}
+              variant="span"
+              className="text-primary-500 font-mono uppercase tracking-widest"
             />
+            <RadioGroup name="crmProvider" label={t.crm.providerLabel} options={crmOptions} />
             {crmProvider === 'brevo' && (
               <Input
                 name="brevoListId"
-                label="Brevo List ID"
-                description="The ID of the Brevo list where contacts will be added"
-                placeholder="12345"
+                label={t.crm.brevoListIdLabel}
+                description={t.crm.brevoListIdDescription}
+                placeholder={t.crm.brevoListIdPlaceholder}
                 type="number"
               />
             )}
             {crmProvider === 'hubspot' && (
               <>
-                <Input name="hubspotPortalId" label="HubSpot Portal ID" placeholder="12345678" />
+                <Input
+                  name="hubspotPortalId"
+                  label={t.crm.hubspotPortalIdLabel}
+                  placeholder="12345678"
+                />
                 <Input
                   name="hubspotFormId"
-                  label="HubSpot Form ID"
+                  label={t.crm.hubspotFormIdLabel}
                   placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
                 />
               </>
@@ -277,7 +343,7 @@ const ConfiguratorForm = () => {
 
           <Button
             type="submit"
-            text="Generate config"
+            text={t.output.generateButton}
             variant="primary"
             className="w-fit self-end"
             size="sm"
@@ -295,7 +361,7 @@ const ConfiguratorForm = () => {
                 className="text-primary-500 font-mono uppercase tracking-widest"
               />
               <Button
-                text={copied ? 'Copied!' : 'Copy'}
+                text={copied ? t.output.copiedButton : t.output.copyButton}
                 variant="outlined"
                 icon={copied ? 'Check' : 'Copy'}
                 onClick={handleCopy}
