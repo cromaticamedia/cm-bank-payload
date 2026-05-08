@@ -6,6 +6,18 @@ import { isAdmin, isAuthenticated } from '@/hooks/useAuth'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const sanitizeFilename = (name: string): string => {
+  const ext = path.extname(name)
+  const base = path.basename(name, ext)
+  const sanitized = base
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+  return `${sanitized}${ext.toLowerCase()}`
+}
+
 const Media: CollectionConfig = {
   slug: 'media',
   access: {
@@ -41,7 +53,7 @@ const Media: CollectionConfig = {
           es: 'imagen-usuario-uno',
         },
       },
-      label: { en: 'Fallack Text', es: 'Texto preventivo.' },
+      label: { en: 'Fallback Text', es: 'Texto preventivo.' },
     },
   ],
   upload: {
@@ -50,36 +62,29 @@ const Media: CollectionConfig = {
     focalPoint: true,
     mimeTypes: ['image/*', 'video/*'],
     imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 300,
+      { name: 'thumbnail', width: 300 },
+      { name: 'square', width: 500, height: 500 },
+      { name: 'small', width: 600 },
+      { name: 'medium', width: 900 },
+      { name: 'large', width: 1400 },
+      { name: 'xlarge', width: 1920 },
+      { name: 'og', width: 1200, height: 630, crop: 'center' },
+    ],
+    handlers: [
+      async (req) => {
+        if (req.file) {
+          req.file.name = sanitizeFilename(req.file.name)
+        }
       },
-      {
-        name: 'square',
-        width: 500,
-        height: 500,
-      },
-      {
-        name: 'small',
-        width: 600,
-      },
-      {
-        name: 'medium',
-        width: 900,
-      },
-      {
-        name: 'large',
-        width: 1400,
-      },
-      {
-        name: 'xlarge',
-        width: 1920,
-      },
-      {
-        name: 'og',
-        width: 1200,
-        height: 630,
-        crop: 'center',
+    ],
+  },
+  hooks: {
+    beforeOperation: [
+      async ({ args, operation }) => {
+        if (operation === 'create' && args.req?.file) {
+          args.req.file.name = sanitizeFilename(args.req.file.name)
+        }
+        return args
       },
     ],
   },

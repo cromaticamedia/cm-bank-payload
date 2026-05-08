@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import AuthorField from '@/fields/author'
+import { isAuthenticated, isAdmin } from '@/hooks/useAuth'
 
 const Templates: CollectionConfig = {
   slug: 'templates',
@@ -10,9 +11,9 @@ const Templates: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: ({ req: { user } }) => !!user,
-    update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    create: isAuthenticated,
+    update: isAuthenticated,
+    delete: isAdmin,
   },
   fields: [
     // --- Identidad ---

@@ -27,26 +27,26 @@ const BlocksView = ({ locale, data, currentPage }: BlocksViewProps) => {
         {blocks.length === 0 ? (
           // ── Empty state ──────────────────────────────────────────
           <div className="flex flex-col items-center justify-center py-32 gap-6 text-center">
-            <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-neutral-900 dark:bg-neutral-300/50 border border-neutral-800 dark:border-neutral-700/50 text-4xl">
+            <div className="flex items-center justify-center w-30 h-30 bg-neutral-900 dark:bg-neutral-300/50 border border-neutral-800 dark:border-neutral-700/50 text-6xl">
               📦
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 items-center">
               <Typography
                 text={t.emptyTitle}
                 variant="label5"
-                className="text-neutral-300 dark:text-neutral-800"
+                className="text-neutral-300 dark:text-neutral-900"
               />
               <Typography
                 text={t.emptySubtitle}
-                variant="p"
-                className="text-neutral-600 dark:text-neutral-600 max-w-sm"
+                variant="label6"
+                className="text-neutral-600 dark:text-neutral-800 w-1/2"
               />
             </div>
           </div>
         ) : (
           <>
             {/* ── Grid ──────────────────────────────────────────── */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
               {blocks.map((block) => (
                 <BlockCard
                   key={block.id}

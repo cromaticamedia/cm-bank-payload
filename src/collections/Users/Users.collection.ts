@@ -5,9 +5,9 @@ import { isAdmin, isAuthenticated } from '@/hooks/useAuth'
 const Users: CollectionConfig = {
   slug: 'users',
   access: {
-    admin: isAuthenticated,
+    admin: isAdmin,
     create: isAdmin,
-    read: isAuthenticated,
+    read: isAdmin,
     update: isAdmin,
     delete: isAdmin,
   },

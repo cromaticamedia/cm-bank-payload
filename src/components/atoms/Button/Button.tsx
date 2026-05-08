@@ -13,7 +13,7 @@ const iconVariants = cva(
   {
     variants: {
       iconSize: {
-        sm: 'text-[28px] p-1',
+        sm: 'text-[18px] p-1',
         md: 'text-[32px] p-1',
         lg: 'text-[40px] p-1.5',
       },

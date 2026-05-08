@@ -10,7 +10,7 @@ export const queryBlocks = cache(async () => {
     limit: 100,
     pagination: false,
     where: {
-      status: { equals: 'stable' },
+      status: { in: ['stable', 'draft', 'deprecated'] },
     },
     select: {
       name: true,
@@ -37,7 +37,7 @@ export const queryBlockByName = cache(async (name: string) => {
     pagination: false,
     where: {
       name: { equals: name },
-      status: { equals: 'stable' },
+      status: { in: ['stable', 'draft', 'deprecated'] },
     },
     depth: 2,
   })
@@ -53,7 +53,7 @@ export const queryBlocksByCategory = cache(async (category: string) => {
     limit: 100,
     pagination: false,
     where: {
-      status: { equals: 'stable' },
+      status: { in: ['stable', 'draft', 'deprecated'] },
       category: { equals: category },
     },
     select: {
@@ -81,7 +81,7 @@ export const queryBlocksPaginated = cache(async (page: number = 1) => {
     page,
     pagination: true,
     where: {
-      status: { equals: 'stable' },
+      status: { in: ['stable', 'draft', 'deprecated'] },
     },
     select: {
       name: true,

@@ -1,0 +1,18 @@
+{
+  "en": {
+    "preferences": "Preferences",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "language": "Language"
+  },
+  "es": {
+    "preferences": "Preferencias",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema",
+    "language": "Idioma"
+  }
+}

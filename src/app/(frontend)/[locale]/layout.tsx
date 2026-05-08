@@ -1,4 +1,4 @@
-import AppSidebar from '@/components/organisms/AppSidebar'
+import AppShell from '@/components/organisms/AppShell'
 import type { LocaleCode } from '@/config/locales'
 import Footer from '@/components/molecules/Footer'
 
@@ -12,8 +12,8 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <div className="flex w-full h-screen overflow-hidden">
-      <AppSidebar locale={locale as LocaleCode} />
-      <main className="flex-1 overflow-y-auto flex flex-col">
+      <AppShell locale={locale as LocaleCode} />
+      <main className="flex-1 overflow-y-auto flex flex-col pb-14 lg:pb-0">
         <div className="flex-1">{children}</div>
         <Footer locale={locale as LocaleCode} />
       </main>

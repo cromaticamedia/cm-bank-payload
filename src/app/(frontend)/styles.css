@@ -6,18 +6,10 @@
 @import 'shadcn/tailwind.css';
 @plugin "@tailwindcss/typography";
 
-/* @custom-variant dark (&:is(.dark *)); */
 @custom-variant dark (&:is(.dark *), .dark &);
+
 /* ─────────────────────────────────────────────
    @theme — design tokens primitivos
-   
-   QUÉ VA AQUÍ: variables que Tailwind convierte
-   en utilidades (bg-primary-400, shadow-md...).
-   Solo valores: colores, fuentes, espaciado,
-   radios, sombras, tamaños de texto.
-   
-   QUÉ NO VA AQUÍ: clases CSS, keyframes,
-   estilos de componentes.
 ───────────────────────────────────────────── */
 @theme {
   /* Primary */
@@ -67,6 +59,41 @@
   --color-neutral-800: var(--project-neutral-800);
   --color-neutral-900: var(--project-neutral-900);
   --color-neutral-1000: var(--project-neutral-1000);
+
+  /* Success */
+  --color-success-100: #052e16;
+  --color-success-200: #14532d;
+  --color-success-300: #166534;
+  --color-success-400: #15803d;
+  --color-success-500: #22c55e;
+
+  /* Warning */
+  --color-warning-100: #431407;
+  --color-warning-200: #7c2d12;
+  --color-warning-300: #9a3412;
+  --color-warning-400: #c2410c;
+  --color-warning-500: #f97316;
+
+  /* Error */
+  --color-error-100: #2d0a0a;
+  --color-error-200: #450a0a;
+  --color-error-300: #7f1d1d;
+  --color-error-400: #991b1b;
+  --color-error-500: #ef4444;
+
+  /* Info */
+  --color-info-100: #0c1a2e;
+  --color-info-200: #1e3a5f;
+  --color-info-300: #1d4ed8;
+  --color-info-400: #2563eb;
+  --color-info-500: #60a5fa;
+
+  /* Loading */
+  --color-loading-100: #1a0533;
+  --color-loading-200: #2e1065;
+  --color-loading-300: #4c1d95;
+  --color-loading-400: #6d28d9;
+  --color-loading-500: #a78bfa;
 
   --color-white: #ffffff;
   --color-black: #000000;
@@ -125,14 +152,6 @@
 
 /* ─────────────────────────────────────────────
    @theme inline — tokens de shadcn/ui
-   
-   QUÉ VA AQUÍ: variables que shadcn necesita
-   expuestas como clases de Tailwind
-   (bg-background, text-foreground...).
-   El "inline" las resuelve en compilación.
-   
-   QUÉ NO VA AQUÍ: tus tokens de proyecto,
-   esos van en el @theme de arriba.
 ───────────────────────────────────────────── */
 @theme inline {
   --font-heading: var(--font-mono);
@@ -182,12 +201,6 @@
 
 /* ─────────────────────────────────────────────
    :root y .dark — valores concretos del proyecto
-   
-   QUÉ VA AQUÍ: los valores reales de las
-   variables --project-* y los tokens de shadcn.
-   Este bloque es el que cambia entre proyectos.
-   
-   QUÉ NO VA AQUÍ: clases CSS ni keyframes.
 ───────────────────────────────────────────── */
 :root {
   /* Primary */
@@ -323,14 +336,6 @@
 
 /* ─────────────────────────────────────────────
    BASE STYLES — reset global
-   
-   QUÉ VA AQUÍ: estilos de elementos HTML
-   nativos (html, body, img, a, svg...).
-   Van fuera de @layer para mantener el mismo
-   comportamiento que tenían en el original.
-   
-   QUÉ NO VA AQUÍ: clases de componentes,
-   @utility, animaciones.
 ───────────────────────────────────────────── */
 *,
 *::before,
@@ -384,11 +389,6 @@ svg {
 
 /* ─────────────────────────────────────────────
    @layer base — utilidades base de shadcn
-   
-   QUÉ VA AQUÍ: solo las 3 reglas que shadcn
-   necesita en @layer base. Van separadas del
-   reset de arriba para no cambiar su
-   especificidad original.
 ───────────────────────────────────────────── */
 @layer base {
   * {
@@ -406,21 +406,8 @@ svg {
 }
 
 /* ─────────────────────────────────────────────
-   KEYFRAMES — definiciones puras de animación
-   
-   QUÉ VA AQUÍ: solo @keyframes y @property.
-   Van a nivel raíz para estar disponibles
-   globalmente.
-   
-   REGLA CRÍTICA: un nombre único por keyframe.
-   Nunca repetir el mismo nombre — el segundo
-   pisa al primero silenciosamente.
-   
-   NUEVA ANIMACIÓN: define su @property y
-   @keyframes aquí, y la clase CSS en la
-   sección de componentes más abajo.
+   KEYFRAMES
 ───────────────────────────────────────────── */
-
 @keyframes accordion-down {
   from {
     height: 0;
@@ -492,15 +479,7 @@ svg {
 
 /* ─────────────────────────────────────────────
    @utility — utilidades simples
-   
-   QUÉ VA AQUÍ: clases sin pseudo-elementos
-   ni selectores anidados. Tailwind las trata
-   como utilidades propias.
-   
-   QUÉ NO VA AQUÍ: clases con ::before/::after
-   — esas van en la sección de componentes.
 ───────────────────────────────────────────── */
-
 @utility animate-fade-up {
   animation: fadeUp 1s ease-out both;
 }
@@ -526,20 +505,8 @@ svg {
 }
 
 /* ─────────────────────────────────────────────
-   CLASES DE COMPONENTE — clases con pseudo-elementos
-   
-   QUÉ VA AQUÍ: clases que usan ::before,
-   ::after, o selectores anidados complejos.
-   No pueden ser @utility porque Tailwind v4
-   no soporta pseudo-elementos en @utility.
-   
-   Se usan igual en JSX: className="animate-border-glow"
-   
-   NUEVA ANIMACIÓN: agrega su @property y
-   @keyframes arriba, y la clase aquí.
+   CLASES DE COMPONENTE — pseudo-elementos
 ───────────────────────────────────────────── */
-
-/* Borde fino giratorio — usar directo en el elemento */
 .animate-border-spin {
   position: relative;
   overflow: hidden;
@@ -566,8 +533,6 @@ svg {
   z-index: 1;
 }
 
-/* Punto grueso con glow — usar en un div WRAPPER alrededor del botón,
-   nunca directo en el botón porque colisiona con sus ::before/::after */
 .animate-border-glow {
   position: relative;
   overflow: visible;
@@ -614,8 +579,6 @@ svg {
   pointer-events: none;
 }
 
-/* Texto con gradiente — va aquí y no en @utility porque
-   usa múltiples propiedades que forman un efecto visual conjunto */
 .text-gradient {
   background: linear-gradient(90deg, #22c55e, #00a6fb);
   -webkit-background-clip: text;

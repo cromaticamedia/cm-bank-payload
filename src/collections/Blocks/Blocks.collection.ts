@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
+import { isAuthenticated, isAdmin } from '@/hooks/useAuth'
 import AuthorField from '@/fields/author'
+import ChipsField from '@/fields/ChipsField/ChipsField.field'
 
 const Blocks: CollectionConfig = {
   slug: 'blocks',
@@ -7,12 +9,17 @@ const Blocks: CollectionConfig = {
     useAsTitle: 'name',
     description: 'Block bank — reusable blocks for Cromatica templates',
     defaultColumns: ['name', 'category', 'status', 'updatedAt'],
+    components: {
+      edit: {
+        beforeDocumentControls: [{ path: '@/components/payload/ViewInBankBtn#default' }],
+      },
+    },
   },
   access: {
     read: () => true,
-    create: ({ req: { user } }) => !!user,
-    update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    create: isAuthenticated,
+    update: isAuthenticated,
+    delete: isAdmin,
   },
   fields: [
     // --- Identidad del bloque ---
@@ -42,6 +49,7 @@ const Blocks: CollectionConfig = {
       name: 'label',
       type: 'text',
       required: true,
+      localized: true,
       admin: {
         description: 'Nombre legible, ej: Travel Cards, Hero Split',
       },
@@ -49,6 +57,7 @@ const Blocks: CollectionConfig = {
     {
       name: 'description',
       type: 'textarea',
+      localized: true,
       admin: {
         description: 'Qué hace este bloque y cuándo usarlo',
       },
@@ -133,35 +142,24 @@ const Blocks: CollectionConfig = {
     },
 
     // --- Metadata para el CLI ---
-    {
+    ChipsField({
       name: 'dependencies',
-      type: 'array',
-      label: 'NPM dependencies',
-      admin: {
-        description: 'Dependencias que el CLI debe instalar al agregar este bloque',
+      label: { en: 'NPM Dependencies', es: 'Dependencias NPM' },
+      description: {
+        en: 'Dependencies the CLI must install when adding this block.',
+        es: 'Dependencias que el CLI debe instalar al agregar este bloque.',
       },
-      fields: [
-        {
-          name: 'package',
-          type: 'text',
-          required: true,
-          admin: {
-            placeholder: 'ej: framer-motion, lucide-react',
-          },
-        },
-      ],
-    },
-    {
+      placeholder: 'e.g: framer-motion',
+    }),
+    ChipsField({
       name: 'tags',
-      type: 'array',
-      label: 'Tags',
-      fields: [
-        {
-          name: 'tag',
-          type: 'text',
-        },
-      ],
-    },
+      label: { en: 'Tags', es: 'Tags' },
+      description: {
+        en: 'Tags to help categorize and filter this block.',
+        es: 'Tags para categorizar y filtrar este bloque.',
+      },
+      placeholder: 'e.g: animation, dark-mode',
+    }),
   ],
 }
 

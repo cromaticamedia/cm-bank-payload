@@ -14,15 +14,15 @@ export default function Footer({ locale }: FooterProps) {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="w-full flex flex-col items-center justify-center">
+    <footer className="w-full flex flex-col items-center justify-center pb-3 lg:pb-0">
       <Separator className="w-[99%]" />
-      <LayoutContainer className="justify-between p-0 lg:p-4">
-        <span className="text-[12px] font-mono text-neutral-200 dark:text-neutral-900">
+      <LayoutContainer className="justify-between px-4 py-3 lg:p-4">
+        <span className="text-[11px] font-mono text-neutral-200 dark:text-neutral-900 truncate">
           {pkg.name}{' '}
           <span className="mx-1 text-neutral-200 dark:text-neutral-900 font-bold">·</span> v
           {pkg.version}
         </span>
-        <span className="text-[12px] font-mono text-neutral-200 dark:text-neutral-900">
+        <span className="text-[11px] font-mono text-neutral-200 dark:text-neutral-900 text-right shrink-0 hidden sm:block">
           © {year} {t.rights}
         </span>
       </LayoutContainer>

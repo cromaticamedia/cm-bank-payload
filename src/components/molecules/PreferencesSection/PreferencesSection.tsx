@@ -23,6 +23,7 @@ interface PreferencesSectionProps {
   collapsed: boolean
   theme: 'light' | 'dark' | 'system'
   onApplyTheme: (t: 'light' | 'dark' | 'system') => void
+  forceOpen?: boolean
 }
 
 const AVAILABLE_LOCALES = [
@@ -36,9 +37,10 @@ export default function PreferencesSection({
   collapsed,
   theme,
   onApplyTheme,
+  forceOpen = false,
 }: PreferencesSectionProps) {
   const t = useTranslations(translations, locale)
-  const [prefsOpen, setPrefsOpen] = useState(false)
+  const [prefsOpen, setPrefsOpen] = useState(forceOpen)
   const popoverRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

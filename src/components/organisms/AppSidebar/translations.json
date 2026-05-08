@@ -7,7 +7,8 @@
     "dashboard": "Dashboard",
     "blocks": "Blocks",
     "templates": "Templates",
-    "configurator": "Config Export"
+    "configurator": "Config Export",
+    "redirectingToDashboard": "We're redirecting yourself to the admin dashboard."
   },
   "es": {
     "navigation": "Navegación",
@@ -17,6 +18,7 @@
     "dashboard": "Dashboard",
     "blocks": "Bloques",
     "templates": "Templates",
-    "configurator": "Configurador Web"
+    "configurator": "Configurador Web",
+    "redirectingToDashboard": "Te estmamos re-dirigiendo al dashboard de payload, espera un momento."
   }
 }

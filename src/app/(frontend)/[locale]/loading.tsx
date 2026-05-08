@@ -13,7 +13,7 @@ export default function Loading() {
         }}
       />
       {/* Logo */}
-      <div className="relative z-10 flex flex-col items-center gap-12">
+      <div className="relative z-10 flex flex-col items-center gap-8">
         <img
           src={logos.light}
           alt="Cromatica Media"

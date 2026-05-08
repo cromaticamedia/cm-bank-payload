@@ -96,10 +96,10 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'es') | ('en' | 'es')[];
   globals: {};
   globalsSelect: {};
-  locale: null;
+  locale: 'en' | 'es';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -320,20 +320,13 @@ export interface Block {
    */
   preview?: (number | null) | Media;
   /**
-   * Dependencias que el CLI debe instalar al agregar este bloque
+   * Dependencies the CLI must install when adding this block.
    */
-  dependencies?:
-    | {
-        package: string;
-        id?: string | null;
-      }[]
-    | null;
-  tags?:
-    | {
-        tag?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  dependencies?: string[] | null;
+  /**
+   * Tags to help categorize and filter this block.
+   */
+  tags?: string[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -633,18 +626,8 @@ export interface BlocksSelect<T extends boolean = true> {
         mockData?: T;
       };
   preview?: T;
-  dependencies?:
-    | T
-    | {
-        package?: T;
-        id?: T;
-      };
-  tags?:
-    | T
-    | {
-        tag?: T;
-        id?: T;
-      };
+  dependencies?: T;
+  tags?: T;
   updatedAt?: T;
   createdAt?: T;
 }

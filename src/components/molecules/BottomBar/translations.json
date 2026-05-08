@@ -1,0 +1,16 @@
+{
+  "en": {
+    "home": "Home",
+    "blocks": "Blocks",
+    "templates": "Templates",
+    "configurator": "Config",
+    "preferences": "Prefs"
+  },
+  "es": {
+    "home": "Inicio",
+    "blocks": "Bloques",
+    "templates": "Templates",
+    "configurator": "Config",
+    "preferences": "Ajustes"
+  }
+}

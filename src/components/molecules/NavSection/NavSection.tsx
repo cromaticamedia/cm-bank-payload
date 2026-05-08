@@ -6,6 +6,7 @@ interface NavItem {
   label: string
   href: string
   icon: React.ReactNode
+  onClick?: (e: React.MouseEvent) => void
 }
 
 interface NavSectionProps {
@@ -28,6 +29,7 @@ export default function NavSection({ label, items, collapsed, isActive }: NavSec
       {items.map((item) => (
         <Link
           key={item.href}
+          onClick={item.onClick}
           href={item.href}
           title={collapsed ? item.label : undefined}
           className={cn(

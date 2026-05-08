@@ -8,6 +8,9 @@ import sharp from 'sharp'
 import Blocks from '@/collections/Blocks'
 import Users from '@/collections/Users'
 import Medias from '@/collections/Medias'
+import { en } from '@payloadcms/translations/languages/en'
+import { es } from '@payloadcms/translations/languages/es'
+import { pt } from '@payloadcms/translations/languages/pt'
 import Templates from '@/collections/Templates'
 
 const filename = fileURLToPath(import.meta.url)
@@ -26,6 +29,18 @@ export default buildConfig({
         Icon: '@/components/payload/CompanyIcon#default',
       },
     },
+  },
+  i18n: {
+    fallbackLanguage: 'en',
+    supportedLanguages: { en, es, pt },
+  },
+  localization: {
+    locales: [
+      { label: 'English', code: 'en' },
+      { label: 'Spanish', code: 'es' },
+    ],
+    defaultLocale: 'en',
+    fallback: true,
   },
   collections: [Users, Medias, Blocks, Templates],
   editor: lexicalEditor(),
