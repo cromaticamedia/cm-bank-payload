@@ -20,9 +20,10 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     components: {
+      afterLogin: ['@/components/payload/AfterLogin#default'],
       graphics: {
-        Logo: '@/components/dashboard/CompanyLogo#default',
-        Icon: '@/components/dashboard/CompanyIcon#default',
+        Logo: '@/components/payload/CompanyLogo#default',
+        Icon: '@/components/payload/CompanyIcon#default',
       },
     },
   },

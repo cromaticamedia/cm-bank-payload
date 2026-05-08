@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 import { cn } from '@/utils/styles'
 import { themeScript, langScript } from '@/lib/scripts'
 import Script from 'next/script'
-import InitialLoading from '@/components/molecules/InitialLoading'
+// import InitialLoading from '@/components/molecules/InitialLoading'
 import { MiChroma, Microgramma, SpaceGrotesk } from '@/fonts'
 import type { Metadata } from 'next'
 import './styles.css'
@@ -73,7 +73,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         />
       </head>
       <body className="min-h-screen w-full flex flex-col justify-between items-center bg-gradient-light dark:bg-gradient-dark">
-        <Suspense fallback={<InitialLoading />}>{children}</Suspense>
+        {/* <Suspense fallback={<InitialLoading />}>{children}</Suspense> */}
+        {children}
       </body>
     </html>
   )

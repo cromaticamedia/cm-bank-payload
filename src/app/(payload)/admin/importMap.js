@@ -1,8 +1,9 @@
 import { FolderTableCell as FolderTableCell_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { FolderField as FolderField_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
-import { default as default_4ba6adc5dfe7e986cccfac586d7cc8d9 } from '@/components/dashboard/CompanyIcon'
-import { default as default_a6add3f73cab7b1e941988aa495dac0d } from '@/components/dashboard/CompanyLogo'
+import { default as default_6e42acbd7e63151add59542a23700433 } from '@/components/payload/CompanyIcon'
+import { default as default_60ce9c3132a6655fcfda33a7b5ef13f2 } from '@/components/payload/CompanyLogo'
+import { default as default_78f62096abaf99acdee074b45f838b2b } from '@/components/payload/AfterLogin'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -10,8 +11,9 @@ export const importMap = {
   "@payloadcms/next/rsc#FolderTableCell": FolderTableCell_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/next/rsc#FolderField": FolderField_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
-  "@/components/dashboard/CompanyIcon#default": default_4ba6adc5dfe7e986cccfac586d7cc8d9,
-  "@/components/dashboard/CompanyLogo#default": default_a6add3f73cab7b1e941988aa495dac0d,
+  "@/components/payload/CompanyIcon#default": default_6e42acbd7e63151add59542a23700433,
+  "@/components/payload/CompanyLogo#default": default_60ce9c3132a6655fcfda33a7b5ef13f2,
+  "@/components/payload/AfterLogin#default": default_78f62096abaf99acdee074b45f838b2b,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

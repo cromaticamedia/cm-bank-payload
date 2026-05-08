@@ -1,6 +1,6 @@
-import NavigationBar from '@/components/molecules/NavigationBar/NavigationBar'
-import Footer from '@/components/molecules/Footer/Footer'
+import AppSidebar from '@/components/organisms/AppSidebar'
 import type { LocaleCode } from '@/config/locales'
+import Footer from '@/components/molecules/Footer'
 
 type Props = {
   children: React.ReactNode
@@ -11,10 +11,12 @@ export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params
 
   return (
-    <>
-      <NavigationBar locale={locale as LocaleCode} />
-      {children}
-      <Footer locale={locale as LocaleCode} />
-    </>
+    <div className="flex w-full h-screen overflow-hidden">
+      <AppSidebar locale={locale as LocaleCode} />
+      <main className="flex-1 overflow-y-auto flex flex-col">
+        <div className="flex-1">{children}</div>
+        <Footer locale={locale as LocaleCode} />
+      </main>
+    </div>
   )
 }

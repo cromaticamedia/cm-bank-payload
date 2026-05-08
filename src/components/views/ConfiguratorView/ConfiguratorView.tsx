@@ -1,6 +1,6 @@
 import LayoutContainer from '@/components/atoms/LayoutContainer'
 import PageHeader from '@/components/molecules/PageHeader'
-import ConfiguratorForm from '@/components/organism/ConfiguratorForm'
+import ConfiguratorForm from '@/components/organisms/ConfiguratorForm'
 
 const ConfiguratorView = () => {
   return (

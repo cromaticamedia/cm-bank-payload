@@ -1,4 +1,4 @@
-import type { ConfiguratorSchema } from '@/components/organism/ConfiguratorForm/schema'
+import type { ConfiguratorSchema } from '@/components/organisms/ConfiguratorForm/schema'
 
 export const TIER_DEFAULTS: Record<string, Partial<ConfiguratorSchema>> = {
   launch: {

@@ -2,11 +2,41 @@
   "en": {
     "description": "Reusable blocks and templates repository for the Cromatica team and clients.",
     "browseBlocks": "Browse Blocks",
-    "browseTemplates": "Browse Templates"
+    "browseTemplates": "Browse Templates",
+    "tagline": "Block Bank",
+    "title": "Overview",
+    "subtitle": "Analytics and quick access to all resources.",
+    "totalBlocks": "Total Blocks",
+    "totalTemplates": "Total Templates",
+    "stable": "Stable",
+    "draft": "Draft",
+    "deprecated": "Deprecated",
+    "published": "Published",
+    "byCategory": "By Category",
+    "byStatus": "By Status",
+    "byTier": "By Tier",
+    "free": "Free",
+    "pro": "Pro",
+    "enterprise": "Enterprise"
   },
   "es": {
     "description": "Repositorio de bloques y templates reutilizables para el equipo y clientes de Cromatica.",
     "browseBlocks": "Ver Bloques",
-    "browseTemplates": "Ver Templates"
+    "browseTemplates": "Ver Templates",
+    "tagline": "Block Bank",
+    "title": "Resumen",
+    "subtitle": "Analíticas y acceso rápido a todos los recursos.",
+    "totalBlocks": "Total Bloques",
+    "totalTemplates": "Total Templates",
+    "stable": "Estable",
+    "draft": "Borrador",
+    "deprecated": "Deprecado",
+    "published": "Publicado",
+    "byCategory": "Por Categoría",
+    "byStatus": "Por Estado",
+    "byTier": "Por Tier",
+    "free": "Gratis",
+    "pro": "Pro",
+    "enterprise": "Enterprise"
   }
 }

@@ -395,7 +395,7 @@ svg {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-neutral-900 text-foreground dark:bg-neutral-200;
   }
   html {
     @apply font-mono;
@@ -511,14 +511,18 @@ svg {
 
 @utility bg-gradient-dark {
   background: linear-gradient(
-    to left,
-    color-mix(in srgb, var(--color-neutral-100) 100%, var(--color-neutral-100)),
-    color-mix(in srgb, var(--color-secondary-100) 100%, var(--color-secondary-100))
+    135deg,
+    color-mix(in srgb, var(--color-neutral-100) 95%, transparent),
+    color-mix(in srgb, var(--color-primary-100) 100%, transparent)
   );
 }
 
 @utility bg-gradient-light {
-  background: linear-gradient(to left, var(--color-neutral-1000), var(--color-secondary-900));
+  background: linear-gradient(
+    135deg,
+    var(--color-neutral-1000),
+    color-mix(in srgb, var(--color-secondary-900) 100%, transparent)
+  );
 }
 
 /* ─────────────────────────────────────────────

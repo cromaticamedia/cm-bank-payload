@@ -1,91 +1,162 @@
-import LayoutContainer from '@/components/atoms/LayoutContainer'
-import Typography from '@/components/atoms/Typography'
-import { Button } from '@/components/atoms/Button'
+import Link from 'next/link'
 import type { LocaleCode } from '@/config/locales'
 import { useTranslations } from '@/hooks/useTranslations'
+import { getAnalytics } from '@/queries/analytics'
+import LayoutContainer from '@/components/atoms/LayoutContainer'
+import PageHeader from '@/components/molecules/PageHeader/PageHeader'
 import translations from './translations.json'
-import Image from 'next/image'
-import Link from 'next/link'
 
 interface HomeProps {
   locale: LocaleCode
 }
 
-const Home = ({ locale }: HomeProps) => {
+const Home = async ({ locale }: HomeProps) => {
   const t = useTranslations(translations, locale)
+  const analytics = await getAnalytics()
 
   return (
-    <main className="w-full flex items-center min-h-screen relative overflow-hidden">
-      {/* Grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,119,220,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(0,119,220,0.04)_1px,transparent_1px)] bg-[size:64px_64px]" />
-      {/* Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary-500/5 rounded-full blur-3xl pointer-events-none" />
+    <main className="w-full flex flex-col relative overflow-hidden">
+      <LayoutContainer className="relative z-10 flex-col gap-8 py-8">
+        <PageHeader tagline={t.tagline} title={t.title} subtitle={t.subtitle} />
+        {/* ── Stat cards ─────────────────────────────────────────── */}
+        <div className="grid grid-cols-2 gap-4">
+          <StatCard
+            label={t.totalBlocks}
+            value={analytics.blocks.total}
+            href={`/${locale}/blocks`}
+          />
+          <StatCard
+            label={t.totalTemplates}
+            value={analytics.templates.total}
+            href={`/${locale}/templates`}
+          />
+        </div>
 
-      <LayoutContainer className="relative z-10 flex-col items-center gap-10 text-center justify-center">
-        <div className="flex flex-col items-center gap-10">
-          {/* Logo + Heading */}
-          <div className="flex flex-col items-center gap-6">
-            <div className="w-full flex items-center justify-center">
-              <div className="dark:hidden">
-                <Image
-                  src="/logo-light-cropped.png"
-                  alt="Cromatica"
-                  width={350}
-                  height={100}
-                  className="object-contain"
-                />
-              </div>
-              <div className="hidden dark:block">
-                <Image
-                  src="/logo-dark-cropped.png"
-                  alt="Cromatica"
-                  width={350}
-                  height={100}
-                  className="object-contain"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-6">
-              <Typography
-                text="Block Bank"
-                className="font-primary"
-                variant="label2"
-                htmlTag="h1"
-              />
-              <Typography
-                text={t.description}
-                variant="label5"
-                htmlTag="p"
-                className="text-neutral-500 dark:text-neutral-800 font-body w-full"
-              />
-            </div>
-          </div>
-
-          {/* CTAs */}
-          <div className="flex items-center gap-3">
-            <Link href={`/${locale}/blocks`}>
-              <Button
-                text={t.browseBlocks}
-                variant="primary"
-                size="md"
-                icon="ArrowRight"
-                iconRightSide
-              />
-            </Link>
-            <Link href={`/${locale}/templates`}>
-              <Button
-                text={t.browseTemplates}
-                variant="outlined"
-                size="md"
-                icon="ArrowRight"
-                iconRightSide
-              />
-            </Link>
-          </div>
+        {/* ── Blocks breakdown ───────────────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <BreakdownCard
+            title={`${t.totalBlocks} — ${t.byStatus}`}
+            items={[
+              { label: t.stable, value: analytics.blocks.byStatus.stable, color: 'bg-primary-500' },
+              { label: t.draft, value: analytics.blocks.byStatus.draft, color: 'bg-neutral-500' },
+              {
+                label: t.deprecated,
+                value: analytics.blocks.byStatus.deprecated,
+                color: 'bg-red-500',
+              },
+            ]}
+            total={analytics.blocks.total}
+          />
+          <BreakdownCard
+            title={`${t.totalTemplates} — ${t.byStatus}`}
+            items={[
+              {
+                label: t.published,
+                value: analytics.templates.byStatus.published,
+                color: 'bg-primary-500',
+              },
+              {
+                label: t.draft,
+                value: analytics.templates.byStatus.draft,
+                color: 'bg-neutral-500',
+              },
+              {
+                label: t.deprecated,
+                value: analytics.templates.byStatus.deprecated,
+                color: 'bg-red-500',
+              },
+            ]}
+            total={analytics.templates.total}
+          />
+          <BreakdownCard
+            title={`${t.totalTemplates} — ${t.byTier}`}
+            items={[
+              { label: t.free, value: analytics.templates.byTier.free, color: 'bg-neutral-400' },
+              { label: t.pro, value: analytics.templates.byTier.pro, color: 'bg-primary-500' },
+              {
+                label: t.enterprise,
+                value: analytics.templates.byTier.enterprise,
+                color: 'bg-secondary-500',
+              },
+            ]}
+            total={analytics.templates.total}
+          />
+          <BreakdownCard
+            title={`${t.totalBlocks} — ${t.byCategory}`}
+            items={Object.entries(analytics.blocks.byCategory).map(([key, value]) => ({
+              label: key,
+              value,
+              color: 'bg-primary-500',
+            }))}
+            total={analytics.blocks.total}
+          />
         </div>
       </LayoutContainer>
     </main>
+  )
+}
+
+// ── StatCard ────────────────────────────────────────────────────────────────
+function StatCard({ label, value, href }: { label: string; value: number; href: string }) {
+  return (
+    <Link
+      href={href}
+      className="flex flex-col gap-1 p-5 border border-neutral-900 dark:border-neutral-300 bg-neutral-1000 dark:bg-neutral-100/20 hover:border-primary-600 dark:hover:border-primary-600 transition-colors group"
+    >
+      <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700">
+        {label}
+      </span>
+      <span className="text-4xl font-bold text-neutral-100 dark:text-neutral-1000 group-hover:text-primary-500 transition-colors">
+        {value}
+      </span>
+    </Link>
+  )
+}
+
+// ── BreakdownCard ───────────────────────────────────────────────────────────
+function BreakdownCard({
+  title,
+  items,
+  total,
+}: {
+  title: string
+  items: { label: string; value: number; color: string }[]
+  total: number
+}) {
+  return (
+    <div className="flex flex-col gap-4 p-5 border border-neutral-900 dark:border-neutral-300 bg-neutral-1000 dark:bg-neutral-100/20">
+      <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700">
+        {title}
+      </span>
+
+      {/* Bar */}
+      <div className="flex h-1.5 w-full rounded-full overflow-hidden gap-px">
+        {items.map((item) => (
+          <div
+            key={item.label}
+            className={`${item.color} transition-all`}
+            style={{ width: total > 0 ? `${(item.value / total) * 100}%` : '0%' }}
+          />
+        ))}
+      </div>
+
+      {/* Legend */}
+      <div className="flex flex-col gap-2">
+        {items.map((item) => (
+          <div key={item.label} className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className={`w-2 h-2 rounded-full ${item.color}`} />
+              <span className="text-xs capitalize text-neutral-500 dark:text-neutral-700">
+                {item.label}
+              </span>
+            </div>
+            <span className="text-xs font-mono font-medium text-neutral-300 dark:text-neutral-800">
+              {item.value}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 

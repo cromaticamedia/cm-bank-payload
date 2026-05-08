@@ -1,0 +1,22 @@
+{
+  "en": {
+    "navigation": "Navigation",
+    "bank": "Bank",
+    "tools": "Tools",
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "blocks": "Blocks",
+    "templates": "Templates",
+    "configurator": "Web Configurator"
+  },
+  "es": {
+    "navigation": "Navegación",
+    "bank": "Bank",
+    "tools": "Herramientas",
+    "home": "Inicio",
+    "dashboard": "Dashboard",
+    "blocks": "Bloques",
+    "templates": "Templates",
+    "configurator": "Configurador Web"
+  }
+}

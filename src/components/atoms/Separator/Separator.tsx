@@ -2,10 +2,10 @@ import * as SeparatorPrimitive from '@radix-ui/react-separator'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/utils/styles'
 
-const separatorVariants = cva('shrink-0 rounded-lg', {
+const separatorVariants = cva('shrink-0 rounded-full', {
   variants: {
     variant: {
-      primary: 'bg-neutral-900 dark:bg-neutral-300',
+      primary: 'bg-neutral-800 dark:bg-neutral-400',
       secondary: 'bg-border',
     },
   },
@@ -31,7 +31,7 @@ const Separator = ({
     orientation={orientation}
     className={cn(
       separatorVariants({ variant }),
-      orientation === 'horizontal' ? 'h-0.5 w-full' : 'h-full w-px',
+      orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',
       className,
     )}
     {...props}
