@@ -58,7 +58,6 @@ export default function BottomBar({ locale, theme, onApplyTheme }: BottomBarProp
           <div className="fixed bottom-14 left-2 right-2 z-50 lg:hidden">
             <PreferencesContent
               locale={locale}
-              pathname={pathname}
               theme={theme}
               onApplyTheme={onApplyTheme}
               onClose={() => setPrefsOpen(false)}

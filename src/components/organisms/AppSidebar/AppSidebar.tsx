@@ -168,7 +168,6 @@ export default function AppSidebar({ locale, theme, onApplyTheme }: AppSidebarPr
       {/* Preferences */}
       <PreferencesSection
         locale={locale}
-        pathname={pathname}
         collapsed={collapsed}
         theme={theme}
         onApplyTheme={onApplyTheme}

@@ -6,6 +6,7 @@ import { cn } from '@/utils/styles'
 import { Separator } from '@/components/atoms/Separator'
 import { useTranslations } from '@/hooks/useTranslations'
 import translations from './translations.json'
+import { useRouter, usePathname } from 'next/navigation'
 import {
   SlidersHorizontal,
   Sun,
@@ -19,7 +20,6 @@ import type { LocaleCode } from '@/config/locales'
 
 interface PreferencesSectionProps {
   locale: LocaleCode
-  pathname: string
   collapsed: boolean
   theme: 'light' | 'dark' | 'system'
   onApplyTheme: (t: 'light' | 'dark' | 'system') => void
@@ -33,13 +33,14 @@ const AVAILABLE_LOCALES = [
 
 export default function PreferencesSection({
   locale,
-  pathname,
   collapsed,
   theme,
   onApplyTheme,
   forceOpen = false,
 }: PreferencesSectionProps) {
   const t = useTranslations(translations, locale)
+  const pathname = usePathname()
+  const router = useRouter()
   const [prefsOpen, setPrefsOpen] = useState(forceOpen)
   const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -112,20 +113,29 @@ export default function PreferencesSection({
               {AVAILABLE_LOCALES.map(({ code, label }) => {
                 const active = locale === code
                 return (
-                  <Link
+                  <button
                     key={code}
-                    href={pathname.replace(`/${locale}`, `/${code}`)}
-                    onClick={() => setPrefsOpen(false)}
+                    onClick={() => {
+                      let newPath = pathname.replace(`/${locale}`, `/${code}`)
+
+                      // Si el pathname es '/' o no contiene el locale, construye la ruta directo
+                      if (newPath === pathname || newPath === '/') {
+                        newPath = `/${code}`
+                      }
+
+                      setPrefsOpen(false)
+                      router.push(newPath)
+                    }}
                     className={cn(
-                      'flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all',
+                      'flex items-center justify-between px-3 py-2 rounded-md text-sm transition-all cursor-pointer',
                       active
-                        ? 'bg-neutral-900 dark:bg-neutral-400 text-primary-600 dark:text-primary-400 font-medium'
-                        : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-900 dark:hover:bg-neutral-300',
+                        ? 'bg-neutral-900  dark:bg-neutral-400 text-neutral-600 dark:text-neutral-900 font-medium'
+                        : 'text-neutral-400 dark:text-neutral-1000 hover:bg-neutral-900/50 dark:hover:bg-neutral-300',
                     )}
                   >
                     <span>{label}</span>
                     {active && <Check size={13} weight="bold" />}
-                  </Link>
+                  </button>
                 )
               })}
             </div>

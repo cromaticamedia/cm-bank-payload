@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { cn } from '@/utils/styles'
 import { Sun, PaletteIcon, Moon, Monitor, TranslateIcon, Check } from '@phosphor-icons/react'
 import type { LocaleCode } from '@/config/locales'
@@ -9,7 +9,6 @@ import translations from './translations.json'
 
 interface PreferencesContentProps {
   locale: LocaleCode
-  pathname: string
   theme: 'light' | 'dark' | 'system'
   onApplyTheme: (t: 'light' | 'dark' | 'system') => void
   onClose?: () => void
@@ -22,12 +21,13 @@ const AVAILABLE_LOCALES = [
 
 export default function PreferencesContent({
   locale,
-  pathname,
   theme,
   onApplyTheme,
   onClose,
 }: PreferencesContentProps) {
   const t = useTranslations(translations, locale)
+  const pathname = usePathname()
+  const router = useRouter()
 
   return (
     <div className="w-full rounded-sm border border-neutral-900 dark:border-neutral-300 bg-white dark:bg-neutral-200 shadow-xl p-4 flex flex-col gap-4">
@@ -72,20 +72,26 @@ export default function PreferencesContent({
           {AVAILABLE_LOCALES.map(({ code, label }) => {
             const active = locale === code
             return (
-              <Link
+              <button
                 key={code}
-                href={pathname.replace(`/${locale}`, `/${code}`)}
-                onClick={onClose}
+                onClick={() => {
+                  let newPath = pathname.replace(`/${locale}`, `/${code}`)
+                  if (newPath === pathname || newPath === '/') {
+                    newPath = `/${code}`
+                  }
+                  onClose?.()
+                  router.push(newPath)
+                }}
                 className={cn(
-                  'flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all',
+                  'flex items-center justify-between px-3 py-2 rounded-md text-sm transition-all cursor-pointer',
                   active
-                    ? 'bg-neutral-900 dark:bg-neutral-400 text-primary-600 dark:text-primary-400 font-medium'
-                    : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-900 dark:hover:bg-neutral-300',
+                    ? 'bg-neutral-900  dark:bg-neutral-400 text-neutral-600 dark:text-neutral-900 font-medium'
+                    : 'text-neutral-400 dark:text-neutral-1000 hover:bg-neutral-900/50 dark:hover:bg-neutral-300',
                 )}
               >
                 <span>{label}</span>
                 {active && <Check size={13} weight="bold" />}
-              </Link>
+              </button>
             )
           })}
         </div>

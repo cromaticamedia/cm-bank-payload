@@ -43,6 +43,13 @@ export default function middleware(request: NextRequest) {
   }
 
   const locale = detectLocale(request)
+
+  // Rewrite en lugar de redirect para que Vercel pueda capturar el screenshot
+  if (pathname === '/') {
+    const rewriteUrl = new URL(`/${locale}`, request.url)
+    return NextResponse.rewrite(rewriteUrl)
+  }
+
   const redirectUrl = new URL(`/${locale}${pathname}`, request.url)
   redirectUrl.search = request.nextUrl.search
   return NextResponse.redirect(redirectUrl, 307)
