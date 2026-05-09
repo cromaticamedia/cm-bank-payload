@@ -14,7 +14,8 @@ type PhosphorIconName = keyof typeof PhosphorIcons
 const ChipVariants = cva('inline-flex items-center gap-1.5 transition-colors select-none', {
   variants: {
     variant: {
-      filled: 'bg-primary/10 text-primary',
+      filled:
+        'border border-neutral-500 bg-neutral-900/40 dark:bg-neutral-200 text-neutral-100 dark:text-neutral-900',
       outlined:
         'border border-black dark:border-white bg-transparent text-foreground hover:bg-neutral-300/30',
       brand: 'bg-brand-1/10 text-brand-1',

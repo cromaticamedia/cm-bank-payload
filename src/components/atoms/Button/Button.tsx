@@ -23,7 +23,7 @@ const iconVariants = cva(
           'rounded-sm text-neutral-500 bg-primary-900 dark:bg-secondary-200 hover:bg-neutral-400 hover:text-white hover:dark:bg-primary-900 shadow-xs dark:text-white hover:dark:text-neutral-400',
         secondary: '',
         outlined:
-          'text-neutral-200 bg-neutral-1000 border-neutral-900 border-1  hover:text-neutral-100 hover:bg-neutral-900 dark:border-neutral-700 dark:bg-neutral-200 dark:text-neutral-700 hover:dark:bg-neutral-400 hover:scale-105 transition-all',
+          'text-neutral-200 bg-neutral-1000 border-neutral-700 border-1  hover:text-neutral-100 hover:bg-neutral-900 dark:border-neutral-700 dark:bg-neutral-200 dark:text-neutral-700 hover:dark:bg-neutral-400 hover:scale-105 transition-all',
         link: '',
       },
     },

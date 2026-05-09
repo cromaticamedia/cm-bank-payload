@@ -97,13 +97,13 @@ export default function AppSidebar({ locale, theme, onApplyTheme }: AppSidebarPr
     <aside
       className={cn(
         'hidden lg:flex relative flex-col items-center h-screen shadow-sm border-r border-neutral-900 dark:border-neutral-300 bg-neutral-1000 dark:bg-neutral-200 transition-all duration-300 ease-in-out shrink-0 px-2 gap-4',
-        collapsed ? 'w-[60px]' : 'w-[220px]',
+        collapsed ? 'w-[60px]' : 'w-[220px] px-3',
       )}
     >
       {/* Toggle */}
       <button
         onClick={toggleCollapsed}
-        className="absolute -right-6 top-6 z-10 flex h-6 w-6 items-center justify-center rounded-tr-sm rounded-br-sm border border-neutral-900 dark:border-neutral-400 bg-white dark:bg-neutral-200 text-neutral-600 dark:text-neutral-700 hover:text-neutral-200 dark:hover:text-white shadow-xs transition-colors cursor-pointer"
+        className="absolute -right-6 top-13 z-10 flex h-6 w-6 items-center justify-center rounded-tr-sm rounded-br-sm border border-neutral-900 dark:border-neutral-400 bg-white dark:bg-neutral-200 text-neutral-600 dark:text-neutral-700 hover:text-neutral-200 dark:hover:text-white shadow-xs transition-colors cursor-pointer"
         aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
         {collapsed ? (

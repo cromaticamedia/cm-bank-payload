@@ -16,7 +16,7 @@ export default function Footer({ locale }: FooterProps) {
   return (
     <footer className="w-full flex flex-col items-center justify-center pb-3 lg:pb-0">
       <Separator className="w-[99%]" />
-      <LayoutContainer className="justify-between px-4 py-3 lg:p-4">
+      <LayoutContainer className="flex-row justify-between">
         <span className="text-[11px] font-mono text-neutral-200 dark:text-neutral-900 truncate">
           {pkg.name}{' '}
           <span className="mx-1 text-neutral-200 dark:text-neutral-900 font-bold">·</span> v

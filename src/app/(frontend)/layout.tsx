@@ -1,7 +1,5 @@
-import React, { Suspense } from 'react'
 import { cn } from '@/utils/styles'
 import { themeScript, langScript } from '@/lib/scripts'
-import Script from 'next/script'
 import { Toaster } from 'sonner'
 import { MiChroma, Microgramma, SpaceGrotesk } from '@/fonts'
 import type { Metadata } from 'next'
@@ -24,14 +22,7 @@ export const metadata: Metadata = {
     siteName: 'Cromatica Block Bank',
     title: 'Cromatica Block Bank',
     description: 'Reusable blocks and templates repository for the Cromatica team and clients.',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Cromatica Block Bank',
-      },
-    ],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Cromatica Block Bank' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -45,10 +36,7 @@ export const metadata: Metadata = {
       { url: '/c-dark.png', media: '(prefers-color-scheme: dark)' },
     ],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
@@ -62,19 +50,20 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       suppressHydrationWarning
     >
       <head>
-        <Script
+        <script
           id="theme-script"
-          strategy="beforeInteractive"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: themeScript }}
+          suppressHydrationWarning
         />
-        <Script
+        <script
           id="locale-script"
-          strategy="beforeInteractive"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: langScript }}
+          suppressHydrationWarning
         />
       </head>
       <body className="min-h-screen w-full flex flex-col justify-between items-center bg-gradient-light dark:bg-gradient-dark">
-        {/* <Suspense fallback={<InitialLoading />}>{children}</Suspense> */}
         {children}
         <Toaster position="bottom-right" richColors />
       </body>

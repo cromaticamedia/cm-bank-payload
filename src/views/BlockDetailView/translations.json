@@ -2,7 +2,7 @@
   "en": {
     "tagline": "Block Bank",
     "backToBlocks": "Back to Blocks",
-    "createdBy": "Created by",
+    "createdBy": "Created by:",
     "install": "Install command",
     "copied": "Copied!",
     "copy": "Copy",
@@ -19,7 +19,7 @@
   "es": {
     "tagline": "Block Bank",
     "backToBlocks": "Volver a Bloques",
-    "createdBy": "Creado por",
+    "createdBy": "Creado por:",
     "install": "Comando de instalación",
     "copied": "¡Copiado!",
     "copy": "Copiar",

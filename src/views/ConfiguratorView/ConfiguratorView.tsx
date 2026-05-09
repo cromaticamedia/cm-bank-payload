@@ -13,8 +13,8 @@ const ConfiguratorView = ({ locale }: ConfiguratorViewProps) => {
   const t = useTranslations(translations, locale)
 
   return (
-    <main className="w-full">
-      <LayoutContainer className="flex-col gap-6">
+    <main>
+      <LayoutContainer>
         <PageHeader tagline={t.tagline} title={t.title} subtitle={t.subtitle} />
         <ConfiguratorForm locale={locale} />
       </LayoutContainer>

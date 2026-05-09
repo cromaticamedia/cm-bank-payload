@@ -1,25 +1,26 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { toast } from 'sonner'
 import { useState } from 'react'
+import type { LocaleCode } from '@/config/locales'
 import Typography from '@/components/atoms/Typography'
 import { CardHeader, CardBody, CardFooter } from '@/components/atoms/Card'
 import { Button } from '@/components/atoms/Button'
+import NavLink from '@/components/atoms/NavLink/NavLink'
 import type { Media } from '@/payload-types'
 import type { queryBlocksPaginated } from '@/queries/blocks'
 import { Separator } from '@/components/atoms/Separator'
 import { cn } from '@/utils/styles'
 import { useTranslations } from '@/hooks/useTranslations'
 import translations from './translations.json'
+import { Chip } from '@/components/atoms/Chip'
 
 type Block = Awaited<ReturnType<typeof queryBlocksPaginated>>['docs'][number]
 
 interface BlockCardProps {
   block: Block
-  locale: string
-  noPreviewLabel: string
+  locale: LocaleCode
 }
 
 const STATUS_STYLES: Record<string, string> = {
@@ -31,8 +32,8 @@ const STATUS_STYLES: Record<string, string> = {
     'bg-error-500/10 text-error-400 border-error-400 dark:bg-error-500/15 dark:text-error-500 dark:border-error-500',
 }
 
-export default function BlockCard({ block, locale, noPreviewLabel }: BlockCardProps) {
-  const t = useTranslations(translations, locale as 'en' | 'es')
+export default function BlockCard({ block, locale }: BlockCardProps) {
+  const t = useTranslations(translations, locale)
   const preview = block.preview as Media | null
   const installCommand = `npx cm-template-website add block ${block.name}`
   const [imageLoaded, setImageLoaded] = useState(false)
@@ -45,28 +46,23 @@ export default function BlockCard({ block, locale, noPreviewLabel }: BlockCardPr
   }
 
   return (
-    <Link
+    <NavLink
       href={`/${locale}/blocks/${block.name}`}
       className="p-3 group flex flex-col gap-3 bg-neutral-1000 dark:bg-neutral-200/50 border border-neutral-800 dark:border-neutral-700/50 hover:border-primary-500/50 hover:bg-neutral-900/20 dark:hover:bg-neutral-200 transition-all duration-200 shadow-xs hover:scale-105 cursor-pointer"
     >
       {/* Header — category + status */}
       <CardHeader className="w-full px-0 py-0">
-        <span className="text-[12px] font-mono px-2 py-0.5 border bg-neutral-900/20 dark:bg-neutral-300 text-neutral-200 dark:text-neutral-900 border-neutral-400 dark:border-neutral-600/50 group-hover:border-primary-500/30 transition-colors">
-          {block.category as string}
-        </span>
-        <span
-          className={`text-[12px] font-mono px-2 py-0.5 border ${STATUS_STYLES[block.status as string] ?? STATUS_STYLES.draft}`}
-        >
-          {block.status as string}
-        </span>
+        <Chip label={block.category as string} />
+        <Chip
+          label={block.status as string}
+          className={STATUS_STYLES[block.status as string] ?? STATUS_STYLES.draft}
+        />
       </CardHeader>
 
       {/* Body — label + description */}
       <CardBody className="py-0 px-0 w-full gap-3">
-        {/* Preview */}
         {preview?.url ? (
           <div className="relative w-full h-48 dark:bg-neutral-400/30 overflow-hidden">
-            {/* Spinner */}
             {!imageLoaded && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-6 h-6 border-2 border-neutral-600 border-t-primary-500 rounded-full animate-spin" />
@@ -87,7 +83,7 @@ export default function BlockCard({ block, locale, noPreviewLabel }: BlockCardPr
           </div>
         ) : (
           <div className="w-full aspect-video flex items-center justify-center bg-neutral-800 dark:bg-neutral-400/30">
-            <Typography text={noPreviewLabel} variant="p" className="text-neutral-600 font-mono" />
+            <Typography text={t.noPreview} variant="p" className="text-neutral-600 font-mono" />
           </div>
         )}
         <Typography
@@ -102,7 +98,6 @@ export default function BlockCard({ block, locale, noPreviewLabel }: BlockCardPr
         )}
       </CardBody>
       <Separator />
-      {/* Footer — install command + copy button */}
       <CardFooter className="py-0 px-0 w-full justify-between">
         <Typography
           text={installCommand}
@@ -118,6 +113,6 @@ export default function BlockCard({ block, locale, noPreviewLabel }: BlockCardPr
           className="text-neutral-400 hover:text-primary-400 transition-colors shrink-0 hover:bg-neutral-300 hover:text-white rounded-sm"
         />
       </CardFooter>
-    </Link>
+    </NavLink>
   )
 }

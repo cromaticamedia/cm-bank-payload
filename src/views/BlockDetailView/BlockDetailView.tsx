@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -9,14 +8,14 @@ import { useTranslations } from '@/hooks/useTranslations'
 import LayoutContainer from '@/components/atoms/LayoutContainer'
 import Typography from '@/components/atoms/Typography'
 import { Button } from '@/components/atoms/Button'
-import { Chip } from '@/components/atoms/Chip'
 import CodeViewer from '@/components/molecules/CodeViewer'
 import PageHeader from '@/components/molecules/PageHeader'
 import type { LocaleCode } from '@/config/locales'
 import type { Media, User } from '@/payload-types'
 import type { queryBlockByName } from '@/queries/blocks'
 import translations from './translations.json'
-import { ArrowLeftIcon } from '@phosphor-icons/react'
+
+import { Chip } from '@/components/atoms/Chip'
 
 type Block = NonNullable<Awaited<ReturnType<typeof queryBlockByName>>>
 
@@ -26,9 +25,12 @@ interface BlockDetailViewProps {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  stable: 'bg-success-500/10 text-success-400 border-success-400',
-  draft: 'bg-warning-500/10 text-warning-400 border-warning-400',
-  deprecated: 'bg-error-500/10 text-error-400 border-error-400',
+  stable:
+    'bg-success-500/10 text-success-400 border-success-400 dark:bg-success-500/15 dark:text-success-500 dark:border-success-300',
+  draft:
+    'bg-warning-500/10 text-warning-400 border-warning-400 dark:bg-warning-500/15 dark:text-warning-500 dark:border-warning-500',
+  deprecated:
+    'bg-error-500/10 text-error-400 border-error-400 dark:bg-error-500/15 dark:text-error-500 dark:border-error-500',
 }
 
 const TABS = ['component', 'schema', 'mock'] as const
@@ -37,22 +39,16 @@ type Tab = (typeof TABS)[number]
 export default function BlockDetailView({ block, locale }: BlockDetailViewProps) {
   const t = useTranslations(translations, locale)
   const [activeTab, setActiveTab] = useState<Tab>('component')
-  const [copied, setCopied] = useState(false)
+  const [copiedInstall, setCopiedInstall] = useState(false)
+  const [copiedTab, setCopiedTab] = useState(false)
 
   const preview = block.preview as Media | null
   const installCommand = `npx cm-template-website add block ${block.name}`
 
   const authorName =
     block.authorType === 'registered'
-      ? ((block.author as User)?.email ?? '—')
+      ? `${(block.author as User)?.firstName} ${(block.author as User)?.lastName}` || '-'
       : (block.authorName ?? '—')
-
-  const handleCopy = async (text: string) => {
-    await navigator.clipboard.writeText(text)
-    setCopied(true)
-    toast.success(t.copied, { description: text })
-    setTimeout(() => setCopied(false), 2000)
-  }
 
   const tabContent: Record<Tab, string> = {
     component: (block.files?.componentTsx as string) ?? '',
@@ -60,116 +56,128 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
     mock: (block.files?.mockData as string) ?? '',
   }
 
-  return (
-    <main className="w-full flex flex-col">
-      <LayoutContainer className="flex-col gap-8 py-8">
-        {/* Back */}
-        <Link
-          href={`/${locale}/blocks`}
-          className="flex items-center gap-1.5 text-neutral-500 hover:text-primary-500 transition-colors text-sm font-mono w-fit"
-        >
-          <ArrowLeftIcon size={14} weight="bold" />
-          {t.backToBlocks}
-        </Link>
+  const handleCopyInstall = async () => {
+    await navigator.clipboard.writeText(installCommand)
+    setCopiedInstall(true)
+    toast.success(t.copied, { description: installCommand })
+    setTimeout(() => setCopiedInstall(false), 2000)
+  }
 
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-          <PageHeader
-            tagline={t.tagline}
-            title={block.label as string}
-            subtitle={block.description as string}
-          />
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="text-[12px] font-mono px-2 py-0.5 border border-neutral-700 text-neutral-400">
-              {block.category as string}
-            </span>
-            <span
-              className={`text-[12px] font-mono px-2 py-0.5 border ${STATUS_STYLES[block.status as string] ?? STATUS_STYLES.draft}`}
-            >
-              {block.status as string}
-            </span>
+  const handleCopyTab = async () => {
+    await navigator.clipboard.writeText(tabContent[activeTab])
+    setCopiedTab(true)
+    toast.success(t.copied, { description: tabContent[activeTab].slice(0, 50) + '...' })
+    setTimeout(() => setCopiedTab(false), 2000)
+  }
+
+  return (
+    <main>
+      <LayoutContainer>
+        <PageHeader
+          tagline={t.tagline}
+          getBackLink={`/${locale}/blocks`}
+          getBackLabel={t.backToBlocks}
+          title={block.label as string}
+          subtitle={block.description as string}
+        >
+          <div className="flex items-center gap-2">
+            <Chip label={block.category as string} />
+            <Chip
+              label={block.status as string}
+              className={STATUS_STYLES[block.status as string] ?? STATUS_STYLES.draft}
+            />
           </div>
+        </PageHeader>
+        <div className="flex items-center gap-2">
+          <Typography
+            text={t.createdBy}
+            className="text-neutral-400 dark:text-neutral-900 text-[13px]"
+          />
+          <Typography
+            text={authorName}
+            className="text-neutral-200 dark:text-neutral-1000 text-[14px] font-bold"
+          />
         </div>
 
-        {/* Preview */}
+        {/* ── Preview ──────────────────────────────────────────────── */}
         {preview?.url && (
-          <div className="w-full rounded-sm overflow-hidden border border-neutral-800 dark:border-neutral-300">
+          <div className="w-full overflow-hidden flex items-center justify-center">
             <Image
               src={preview.url}
               alt={block.label as string}
-              width={1200}
-              height={675}
-              className="w-full object-cover"
+              width={700}
+              height={400}
+              className="w-fit max-w-[700px]"
               priority
             />
           </div>
         )}
 
-        {/* Meta row — author + install command */}
+        {/* ── Meta — author + install command ──────────────────────── */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border border-neutral-800 dark:border-neutral-300 bg-neutral-900/20 dark:bg-neutral-200/50">
-          {/* Author */}
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700">
-              {t.createdBy}
-            </span>
-            <span className="text-sm font-mono text-neutral-200 dark:text-neutral-900">
-              {authorName}
-            </span>
-          </div>
-
-          {/* Install command */}
-          <div className="flex items-center gap-2">
-            <code className="text-[11px] font-mono text-neutral-400 dark:text-neutral-700 truncate max-w-[280px]">
-              {installCommand}
-            </code>
-            <Button
-              isIcon
-              icon={copied ? 'CheckIcon' : 'CopyIcon'}
-              iconVariant="none"
-              iconSize="sm"
-              onClick={() => handleCopy(installCommand)}
-              className="text-neutral-400 hover:text-primary-400 transition-colors shrink-0"
-            />
-          </div>
+          <Typography
+            text={installCommand}
+            variant="p"
+            htmlTag="span"
+            className="font-mono text-neutral-400 dark:text-neutral-700 truncate max-w-[280px]"
+          />
+          <Button
+            isIcon
+            icon={copiedInstall ? 'CheckIcon' : 'CopyIcon'}
+            iconVariant="none"
+            iconSize="sm"
+            onClick={handleCopyInstall}
+            className="text-neutral-400 dark:text-neutral-600 hover:text-primary-400 dark:hover:text-primary-500 transition-colors shrink-0"
+          />
         </div>
 
-        {/* Dependencies + Tags */}
-        <div className="flex flex-col md:flex-row gap-6">
+        {/* ── Dependencies + Tags ───────────────────────────────────── */}
+        <div className="flex flex-col md:flex-row gap-8">
           <div className="flex flex-col gap-2">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700">
-              {t.dependencies}
-            </span>
+            <Typography
+              text={t.dependencies}
+              variant="p"
+              className="font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700"
+            />
             <div className="flex flex-wrap gap-2">
               {block.dependencies && (block.dependencies as string[]).length > 0 ? (
                 (block.dependencies as string[]).map((dep) => (
                   <Chip key={dep} label={dep} variant="outlined" className="font-mono text-xs" />
                 ))
               ) : (
-                <span className="text-xs text-neutral-600 font-mono">{t.noDependencies}</span>
+                <Typography
+                  text={t.noDependencies}
+                  variant="p"
+                  className="font-mono text-neutral-600 dark:text-neutral-500"
+                />
               )}
             </div>
           </div>
-
           <div className="flex flex-col gap-2">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700">
-              {t.tags}
-            </span>
+            <Typography
+              text={t.tags}
+              variant="p"
+              className="font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700"
+            />
             <div className="flex flex-wrap gap-2">
               {block.tags && (block.tags as string[]).length > 0 ? (
                 (block.tags as string[]).map((tag) => (
                   <Chip key={tag} label={tag} variant="filled" className="font-mono text-xs" />
                 ))
               ) : (
-                <span className="text-xs text-neutral-600 font-mono">{t.noTags}</span>
+                <Typography
+                  text={t.noTags}
+                  variant="p"
+                  className="font-mono text-neutral-600 dark:text-neutral-500"
+                />
               )}
             </div>
           </div>
         </div>
 
-        {/* Code tabs */}
-        <div className="flex flex-col gap-0">
-          {/* Tab headers */}
-          <div className="flex border-b border-neutral-800 dark:border-neutral-300">
+        {/* ── Code tabs ────────────────────────────────────────────── */}
+        <div className="flex flex-col">
+          <div className="flex items-center border-b border-neutral-800 dark:border-neutral-300">
             {TABS.map((tab) => (
               <button
                 key={tab}
@@ -178,7 +186,7 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
                   'px-4 py-2 text-xs font-mono transition-colors cursor-pointer border-b-2 -mb-px',
                   activeTab === tab
                     ? 'border-primary-500 text-primary-500'
-                    : 'border-transparent text-neutral-500 hover:text-neutral-200 dark:hover:text-neutral-900',
+                    : 'border-transparent text-neutral-500 dark:text-neutral-600 hover:text-neutral-100 dark:hover:text-neutral-900',
                 )}
               >
                 {t.tabs[tab]}
@@ -186,14 +194,12 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
             ))}
             <div className="flex-1" />
             <button
-              onClick={() => handleCopy(tabContent[activeTab])}
-              className="px-3 py-2 text-xs font-mono text-neutral-500 hover:text-primary-500 transition-colors cursor-pointer flex items-center gap-1.5"
+              onClick={handleCopyTab}
+              className="flex items-center gap-1.5 px-3 py-2 text-xs font-mono text-neutral-500 dark:text-neutral-600 hover:text-primary-500 dark:hover:text-primary-500 transition-colors cursor-pointer"
             >
-              {copied ? t.copied : t.copy}
+              {copiedTab ? t.copied : t.copy}
             </button>
           </div>
-
-          {/* Tab content */}
           <CodeViewer code={tabContent[activeTab]} />
         </div>
       </LayoutContainer>

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import NavLink from '@/components/atoms/NavLink'
 import { useRouter } from 'next/navigation'
 import LayoutContainer from '@/components/atoms/LayoutContainer'
 import Typography from '@/components/atoms/Typography'
@@ -36,15 +37,14 @@ const BlocksView = ({ locale, data, currentPage }: BlocksViewProps) => {
   const subtitle = `${totalDocs} ${totalDocs === 1 ? t.subtitle_one : t.subtitle_many}`
 
   return (
-    <main className="w-full">
-      <LayoutContainer className="flex-col gap-6">
+    <main>
+      <LayoutContainer>
         {/* ── Header + Actions ─────────────────────────────────── */}
-        <div className="flex items-start justify-between gap-4">
-          <PageHeader tagline={t.eyebrow} title={t.title} subtitle={subtitle} />
-          <div className="pt-5 shrink-0">
+        <div className="flex items-start justify-between gap-4 ">
+          <PageHeader tagline={t.eyebrow} title={t.title} subtitle={subtitle}>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button iconVariant="outlined" iconSize="md" icon="DotsThreeVerticalIcon" isIcon />
+                <Button iconVariant="outlined" iconSize="sm" icon="DotsThreeVerticalIcon" isIcon />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>{t.actions}</DropdownMenuLabel>
@@ -72,11 +72,10 @@ const BlocksView = ({ locale, data, currentPage }: BlocksViewProps) => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
+          </PageHeader>
         </div>
 
         {blocks.length === 0 ? (
-          // ── Empty state ──────────────────────────────────────────
           <div className="flex flex-col items-center justify-center py-32 gap-6 text-center">
             <div className="flex items-center justify-center w-30 h-30 bg-neutral-900 dark:bg-neutral-300/50 border border-neutral-800 dark:border-neutral-700/50 text-6xl">
               📦
@@ -96,19 +95,12 @@ const BlocksView = ({ locale, data, currentPage }: BlocksViewProps) => {
           </div>
         ) : (
           <>
-            {/* ── Grid ──────────────────────────────────────────── */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
               {blocks.map((block) => (
-                <BlockCard
-                  key={block.id}
-                  block={block}
-                  locale={locale}
-                  noPreviewLabel={t.noPreview}
-                />
+                <BlockCard key={block.id} block={block} locale={locale} />
               ))}
             </div>
 
-            {/* ── Pagination ────────────────────────────────────── */}
             {totalDocs > 0 && (
               <div className="flex items-center justify-center gap-10 pb-4">
                 <PaginationLink
@@ -138,7 +130,6 @@ const BlocksView = ({ locale, data, currentPage }: BlocksViewProps) => {
   )
 }
 
-// ── PaginationLink ────────────────────────────────────────────────────────────
 function PaginationLink({
   href,
   label,
@@ -159,7 +150,7 @@ function PaginationLink({
   }
 
   return (
-    <Link
+    <NavLink
       href={href}
       className={`w-8 h-8 flex items-center justify-center rounded-sm text-sm font-mono transition-colors ${
         active
@@ -168,7 +159,7 @@ function PaginationLink({
       }`}
     >
       {label}
-    </Link>
+    </NavLink>
   )
 }
 
