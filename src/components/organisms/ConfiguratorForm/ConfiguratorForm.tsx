@@ -171,6 +171,23 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
     toast.success(t.output.generated, { description: 'project.config.ts' })
   }
 
+  const handleNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const raw = e.target.value
+      const formatted = raw
+        .replace(/([a-z])([A-Z])/g, '$1-$2') // camelCase → kebab
+        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2') // ABCDef → ABC-Def
+        .replace(/[\s_]+/g, '-') // spaces y underscores → guión
+        .replace(/[^a-zA-Z0-9-]/g, '') // elimina caracteres especiales
+        .toLowerCase()
+        .replace(/-+/g, '-') // múltiples guiones → uno solo
+        .replace(/^-|-$/g, '') // elimina guiones al inicio/fin
+
+      methods.setValue('name', formatted, { shouldValidate: true })
+    },
+    [methods],
+  )
+
   const handleCopy = useCallback(async () => {
     if (!generatedConfig) return
     await navigator.clipboard.writeText(generatedConfig)
@@ -197,6 +214,7 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
               label={t.project.nameLabel}
               description={t.project.nameDescription}
               placeholder={t.project.namePlaceholder}
+              onChange={handleNameChange}
             />
             <RadioGroup
               name="tier"
