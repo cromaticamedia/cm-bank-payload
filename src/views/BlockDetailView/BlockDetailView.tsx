@@ -40,7 +40,10 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
   const t = useTranslations(translations, locale)
   const [activeTab, setActiveTab] = useState<Tab>('component')
   const [copiedInstall, setCopiedInstall] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
   const [copiedTab, setCopiedTab] = useState(false)
+
+  console.log('block', block)
 
   const preview = block.preview as Media | null
   const installCommand = `npx cm-template-website add block ${block.name}`
@@ -49,6 +52,15 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
     block.authorType === 'registered'
       ? `${(block.author as User)?.firstName} ${(block.author as User)?.lastName}` || '-'
       : (block.authorName ?? '—')
+
+  const createdAt = new Date(block.createdAt).toLocaleDateString(
+    locale === 'es' ? 'es-PE' : 'en-US',
+    {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    },
+  )
 
   const tabContent: Record<Tab, string> = {
     component: (block.files?.componentTsx as string) ?? '',
@@ -88,27 +100,48 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
             />
           </div>
         </PageHeader>
-        <div className="flex items-center gap-2">
-          <Typography
-            text={t.createdBy}
-            className="text-neutral-400 dark:text-neutral-900 text-[13px]"
-          />
-          <Typography
-            text={authorName}
-            className="text-neutral-200 dark:text-neutral-1000 text-[14px] font-bold"
-          />
+        <div className="w-full flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Typography
+              text={t.createdBy}
+              className="text-neutral-400 dark:text-neutral-900 text-[13px]"
+            />
+            <Typography
+              text={authorName}
+              className="text-neutral-200 dark:text-neutral-1000 text-[14px] font-bold"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <Typography
+              text={t.createdOn}
+              className="text-neutral-400 dark:text-neutral-900 text-[13px]"
+            />
+            <Typography
+              text={createdAt}
+              className="text-neutral-200 dark:text-neutral-1000 text-[14px] font-bold"
+            />
+          </div>
         </div>
 
         {/* ── Preview ──────────────────────────────────────────────── */}
         {preview?.url && (
-          <div className="w-full overflow-hidden flex items-center justify-center">
+          <div className="relative w-full overflow-hidden flex items-center justify-center">
+            {!imageLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-6 h-6 border-2 border-neutral-600 border-t-primary-500 rounded-full animate-spin" />
+              </div>
+            )}
             <Image
               src={preview.url}
               alt={block.label as string}
               width={700}
               height={400}
-              className="w-fit max-w-[700px]"
               priority
+              onLoad={() => setImageLoaded(true)}
+              className={cn(
+                'w-fit max-w-[700px] transition-opacity duration-300',
+                imageLoaded ? 'opacity-100' : 'opacity-0',
+              )}
             />
           </div>
         )}
