@@ -6,9 +6,10 @@ import { codeToHtml } from 'shiki'
 interface CodeViewerProps {
   code: string
   language?: string
+  codeHeader?: string
 }
 
-const CodeViewer = ({ code, language = 'typescript' }: CodeViewerProps) => {
+const CodeViewer = ({ code, language = 'typescript', codeHeader }: CodeViewerProps) => {
   const [lightHtml, setLightHtml] = useState<string>('')
   const [darkHtml, setDarkHtml] = useState<string>('')
 
@@ -70,7 +71,7 @@ const CodeViewer = ({ code, language = 'typescript' }: CodeViewerProps) => {
           <span className="w-3 h-3 rounded-full bg-green-500/70" />
         </div>
         <span className="text-neutral-400 dark:text-neutral-900 text-xs font-mono ml-2">
-          src/config/project.config.ts
+          {codeHeader}
         </span>
       </div>
 

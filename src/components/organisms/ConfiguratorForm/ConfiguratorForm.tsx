@@ -3,7 +3,7 @@
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState, useMemo, useCallback } from 'react'
-import { configuratorSchema, type ConfiguratorSchema } from './schema'
+import { type ConfiguratorSchema } from './schema'
 import { AVAILABLE_LOCALES } from '@/catalogs/locales'
 import { TIER_DEFAULTS } from '@/catalogs/websites-tier-defaults'
 import { generateProjectConfig } from './generate-config'
@@ -17,6 +17,7 @@ import { Button } from '@/components/atoms/Button'
 import Typography from '@/components/atoms/Typography'
 import translations from './translations.json'
 import type { LocaleCode } from '@/config/locales'
+import { buildConfiguratorSchema } from './schema'
 import { toast } from 'sonner'
 
 interface ConfiguratorFormProps {
@@ -29,13 +30,14 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
   const [copied, setCopied] = useState(false)
 
   const methods = useForm<ConfiguratorSchema>({
-    resolver: zodResolver(configuratorSchema),
+    resolver: zodResolver(buildConfiguratorSchema(locale)),
     defaultValues: {
       name: '',
       tier: 'launch',
       locales: ['en'],
       defaultLocale: 'en',
       allowDarkMode: false,
+      layoutWidth: 'w-[95%] md:w-9/10 max-w-layout-lg',
       selectedNavigation: 'nav-simple',
       selectedFooter: 'footer-simple',
       allowPostsCollection: false,
@@ -56,26 +58,33 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
   const crmProvider = watch('crmProvider')
 
   const tierOptions = useMemo(
-    () => [
-      {
-        label: t.project.tiers.launch.label,
-        value: 'launch',
-        description: t.project.tiers.launch.description,
-        icon: 'RocketLaunchIcon' as const,
-      },
-      {
-        label: t.project.tiers.growth.label,
-        value: 'growth',
-        description: t.project.tiers.growth.description,
-        icon: 'TrendUpIcon' as const,
-      },
-      {
-        label: t.project.tiers.scale.label,
-        value: 'scale',
-        description: t.project.tiers.scale.description,
-        icon: 'ChartLineUpIcon' as const,
-      },
-    ],
+    () =>
+      [
+        {
+          label: t.project.tiers.launch.label,
+          value: 'launch',
+          description: t.project.tiers.launch.description,
+          icon: 'RocketLaunchIcon' as const,
+        },
+        {
+          label: t.project.tiers.growth.label,
+          value: 'growth',
+          description: t.project.tiers.growth.description,
+          icon: 'TrendUpIcon' as const,
+        },
+        {
+          label: t.project.tiers.scale.label,
+          value: 'scale',
+          description: t.project.tiers.scale.description,
+          icon: 'ChartLineUpIcon' as const,
+        },
+        {
+          label: t.project.tiers.custom.label,
+          value: 'custom',
+          description: t.project.tiers.custom.description,
+          icon: 'GameControllerIcon' as const,
+        },
+      ].filter(Boolean),
     [t],
   )
 
@@ -110,6 +119,36 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
         value: 'footer-mega',
         description: t.menus.footers.mega.description,
         icon: 'RowsIcon' as const,
+      },
+    ],
+    [t],
+  )
+
+  const layoutOptions = useMemo(
+    () => [
+      {
+        label: t.layout.widths.sm.label,
+        value: 'w-[95%] md:w-9/10 max-w-layout-sm',
+        description: t.layout.widths.sm.description,
+        icon: 'FrameCorners' as const,
+      },
+      {
+        label: t.layout.widths.md.label,
+        value: 'w-[95%] md:w-9/10 max-w-layout-md',
+        description: t.layout.widths.md.description,
+        icon: 'FrameCorners' as const,
+      },
+      {
+        label: t.layout.widths.lg.label,
+        value: 'w-[95%] md:w-9/10 max-w-layout-lg',
+        description: t.layout.widths.lg.description,
+        icon: 'FrameCorners' as const,
+      },
+      {
+        label: t.layout.widths.xl.label,
+        value: 'w-[95%] md:w-9/10 max-w-layout-xl',
+        description: t.layout.widths.xl.description,
+        icon: 'FrameCorners' as const,
       },
     ],
     [t],
@@ -171,23 +210,6 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
     toast.success(t.output.generated, { description: 'project.config.ts' })
   }
 
-  const handleNameChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const raw = e.target.value
-      const formatted = raw
-        .replace(/([a-z])([A-Z])/g, '$1-$2') // camelCase → kebab
-        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2') // ABCDef → ABC-Def
-        .replace(/[\s_]+/g, '-') // spaces y underscores → guión
-        .replace(/[^a-zA-Z0-9-]/g, '') // elimina caracteres especiales
-        .toLowerCase()
-        .replace(/-+/g, '-') // múltiples guiones → uno solo
-        .replace(/^-|-$/g, '') // elimina guiones al inicio/fin
-
-      methods.setValue('name', formatted, { shouldValidate: true })
-    },
-    [methods],
-  )
-
   const handleCopy = useCallback(async () => {
     if (!generatedConfig) return
     await navigator.clipboard.writeText(generatedConfig)
@@ -214,7 +236,6 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
               label={t.project.nameLabel}
               description={t.project.nameDescription}
               placeholder={t.project.namePlaceholder}
-              onChange={handleNameChange}
             />
             <RadioGroup
               name="tier"
@@ -237,20 +258,21 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
                 variant="label6"
                 className="font-medium"
               />
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                 {AVAILABLE_LOCALES.map(({ code, label }) => {
                   const isActive = locales?.includes(code as never)
                   return (
                     <div
                       key={code}
                       onClick={() => handleLocaleToggle(code)}
-                      className="cursor-pointer"
+                      className="cursor-pointer w-full"
                     >
                       <Chip
                         label={label}
                         variant={isActive ? 'filled' : 'outlined'}
                         dismissible={isActive && (locales?.length ?? 0) > 1}
                         onDismiss={() => handleLocaleToggle(code)}
+                        className="w-full justify-center"
                       />
                     </div>
                   )
@@ -288,6 +310,16 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
               label={t.theme.darkModeLabel}
               description={t.theme.darkModeDescription}
             />
+          </section>
+
+          {/* Layout */}
+          <section className="flex flex-col gap-4">
+            <Typography
+              text={t.sections.layout}
+              variant="span"
+              className="text-primary-500 font-mono uppercase tracking-widest"
+            />
+            <RadioGroup name="layoutWidth" label={t.layout.widthLabel} options={layoutOptions} />
           </section>
 
           {/* Menus */}
@@ -389,7 +421,7 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
                 size="sm"
               />
             </div>
-            <CodeViewer code={generatedConfig} />
+            <CodeViewer codeHeader="src/config/project.config.ts" code={generatedConfig} />
           </div>
         )}
       </div>

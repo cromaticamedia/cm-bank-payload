@@ -42,7 +42,7 @@ ${localesArray}
   isSingleLocale: ${data.locales.length === 1},
   // Theme
   allowDarkMode: ${data.allowDarkMode},
-  layoutWidth: 'w-[95%] md:w-9/10 max-w-layout-lg',
+  layoutWidth: '${data.layoutWidth}',
   // Menus
   selectedNavigation: '${data.selectedNavigation}',
   selectedFooter: '${data.selectedFooter}',

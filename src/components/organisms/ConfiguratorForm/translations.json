@@ -3,6 +3,7 @@
     "sections": {
       "project": "Project",
       "languages": "Languages",
+      "layout": "Layout",
       "theme": "Theme",
       "menus": "Menus",
       "collections": "Collections",
@@ -16,15 +17,19 @@
       "tiers": {
         "launch": {
           "label": "Launch",
-          "description": "$400 — 1 route, 5 blocks, 1 language, no dark mode"
+          "description": "Single route, single language, no dark mode, no collections, no crm-supoort, nav-simple and footer-simple."
         },
         "growth": {
           "label": "Growth",
-          "description": "$800 — 5 routes, 25 blocks, 2 languages, dark mode, blog"
+          "description": "Many routes, 2 languages, dark mode, our-team collection, no crm-support, nav-mega and footer-simple."
         },
         "scale": {
           "label": "Scale",
-          "description": "$1,200 — 10 routes, 40 blocks, 3+ languages, mega menu"
+          "description": "Many routes, many languages, dark mode, our-team collection, blog collection, crm-support, nav-mega and footer-mega."
+        },
+        "custom": {
+          "label": "Custom",
+          "description": "Custom your own settings for the projet."
         }
       }
     },
@@ -36,6 +41,18 @@
     "theme": {
       "darkModeLabel": "Dark mode",
       "darkModeDescription": "Allow users to toggle between light and dark mode"
+    },
+    "layout": {
+      "widthLabel": "Layout width",
+      "widths": {
+        "sm": { "label": "Small", "description": "Max width 1080px — compact and focused." },
+        "md": { "label": "Medium", "description": "Max width 1280px — Medium size layout." },
+        "lg": { "label": "Large", "description": "Max width 1440px — Standard layout." },
+        "xl": {
+          "label": "Extra Large",
+          "description": "Max width 1600px — Almost full width layout."
+        }
+      }
     },
     "menus": {
       "singlePageLabel": "Single page",
@@ -87,6 +104,12 @@
       "copyButton": "Copy",
       "copiedButton": "Copied to clipboard.",
       "generated": "project.config.ts generated."
+    },
+    "errors": {
+      "nameRequired": "Project name is required.",
+      "nameFormat": "Only lowercase letters, numbers and hyphens.",
+      "localesMin": "At least one language is required.",
+      "defaultLocaleInvalid": "Default locale must be one of the selected locales."
     }
   },
   "es": {
@@ -94,6 +117,7 @@
       "project": "Proyecto",
       "languages": "Idiomas",
       "theme": "Tema",
+      "layout": "Layout",
       "menus": "Menús",
       "collections": "Colecciones",
       "crm": "Conexión CRM"
@@ -106,15 +130,19 @@
       "tiers": {
         "launch": {
           "label": "Launch",
-          "description": "$400 — 1 ruta, 5 bloques, 1 idioma, sin dark mode"
+          "description": "Una ruta, un idioma, sin dark mode, sin colecciones, sin CRM, nav-simple y footer-simple."
         },
         "growth": {
           "label": "Growth",
-          "description": "$800 — 5 rutas, 25 bloques, 2 idiomas, dark mode, blog"
+          "description": "Múltiples rutas, 2 idiomas, dark mode, colección nuestro equipo, sin CRM, nav-mega y footer-simple."
         },
         "scale": {
           "label": "Scale",
-          "description": "$1,200 — 10 rutas, 40 bloques, 3+ idiomas, mega menú"
+          "description": "Múltiples rutas, múltiples idiomas, dark mode, colección equipo, colección blog, soporte CRM, nav-mega y footer-mega."
+        },
+        "custom": {
+          "label": "Custom",
+          "description": "Personaliza los parámetros del proyecto a tu medida."
         }
       }
     },
@@ -126,6 +154,21 @@
     "theme": {
       "darkModeLabel": "Modo oscuro",
       "darkModeDescription": "Permite a los usuarios alternar entre modo claro y oscuro"
+    },
+    "layout": {
+      "widthLabel": "Ancho del layout",
+      "widths": {
+        "sm": { "label": "Pequeño", "description": "Ancho máximo 1080px — compacto y enfocado." },
+        "md": {
+          "label": "Mediano",
+          "description": "Ancho máximo 1280px — layout de tamaño medio."
+        },
+        "lg": { "label": "Grande", "description": "Ancho máximo 1440px — layout estándar." },
+        "xl": {
+          "label": "Extra Grande",
+          "description": "Ancho máximo 1600px — layout casi completo."
+        }
+      }
     },
     "menus": {
       "singlePageLabel": "Página única",
@@ -183,6 +226,12 @@
       "copyButton": "Copiar",
       "copiedButton": "Copiado al clipboard.",
       "generated": "project.config.ts generado."
+    },
+    "errors": {
+      "nameRequired": "El nombre del proyecto es requerido.",
+      "nameFormat": "Solo letras minúsculas, números y guiones.",
+      "localesMin": "Al menos un idioma es requerido.",
+      "defaultLocaleInvalid": "El idioma por defecto debe ser uno de los idiomas seleccionados."
     }
   }
 }
