@@ -14,14 +14,15 @@ type PhosphorIconName = keyof typeof PhosphorIcons
 const ChipVariants = cva('inline-flex items-center gap-1.5 transition-colors select-none', {
   variants: {
     variant: {
-      filled:
-        'border border-neutral-500 bg-neutral-900/40 dark:bg-neutral-200 text-neutral-100 dark:text-neutral-900',
       outlined:
-        'border border-black dark:border-white bg-transparent text-foreground hover:bg-neutral-300/30',
+        'border border-neutral-200 dark:border-primary-900 bg-neutral-900/20 text-neutral-200 dark:text-primary-900 hover:bg-neutral-900/70 dark:hover:bg-primary-800/30',
       brand: 'bg-brand-1/10 text-brand-1',
-      success: 'bg-green-500/10 text-green-600 dark:text-green-400',
-      warning: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400',
-      danger: 'bg-destructive/10 text-destructive',
+      success:
+        'bg-success-500/10 text-success-400 border-1 border-success-400 dark:bg-success-500/15 dark:text-success-500 dark:border-success-300',
+      warning:
+        'bg-warning-500/10 text-warning-400 border-warning-400 dark:bg-warning-500/15 dark:text-warning-500 dark:border-warning-500',
+      danger:
+        'bg-error-500/10 text-error-400 border-error-400 dark:bg-error-500/15 dark:text-error-500 dark:border-error-500',
       muted: 'bg-muted text-muted-foreground',
     },
     size: {
@@ -31,7 +32,7 @@ const ChipVariants = cva('inline-flex items-center gap-1.5 transition-colors sel
     },
   },
   defaultVariants: {
-    variant: 'filled',
+    variant: 'outlined',
     size: 'md',
   },
 })
@@ -48,6 +49,7 @@ type ChipVariantsType = VariantProps<typeof ChipVariants> & {
   onDismiss?: () => void
   className?: string
 }
+type ChipVariant = VariantProps<typeof ChipVariants>['variant']
 
 // ─── Avatar ──────────────────────────────────────────────────────────────────
 
@@ -113,4 +115,4 @@ const Chip = ({
   )
 }
 
-export { Chip, ChipVariants, type ChipVariantsType }
+export { Chip, ChipVariants, type ChipVariantsType, type ChipVariant }

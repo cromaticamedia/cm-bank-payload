@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params
   const isEn = locale === 'en'
 
-  const title = isEn ? 'Blocks — Block Bank' : 'Bloques — Block Bank'
+  const title = isEn ? 'Bank - Blocks' : 'Bank - Bloques'
   const description = isEn
     ? 'Browse all stable reusable blocks available in the Cromatica Block Bank.'
     : 'Explora todos los bloques reutilizables estables disponibles en el Block Bank de Cromatica.'

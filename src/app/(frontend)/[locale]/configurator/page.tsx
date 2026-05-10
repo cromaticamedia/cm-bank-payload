@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const isEn = locale === 'en'
 
-  const title = isEn ? 'Web Configurator — Block Bank' : 'Configurador Web — Block Bank'
+  const title = isEn ? 'Bank - Configurator' : 'Bank - Configurador'
   const description = isEn
     ? 'Generate your project.config.ts file instantly by configuring your tier, locales, theme, navigation and CRM integrations.'
     : 'Genera tu archivo project.config.ts al instante configurando tu tier, idiomas, tema, navegación e integraciones CRM.'

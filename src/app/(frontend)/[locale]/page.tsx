@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const isEn = locale === 'en'
 
-  const title = 'Block Bank — Cromatica Media'
+  const title = 'Bank'
   const description = isEn
     ? 'Reusable blocks and templates repository for the Cromatica team and clients.'
     : 'Repositorio de bloques y templates reutilizables para el equipo y clientes de Cromatica.'

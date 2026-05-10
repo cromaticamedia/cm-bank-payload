@@ -8,10 +8,7 @@ import './styles.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://bank.cromatica.media'),
-  title: {
-    default: 'Block Bank',
-    template: '%s — Cromatica Block Bank',
-  },
+  title: 'Bank',
   description: 'Reusable blocks and templates repository for the Cromatica team and clients.',
   keywords: ['blocks', 'templates', 'cromatica', 'payload', 'nextjs', 'ui components'],
   authors: [{ name: 'Cromatica Media', url: 'https://cromatica.media' }],

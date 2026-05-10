@@ -14,7 +14,7 @@ import { Separator } from '@/components/atoms/Separator'
 import { cn } from '@/utils/styles'
 import { useTranslations } from '@/hooks/useTranslations'
 import translations from './translations.json'
-import { Chip } from '@/components/atoms/Chip'
+import { Chip, type ChipVariant } from '@/components/atoms/Chip'
 
 type Block = Awaited<ReturnType<typeof queryBlocksPaginated>>['docs'][number]
 
@@ -23,13 +23,10 @@ interface BlockCardProps {
   locale: LocaleCode
 }
 
-const STATUS_STYLES: Record<string, string> = {
-  stable:
-    'bg-success-500/10 text-success-400 border-success-400 dark:bg-success-500/15 dark:text-success-500 dark:border-success-300',
-  draft:
-    'bg-warning-500/10 text-warning-400 border-warning-400 dark:bg-warning-500/15 dark:text-warning-500 dark:border-warning-500',
-  deprecated:
-    'bg-error-500/10 text-error-400 border-error-400 dark:bg-error-500/15 dark:text-error-500 dark:border-error-500',
+const STATUS_VARIANTS: Record<string, ChipVariant> = {
+  stable: 'success',
+  draft: 'warning',
+  deprecated: 'danger',
 }
 
 export default function BlockCard({ block, locale }: BlockCardProps) {
@@ -53,10 +50,7 @@ export default function BlockCard({ block, locale }: BlockCardProps) {
       {/* Header — category + status */}
       <CardHeader className="w-full px-0 py-0">
         <Chip label={block.category as string} />
-        <Chip
-          label={block.status as string}
-          className={STATUS_STYLES[block.status as string] ?? STATUS_STYLES.draft}
-        />
+        <Chip label={block.status as string} variant={STATUS_VARIANTS[block.status as string]} />
       </CardHeader>
 
       {/* Body — label + description */}

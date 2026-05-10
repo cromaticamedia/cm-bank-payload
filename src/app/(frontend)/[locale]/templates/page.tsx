@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const isEn = locale === 'en'
 
-  const title = isEn ? 'Templates — Block Bank' : 'Templates — Block Bank'
+  const title = isEn ? 'Bank - Templates' : 'Bank - Templates'
   const description = isEn
     ? 'Browse Figma templates available for Cromatica clients. Ready-to-use designs for every project tier.'
     : 'Explora los templates de Figma disponibles para clientes de Cromatica. Diseños listos para usar en cada tier de proyecto.'

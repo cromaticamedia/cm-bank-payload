@@ -9,7 +9,7 @@
     "copy": "Copy",
     "tabs": {
       "component": "Component.tsx",
-      "schema": "block.ts",
+      "schema": "Component.block.ts",
       "mock": "Mock Data"
     },
     "dependencies": "Dependencies",
@@ -27,7 +27,7 @@
     "copy": "Copiar",
     "tabs": {
       "component": "Component.tsx",
-      "schema": "block.ts",
+      "schema": "Component.block.ts",
       "mock": "Mock Data"
     },
     "dependencies": "Dependencias",

@@ -15,7 +15,7 @@ import type { Media, User } from '@/payload-types'
 import type { queryBlockByName } from '@/queries/blocks'
 import translations from './translations.json'
 
-import { Chip } from '@/components/atoms/Chip'
+import { Chip, type ChipVariant } from '@/components/atoms/Chip'
 
 type Block = NonNullable<Awaited<ReturnType<typeof queryBlockByName>>>
 
@@ -24,13 +24,10 @@ interface BlockDetailViewProps {
   locale: LocaleCode
 }
 
-const STATUS_STYLES: Record<string, string> = {
-  stable:
-    'bg-success-500/10 text-success-400 border-success-400 dark:bg-success-500/15 dark:text-success-500 dark:border-success-300',
-  draft:
-    'bg-warning-500/10 text-warning-400 border-warning-400 dark:bg-warning-500/15 dark:text-warning-500 dark:border-warning-500',
-  deprecated:
-    'bg-error-500/10 text-error-400 border-error-400 dark:bg-error-500/15 dark:text-error-500 dark:border-error-500',
+const STATUS_VARIANTS: Record<string, ChipVariant> = {
+  stable: 'success',
+  draft: 'warning',
+  deprecated: 'danger',
 }
 
 const TABS = ['component', 'schema', 'mock'] as const
@@ -42,8 +39,6 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
   const [copiedInstall, setCopiedInstall] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
   const [copiedTab, setCopiedTab] = useState(false)
-
-  console.log('block', block)
 
   const preview = block.preview as Media | null
   const installCommand = `npx cm-template-website add block ${block.name}`
@@ -62,10 +57,19 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
     },
   )
 
-  const tabContent: Record<Tab, string> = {
-    component: (block.files?.componentTsx as string) ?? '',
-    schema: (block.files?.blockTs as string) ?? '',
-    mock: (block.files?.mockData as string) ?? '',
+  const tabContent: Record<Tab, { code: string; filename: string }> = {
+    component: {
+      code: (block.files?.componentTsx as string) ?? '',
+      filename: 'src/components/blocks/[block-name]/[block-name].tsx',
+    },
+    schema: {
+      code: (block.files?.blockTs as string) ?? '',
+      filename: 'src/blocks/[block-name]/[block-name].block.ts',
+    },
+    mock: {
+      code: (block.files?.mockData as string) ?? '',
+      filename: 'example-data.json',
+    },
   }
 
   const handleCopyInstall = async () => {
@@ -76,9 +80,9 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
   }
 
   const handleCopyTab = async () => {
-    await navigator.clipboard.writeText(tabContent[activeTab])
+    await navigator.clipboard.writeText(tabContent[activeTab].code)
     setCopiedTab(true)
-    toast.success(t.copied, { description: tabContent[activeTab].slice(0, 50) + '...' })
+    toast.success(t.copied, { description: tabContent[activeTab].code.slice(0, 50) + '...' })
     setTimeout(() => setCopiedTab(false), 2000)
   }
 
@@ -96,7 +100,7 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
             <Chip label={block.category as string} />
             <Chip
               label={block.status as string}
-              className={STATUS_STYLES[block.status as string] ?? STATUS_STYLES.draft}
+              variant={STATUS_VARIANTS[block.status as string]}
             />
           </div>
         </PageHeader>
@@ -146,13 +150,13 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
           </div>
         )}
 
-        {/* ── Meta — author + install command ──────────────────────── */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border border-neutral-800 dark:border-neutral-300 bg-neutral-900/20 dark:bg-neutral-200/50">
+        {/* ── Install Command ──────────────────────── */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border border-neutral-200 dark:border-primary-900 bg-none dark:bg-neutral-200/50">
           <Typography
             text={installCommand}
             variant="p"
             htmlTag="span"
-            className="font-mono text-neutral-400 dark:text-neutral-700 truncate max-w-[280px]"
+            className="font-mono text-neutral-200 dark:text-primary-900 truncate max-w-[280px]"
           />
           <Button
             isIcon
@@ -160,12 +164,12 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
             iconVariant="none"
             iconSize="sm"
             onClick={handleCopyInstall}
-            className="text-neutral-400 dark:text-neutral-600 hover:text-primary-400 dark:hover:text-primary-500 transition-colors shrink-0"
+            className="text-neutral-200 dark:text-primary-900 hover:text-primary-400 dark:hover:text-primary-500 transition-colors shrink-0"
           />
         </div>
 
         {/* ── Dependencies + Tags ───────────────────────────────────── */}
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-5">
           <div className="flex flex-col gap-2">
             <Typography
               text={t.dependencies}
@@ -195,7 +199,7 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
             <div className="flex flex-wrap gap-2">
               {block.tags && (block.tags as string[]).length > 0 ? (
                 (block.tags as string[]).map((tag) => (
-                  <Chip key={tag} label={tag} variant="filled" className="font-mono text-xs" />
+                  <Chip key={tag} label={tag} variant="outlined" className="font-mono text-xs" />
                 ))
               ) : (
                 <Typography
@@ -210,30 +214,37 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
 
         {/* ── Code tabs ────────────────────────────────────────────── */}
         <div className="flex flex-col">
-          <div className="flex items-center border-b border-neutral-800 dark:border-neutral-300">
-            {TABS.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={cn(
-                  'px-4 py-2 text-xs font-mono transition-colors cursor-pointer border-b-2 -mb-px',
-                  activeTab === tab
-                    ? 'border-primary-500 text-primary-500'
-                    : 'border-transparent text-neutral-500 dark:text-neutral-600 hover:text-neutral-100 dark:hover:text-neutral-900',
-                )}
-              >
-                {t.tabs[tab]}
-              </button>
-            ))}
-            <div className="flex-1" />
-            <button
+          <div className="flex items-center justify-between border-b border-neutral-800 dark:border-neutral-300 py-2">
+            <div>
+              {TABS.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={cn(
+                    'px-4 py-2 text-xs font-mono transition-colors cursor-pointer border-b-2 -mb-px',
+                    activeTab === tab
+                      ? 'border-primary-500 text-primary-500'
+                      : 'border-transparent text-neutral-500 dark:text-neutral-600 hover:text-neutral-100 dark:hover:text-neutral-900',
+                  )}
+                >
+                  {t.tabs[tab]}
+                </button>
+              ))}
+            </div>
+            <Button
               onClick={handleCopyTab}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-mono text-neutral-500 dark:text-neutral-600 hover:text-primary-500 dark:hover:text-primary-500 transition-colors cursor-pointer"
+              size="sm"
+              icon="CopyIcon"
+              variant="outlined"
+              className="ring-1"
             >
               {copiedTab ? t.copied : t.copy}
-            </button>
+            </Button>
           </div>
-          <CodeViewer code={tabContent[activeTab]} />
+          <CodeViewer
+            code={tabContent[activeTab].code}
+            codeHeader={tabContent[activeTab].filename}
+          />
         </div>
       </LayoutContainer>
     </main>
