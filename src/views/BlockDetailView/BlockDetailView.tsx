@@ -41,7 +41,7 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
   const [copiedTab, setCopiedTab] = useState(false)
 
   const preview = block.preview as Media | null
-  const installCommand = `npx cm-template-website add block ${block.name}`
+  const installCommand = `npx cromatica add block ${block.name}`
 
   const authorName =
     block.authorType === 'registered'
