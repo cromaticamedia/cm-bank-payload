@@ -13,7 +13,7 @@ export const queryBlocks = cache(async () => {
       status: { in: ['stable', 'draft', 'deprecated'] },
     },
     select: {
-      name: true,
+      slug: true,
       label: true,
       description: true,
       category: true,
@@ -28,7 +28,7 @@ export const queryBlocks = cache(async () => {
   return result.docs
 })
 
-export const queryBlockByName = cache(async (name: string) => {
+export const queryBlockBySlug = cache(async (slug: string) => {
   const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
@@ -36,7 +36,7 @@ export const queryBlockByName = cache(async (name: string) => {
     limit: 1,
     pagination: false,
     where: {
-      name: { equals: name },
+      slug: { equals: slug },
       status: { in: ['stable', 'draft', 'deprecated'] },
     },
     depth: 2,
@@ -57,7 +57,7 @@ export const queryBlocksByCategory = cache(async (category: string) => {
       category: { equals: category },
     },
     select: {
-      name: true,
+      slug: true,
       label: true,
       description: true,
       category: true,
@@ -84,7 +84,7 @@ export const queryBlocksPaginated = cache(async (page: number = 1) => {
       status: { in: ['stable', 'draft', 'deprecated'] },
     },
     select: {
-      name: true,
+      slug: true,
       label: true,
       description: true,
       category: true,

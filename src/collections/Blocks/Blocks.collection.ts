@@ -1,12 +1,13 @@
 import type { CollectionConfig } from 'payload'
 import { isAuthenticated, isAdmin } from '@/hooks/useAuth'
+import { ValidationError } from 'payload'
 import AuthorField from '@/fields/author'
 import ChipsField from '@/fields/ChipsField/ChipsField.field'
 
 const Blocks: CollectionConfig = {
   slug: 'blocks',
   admin: {
-    useAsTitle: 'name',
+    useAsTitle: 'slug',
     description: 'Block bank — reusable blocks for Cromatica templates',
     defaultColumns: ['name', 'category', 'status', 'updatedAt'],
     components: {
@@ -21,15 +22,54 @@ const Blocks: CollectionConfig = {
     update: isAuthenticated,
     delete: isAdmin,
   },
+  hooks: {
+    beforeValidate: [
+      async ({ data }) => {
+        if (!data?.files?.blockTs || !data?.slug) return data
+
+        const blockTs = data.files.blockTs as string
+        const slugField = data.slug as string
+
+        const slugMatch = blockTs.match(/slug:\s*['"`]([^'"`]+)['"`]/)
+
+        if (!slugMatch) {
+          throw new ValidationError({
+            errors: [
+              {
+                message: `The blockTs code must contain a slug field. e.g: slug: '${slugField}'`,
+                path: 'files.blockTs',
+              },
+            ],
+          })
+        }
+
+        const codeSlug = slugMatch[1]
+
+        if (codeSlug !== slugField) {
+          throw new ValidationError({
+            errors: [
+              {
+                message: `Slug mismatch — the slug field is "${slugField}" but the slug inside blockTs is "${codeSlug}". They must match exactly.`,
+                path: 'files.blockTs',
+              },
+            ],
+          })
+        }
+
+        return data
+      },
+    ],
+  },
   fields: [
     // --- Identidad del bloque ---
     {
-      name: 'name',
+      name: 'slug',
       type: 'text',
       required: true,
       unique: true,
       admin: {
-        description: 'Block slug — auto-converted to kebab-case. e.g: hero-split, perks-grid',
+        description:
+          "Block slug — auto-converted to kebab-case. e.g: hero-split, perks-grid. Block slug MUST be the same name in the 'slug' field on the payload schema. ",
       },
       hooks: {
         beforeValidate: [

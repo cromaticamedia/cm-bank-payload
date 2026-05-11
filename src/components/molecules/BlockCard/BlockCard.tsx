@@ -32,7 +32,7 @@ const STATUS_VARIANTS: Record<string, ChipVariant> = {
 export default function BlockCard({ block, locale }: BlockCardProps) {
   const t = useTranslations(translations, locale)
   const preview = block.preview as Media | null
-  const installCommand = `npx cromatica add block ${block.name}`
+  const installCommand = `npx cromatica add block ${block.slug}`
   const [imageLoaded, setImageLoaded] = useState(false)
 
   const handleCopy = (e: React.MouseEvent) => {
@@ -44,7 +44,7 @@ export default function BlockCard({ block, locale }: BlockCardProps) {
 
   return (
     <NavLink
-      href={`/${locale}/blocks/${block.name}`}
+      href={`/${locale}/blocks/${block.slug}`}
       className="p-3 group flex flex-col gap-3 bg-neutral-1000 dark:bg-neutral-200/50 border border-neutral-800 dark:border-neutral-700/50 hover:border-primary-500/50 hover:bg-neutral-900/20 dark:hover:bg-neutral-200 transition-all duration-200 shadow-xs hover:scale-105 cursor-pointer"
     >
       {/* Header — category + status */}

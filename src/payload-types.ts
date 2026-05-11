@@ -272,9 +272,9 @@ export interface FolderInterface {
 export interface Block {
   id: number;
   /**
-   * Block slug — auto-converted to kebab-case. e.g: hero-split, perks-grid
+   * Block slug — auto-converted to kebab-case. e.g: hero-split, perks-grid. Block slug MUST be the same name in the 'slug' field on the payload schema.
    */
-  name: string;
+  slug: string;
   /**
    * Nombre legible, ej: Travel Cards, Hero Split
    */
@@ -610,7 +610,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "blocks_select".
  */
 export interface BlocksSelect<T extends boolean = true> {
-  name?: T;
+  slug?: T;
   label?: T;
   description?: T;
   authorType?: T;

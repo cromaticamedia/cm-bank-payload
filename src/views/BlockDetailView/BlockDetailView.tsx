@@ -12,12 +12,12 @@ import CodeViewer from '@/components/molecules/CodeViewer'
 import PageHeader from '@/components/molecules/PageHeader'
 import type { LocaleCode } from '@/config/locales'
 import type { Media, User } from '@/payload-types'
-import type { queryBlockByName } from '@/queries/blocks'
+import type { queryBlockBySlug } from '@/queries/blocks'
 import translations from './translations.json'
 
 import { Chip, type ChipVariant } from '@/components/atoms/Chip'
 
-type Block = NonNullable<Awaited<ReturnType<typeof queryBlockByName>>>
+type Block = NonNullable<Awaited<ReturnType<typeof queryBlockBySlug>>>
 
 interface BlockDetailViewProps {
   block: Block
@@ -41,7 +41,7 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
   const [copiedTab, setCopiedTab] = useState(false)
 
   const preview = block.preview as Media | null
-  const installCommand = `npx cromatica add block ${block.name}`
+  const installCommand = `npx cromatica add block ${block.slug}`
 
   const authorName =
     block.authorType === 'registered'
