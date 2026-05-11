@@ -16,7 +16,9 @@ export default function NavLink({ onClick, href, ...props }: NavLinkProps) {
       href={href}
       {...props}
       onClick={(e) => {
-        if (href.toString() !== pathname) {
+        const isNewTab = e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1
+
+        if (!isNewTab && href.toString() !== pathname) {
           startLoading()
         }
         onClick?.(e)
