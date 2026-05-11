@@ -269,7 +269,7 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
                     >
                       <Chip
                         label={label}
-                        variant={isActive ? 'filled' : 'outlined'}
+                        variant={isActive ? 'success' : 'outlined'}
                         dismissible={isActive && (locales?.length ?? 0) > 1}
                         onDismiss={() => handleLocaleToggle(code)}
                         className="w-full justify-center"
