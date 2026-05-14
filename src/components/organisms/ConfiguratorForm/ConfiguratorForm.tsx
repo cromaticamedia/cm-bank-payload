@@ -2,12 +2,13 @@
 
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useEffect } from 'react'
 import { type ConfiguratorSchema } from './schema'
 import { AVAILABLE_LOCALES } from '@/catalogs/locales'
 import { TIER_DEFAULTS } from '@/catalogs/websites-tier-defaults'
 import { generateProjectConfig } from './generate-config'
 import { useTranslations } from '@/hooks/useTranslations'
+import { slugify } from '@/utils/string'
 import Input from '@/components/atoms/Input'
 import Switch from '@/components/atoms/Switch'
 import RadioGroup from '@/components/atoms/RadioGroup/RadioGroup'
@@ -41,7 +42,11 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
       selectedNavigation: 'nav-simple',
       selectedFooter: 'footer-simple',
       allowPostsCollection: false,
+      postsCustomName: '',
+      postsPath: '/blog',
       allowOurTeamCollection: false,
+      ourTeamCustomName: '',
+      ourTeamPath: '/our-team',
       isSinglePage: true,
       crmProvider: 'none',
     },
@@ -56,6 +61,21 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
 
   const locales = watch('locales')
   const crmProvider = watch('crmProvider')
+  const allowPostsCollection = watch('allowPostsCollection')
+  const allowOurTeamCollection = watch('allowOurTeamCollection')
+  const postsCustomName = watch('postsCustomName')
+  const ourTeamCustomName = watch('ourTeamCustomName')
+
+  // ── Derive postsPath from postsCustomName ─────────────────────────
+  useEffect(() => {
+    const slug = postsCustomName ? slugify(postsCustomName) : ''
+    setValue('postsPath', slug ? `/${slug}` : '/blog')
+  }, [postsCustomName, setValue])
+
+  useEffect(() => {
+    const slug = ourTeamCustomName ? slugify(ourTeamCustomName) : ''
+    setValue('ourTeamPath', slug ? `/${slug}` : '/our-team')
+  }, [ourTeamCustomName, setValue])
 
   const tierOptions = useMemo(
     () =>
@@ -349,16 +369,62 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
               variant="span"
               className="text-primary-500 font-mono uppercase tracking-widest"
             />
-            <Switch
-              name="allowPostsCollection"
-              label={t.collections.postsLabel}
-              description={t.collections.postsDescription}
-            />
-            <Switch
-              name="allowOurTeamCollection"
-              label={t.collections.teamLabel}
-              description={t.collections.teamDescription}
-            />
+
+            {/* Posts */}
+            <div className="flex flex-col gap-3">
+              <Switch
+                name="allowPostsCollection"
+                label={t.collections.postsLabel}
+                description={t.collections.postsDescription}
+              />
+              {allowPostsCollection && (
+                <div className="flex flex-col gap-3 pl-4 border-l border-neutral-200 dark:border-neutral-700">
+                  <Input
+                    name="postsCustomName"
+                    icon="NewspaperIcon"
+                    label={t.collections.postsCustomNameLabel}
+                    description={t.collections.postsCustomNameDescription}
+                    placeholder="Blog"
+                  />
+                  <Input
+                    name="postsPath"
+                    icon="LinkIcon"
+                    label={t.collections.postsPathLabel}
+                    description={t.collections.postsPathDescription}
+                    placeholder="/blog"
+                    disabled
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Our Team */}
+            <div className="flex flex-col gap-3">
+              <Switch
+                name="allowOurTeamCollection"
+                label={t.collections.teamLabel}
+                description={t.collections.teamDescription}
+              />
+              {allowOurTeamCollection && (
+                <div className="flex flex-col gap-3 pl-4 border-l border-neutral-200 dark:border-neutral-700">
+                  <Input
+                    name="ourTeamCustomName"
+                    icon="UsersThreeIcon"
+                    label={t.collections.ourTeamCustomNameLabel}
+                    description={t.collections.ourTeamCustomNameDescription}
+                    placeholder="Our Team"
+                  />
+                  <Input
+                    name="ourTeamPath"
+                    icon="LinkIcon"
+                    label={t.collections.ourTeamPathLabel}
+                    description={t.collections.ourTeamPathDescription}
+                    placeholder="/our-team"
+                    disabled
+                  />
+                </div>
+              )}
+            </div>
           </section>
 
           {/* CRM */}

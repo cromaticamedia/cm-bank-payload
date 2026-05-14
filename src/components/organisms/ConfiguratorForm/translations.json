@@ -80,8 +80,16 @@
     "collections": {
       "postsLabel": "Blog / Posts",
       "postsDescription": "Enable the Posts collection for blog support",
+      "postsCustomNameLabel": "Custom name",
+      "postsCustomNameDescription": "Override the public name of this section. e.g: News, Articles",
+      "postsPathLabel": "Public path",
+      "postsPathDescription": "Auto-generated URL path based on the custom name",
       "teamLabel": "Our Team",
-      "teamDescription": "Enable the Our Team collection to showcase team members"
+      "teamDescription": "Enable the Our Team collection to showcase team members",
+      "ourTeamCustomNameLabel": "Custom name",
+      "ourTeamCustomNameDescription": "Override the public name of this section. e.g: Team, People",
+      "ourTeamPathLabel": "Public path",
+      "ourTeamPathDescription": "Auto-generated URL path based on the custom name"
     },
     "crm": {
       "providerLabel": "CRM Provider",
@@ -199,8 +207,16 @@
     "collections": {
       "postsLabel": "Blog / Posts",
       "postsDescription": "Habilita la colección de Posts para soporte de blog",
+      "postsCustomNameLabel": "Nombre personalizado",
+      "postsCustomNameDescription": "Reemplaza el nombre público de esta sección. ej: Noticias, Artículos",
+      "postsPathLabel": "Ruta pública",
+      "postsPathDescription": "Ruta URL generada automáticamente basada en el nombre personalizado",
       "teamLabel": "Nuestro Equipo",
-      "teamDescription": "Habilita la colección Nuestro Equipo para mostrar miembros del equipo"
+      "teamDescription": "Habilita la colección Nuestro Equipo para mostrar miembros del equipo",
+      "ourTeamCustomNameLabel": "Nombre personalizado",
+      "ourTeamCustomNameDescription": "Reemplaza el nombre público de esta sección. ej: Equipo, Personas",
+      "ourTeamPathLabel": "Ruta pública",
+      "ourTeamPathDescription": "Ruta URL generada automáticamente basada en el nombre personalizado"
     },
     "crm": {
       "providerLabel": "Proveedor CRM",

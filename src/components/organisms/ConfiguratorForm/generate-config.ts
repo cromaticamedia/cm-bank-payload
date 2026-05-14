@@ -28,6 +28,10 @@ export function generateProjectConfig(data: ConfiguratorSchema): string {
     hubspot: { portalId: '', formId: '' },
   }`
 
+  // Strip leading slash for the config value since the middleware handles routing
+  const postsPath = (data.postsPath ?? '/blog').replace(/^\//, '') || 'blog'
+  const ourTeamPath = (data.ourTeamPath ?? '/our-team').replace(/^\//, '') || 'our-team'
+
   return `import type { TypeProjectConfig } from '@/config/types'
 
 const ProjectConfig: TypeProjectConfig = {
@@ -48,7 +52,9 @@ ${localesArray}
   selectedFooter: '${data.selectedFooter}',
   // Collections
   allowOurTeamCollection: ${data.allowOurTeamCollection},
+  ourTeamPath: '${ourTeamPath}',
   allowPostsCollection: ${data.allowPostsCollection},
+  postsPath: '${postsPath}',
   isSinglePage: ${data.isSinglePage},
   // CRM Connection
   crm: ${crmConfig},
