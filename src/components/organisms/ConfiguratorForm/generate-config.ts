@@ -29,6 +29,8 @@ export function generateProjectConfig(data: ConfiguratorSchema): string {
   }`
 
   // Strip leading slash for the config value since the middleware handles routing
+  const postsLabel = data.postsCustomName || 'Blog / Posts'
+  const ourTeamLabel = data.ourTeamCustomName || 'Our Team'
   const postsPath = (data.postsPath ?? '/blog').replace(/^\//, '') || 'blog'
   const ourTeamPath = (data.ourTeamPath ?? '/our-team').replace(/^\//, '') || 'our-team'
 
@@ -53,8 +55,10 @@ ${localesArray}
   // Collections
   allowOurTeamCollection: ${data.allowOurTeamCollection},
   ourTeamPath: '${ourTeamPath}',
+  ourTeamLabel: '${ourTeamLabel}',
   allowPostsCollection: ${data.allowPostsCollection},
   postsPath: '${postsPath}',
+  postsLabel: '${postsLabel}',
   isSinglePage: ${data.isSinglePage},
   // CRM Connection
   crm: ${crmConfig},
