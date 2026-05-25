@@ -32,7 +32,7 @@ const STATUS_VARIANTS: Record<string, ChipVariant> = {
 export default function BlockCard({ block, locale }: BlockCardProps) {
   const t = useTranslations(translations, locale)
   const preview = block.preview as Media | null
-  const installCommand = `npx cromatica add block ${block.slug}`
+  const installCommand = `npx cromatica-cli add block ${block.slug}`
   const [imageLoaded, setImageLoaded] = useState(false)
 
   const handleCopy = (e: React.MouseEvent) => {
