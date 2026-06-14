@@ -2,6 +2,7 @@ import { cn } from '@/utils/styles'
 import { themeScript, langScript } from '@/lib/scripts'
 import { Toaster } from 'sonner'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/next'
 import { MiChroma, Microgramma, SpaceGrotesk } from '@/fonts'
 import type { Metadata } from 'next'
 import './styles.css'
@@ -63,6 +64,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       </head>
       <body className="min-h-screen w-full flex flex-col justify-between items-center bg-gradient-light dark:bg-gradient-dark">
         <SpeedInsights />
+        <Analytics />
         {children}
         <Toaster position="bottom-right" richColors />
       </body>

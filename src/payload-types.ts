@@ -67,10 +67,10 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
-    media: Media;
     blocks: Block;
     templates: Template;
+    media: Media;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-folders': FolderInterface;
     'payload-locked-documents': PayloadLockedDocument;
@@ -83,10 +83,10 @@ export interface Config {
     };
   };
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
     blocks: BlocksSelect<false> | BlocksSelect<true>;
     templates: TemplatesSelect<false> | TemplatesSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -126,6 +126,73 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * Block bank — reusable blocks for Cromatica templates
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blocks".
+ */
+export interface Block {
+  id: number;
+  /**
+   * Block slug — auto-converted to kebab-case. e.g: hero-split, perks-grid. Block slug MUST be the same name in the 'slug' field on the payload schema.
+   */
+  slug: string;
+  /**
+   * Nombre legible, ej: Travel Cards, Hero Split
+   */
+  label: string;
+  /**
+   * Qué hace este bloque y cuándo usarlo
+   */
+  description?: string | null;
+  authorType?: ('registered' | 'external') | null;
+  author?: (number | null) | User;
+  /**
+   * Nombre del autor si no está registrado en Payload
+   */
+  authorName?: string | null;
+  category:
+    | 'hero'
+    | 'cards'
+    | 'perks'
+    | 'cta'
+    | 'testimonials'
+    | 'gallery'
+    | 'form'
+    | 'navigation'
+    | 'footer'
+    | 'other';
+  status: 'draft' | 'stable' | 'deprecated';
+  files: {
+    /**
+     * Contenido del archivo .block.ts
+     */
+    blockTs: string;
+    /**
+     * Contenido del componente React
+     */
+    componentTsx: string;
+    /**
+     * Datos de ejemplo para el preview del dashboard
+     */
+    mockData?: string | null;
+  };
+  /**
+   * Screenshot del bloque renderizado
+   */
+  preview?: (number | null) | Media;
+  /**
+   * Dependencies the CLI must install when adding this block.
+   */
+  dependencies?: string[] | null;
+  /**
+   * Tags to help categorize and filter this block.
+   */
+  tags?: string[] | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -264,73 +331,6 @@ export interface FolderInterface {
   createdAt: string;
 }
 /**
- * Block bank — reusable blocks for Cromatica templates
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blocks".
- */
-export interface Block {
-  id: number;
-  /**
-   * Block slug — auto-converted to kebab-case. e.g: hero-split, perks-grid. Block slug MUST be the same name in the 'slug' field on the payload schema.
-   */
-  slug: string;
-  /**
-   * Nombre legible, ej: Travel Cards, Hero Split
-   */
-  label: string;
-  /**
-   * Qué hace este bloque y cuándo usarlo
-   */
-  description?: string | null;
-  authorType?: ('registered' | 'external') | null;
-  author?: (number | null) | User;
-  /**
-   * Nombre del autor si no está registrado en Payload
-   */
-  authorName?: string | null;
-  category:
-    | 'hero'
-    | 'cards'
-    | 'perks'
-    | 'cta'
-    | 'testimonials'
-    | 'gallery'
-    | 'form'
-    | 'navigation'
-    | 'footer'
-    | 'other';
-  status: 'draft' | 'stable' | 'deprecated';
-  files: {
-    /**
-     * Contenido del archivo .block.ts
-     */
-    blockTs: string;
-    /**
-     * Contenido del componente React
-     */
-    componentTsx: string;
-    /**
-     * Datos de ejemplo para el preview del dashboard
-     */
-    mockData?: string | null;
-  };
-  /**
-   * Screenshot del bloque renderizado
-   */
-  preview?: (number | null) | Media;
-  /**
-   * Dependencies the CLI must install when adding this block.
-   */
-  dependencies?: string[] | null;
-  /**
-   * Tags to help categorize and filter this block.
-   */
-  tags?: string[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * Figma templates available for Cromatica clients
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -425,20 +425,20 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
-      } | null)
-    | ({
         relationTo: 'blocks';
         value: number | Block;
       } | null)
     | ({
         relationTo: 'templates';
         value: number | Template;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null)
     | ({
         relationTo: 'payload-folders';
@@ -488,29 +488,79 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "blocks_select".
  */
-export interface UsersSelect<T extends boolean = true> {
-  avatar?: T;
-  firstName?: T;
-  lastName?: T;
-  role?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
+export interface BlocksSelect<T extends boolean = true> {
+  slug?: T;
+  label?: T;
+  description?: T;
+  authorType?: T;
+  author?: T;
+  authorName?: T;
+  category?: T;
+  status?: T;
+  files?:
     | T
     | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
+        blockTs?: T;
+        componentTsx?: T;
+        mockData?: T;
       };
+  preview?: T;
+  dependencies?: T;
+  tags?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates_select".
+ */
+export interface TemplatesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  authorType?: T;
+  author?: T;
+  authorName?: T;
+  category?: T;
+  tier?: T;
+  status?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  features?:
+    | T
+    | {
+        darkMode?: T;
+        responsive?: T;
+        animations?: T;
+        i18n?: T;
+        cms?: T;
+        pagesCount?: T;
+        blocksCount?: T;
+      };
+  figma?:
+    | T
+    | {
+        embedUrl?: T;
+        fileUrl?: T;
+        previewUrl?: T;
+      };
+  thumbnail?: T;
+  screenshots?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  demoUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -607,79 +657,29 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blocks_select".
+ * via the `definition` "users_select".
  */
-export interface BlocksSelect<T extends boolean = true> {
-  slug?: T;
-  label?: T;
-  description?: T;
-  authorType?: T;
-  author?: T;
-  authorName?: T;
-  category?: T;
-  status?: T;
-  files?:
-    | T
-    | {
-        blockTs?: T;
-        componentTsx?: T;
-        mockData?: T;
-      };
-  preview?: T;
-  dependencies?: T;
-  tags?: T;
+export interface UsersSelect<T extends boolean = true> {
+  avatar?: T;
+  firstName?: T;
+  lastName?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "templates_select".
- */
-export interface TemplatesSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  description?: T;
-  authorType?: T;
-  author?: T;
-  authorName?: T;
-  category?: T;
-  tier?: T;
-  status?: T;
-  tags?:
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
     | T
     | {
-        tag?: T;
         id?: T;
+        createdAt?: T;
+        expiresAt?: T;
       };
-  features?:
-    | T
-    | {
-        darkMode?: T;
-        responsive?: T;
-        animations?: T;
-        i18n?: T;
-        cms?: T;
-        pagesCount?: T;
-        blocksCount?: T;
-      };
-  figma?:
-    | T
-    | {
-        embedUrl?: T;
-        fileUrl?: T;
-        previewUrl?: T;
-      };
-  thumbnail?: T;
-  screenshots?:
-    | T
-    | {
-        image?: T;
-        caption?: T;
-        id?: T;
-      };
-  demoUrl?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
