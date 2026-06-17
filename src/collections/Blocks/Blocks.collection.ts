@@ -177,7 +177,8 @@ const Blocks: CollectionConfig = {
       relationTo: 'media',
       label: 'Preview screenshot',
       admin: {
-        description: 'Screenshot del bloque renderizado',
+        description:
+          'Screenshot del bloque renderizado, 4.5 MB max allowed, otherwise use https://squoosh.app/',
       },
     },
 
