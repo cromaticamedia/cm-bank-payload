@@ -72,9 +72,9 @@ const Templates: CollectionConfig = {
       type: 'select',
       required: true,
       options: [
-        { label: 'Free', value: 'free' },
-        { label: 'Pro', value: 'pro' },
-        { label: 'Enterprise', value: 'enterprise' },
+        { label: 'Launch', value: 'launch' },
+        { label: 'Growth', value: 'growth' },
+        { label: 'Scale', value: 'scale' },
       ],
     },
     {
