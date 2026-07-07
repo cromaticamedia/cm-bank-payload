@@ -196,8 +196,8 @@ const Blocks: CollectionConfig = {
       name: 'tags',
       label: { en: 'Tags', es: 'Tags' },
       description: {
-        en: 'Tags to help categorize and filter this block.',
-        es: 'Tags para categorizar y filtrar este bloque.',
+        en: 'Tags to help categorize and filter this block. Hit Enter ↵ to add a new tag.',
+        es: 'Tags para categorizar y filtrar este bloque. Presiona Enter ↵ para agregar un nuevo tag.',
       },
       placeholder: 'e.g: animation, dark-mode',
     }),
