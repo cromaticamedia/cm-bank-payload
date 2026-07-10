@@ -126,15 +126,17 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
             />
           </div>
         </div>
+        {!imageLoaded && (
+          <div className="relative w-full h-full hoverflow-hidden flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-neutral-600 border-t-primary-500 rounded-full animate-spin" />
+            </div>
+          </div>
+        )}
 
         {/* ── Preview ──────────────────────────────────────────────── */}
         {preview?.url && (
           <div className="relative w-full overflow-hidden flex items-center justify-center">
-            {!imageLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-6 h-6 border-2 border-neutral-600 border-t-primary-500 rounded-full animate-spin" />
-              </div>
-            )}
             <Image
               src={preview.url}
               alt={block.label as string}
@@ -151,7 +153,7 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
         )}
 
         {/* ── Install Command ──────────────────────── */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border border-neutral-200 dark:border-white bg-none dark:bg-neutral-200/50">
+        <div className="flex items-center justify-between gap-4 p-4 border border-neutral-200 dark:border-white bg-none dark:bg-neutral-200/50">
           <Typography
             text={installCommand}
             variant="p"
@@ -221,7 +223,7 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={cn(
-                    'px-4 py-2 text-sm font-tertiary transition-colors cursor-pointer border-b-2 -mb-px',
+                    'px-4 py-2 text-xs font-tertiary transition-colors cursor-pointer border-b-2 -mb-px',
                     activeTab === tab
                       ? 'border-primary-500 text-primary-500'
                       : 'border-transparent text-neutral-500 dark:text-neutral-600 hover:text-neutral-100 dark:hover:text-neutral-900',
