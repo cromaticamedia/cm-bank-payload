@@ -151,12 +151,12 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
         )}
 
         {/* ── Install Command ──────────────────────── */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border border-neutral-200 dark:border-primary-900 bg-none dark:bg-neutral-200/50">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border border-neutral-200 dark:border-white bg-none dark:bg-neutral-200/50">
           <Typography
             text={installCommand}
             variant="p"
             htmlTag="span"
-            className="font-mono text-neutral-200 dark:text-primary-900 truncate max-w-[280px]"
+            className="font-mono text-neutral-200 dark:text-white truncate max-w-[90%]"
           />
           <Button
             isIcon
@@ -164,17 +164,17 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
             iconVariant="none"
             iconSize="sm"
             onClick={handleCopyInstall}
-            className="text-neutral-200 dark:text-primary-900 hover:text-primary-400 dark:hover:text-primary-500 transition-colors shrink-0"
+            className="text-neutral-200 dark:text-white hover:text-primary-400 dark:hover:text-primary-500 transition-colors shrink-0"
           />
         </div>
 
         {/* ── Dependencies + Tags ───────────────────────────────────── */}
-        <div className="flex flex-col md:flex-row gap-5">
+        <div className="flex flex-col md:flex-row gap-5 lg:gap-8">
           <div className="flex flex-col gap-2">
             <Typography
               text={t.dependencies}
               variant="p"
-              className="font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700"
+              className="font-secondary uppercase tracking-widest text-neutral-500 dark:text-white"
             />
             <div className="flex flex-wrap gap-2">
               {block.dependencies && (block.dependencies as string[]).length > 0 ? (
@@ -185,7 +185,7 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
                 <Typography
                   text={t.noDependencies}
                   variant="p"
-                  className="font-mono text-neutral-600 dark:text-neutral-500"
+                  className="font-tertiary text-neutral-600 dark:text-neutral-700"
                 />
               )}
             </div>
@@ -194,18 +194,18 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
             <Typography
               text={t.tags}
               variant="p"
-              className="font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700"
+              className="font-secondary uppercase tracking-widest text-neutral-500 dark:text-white"
             />
             <div className="flex flex-wrap gap-2">
               {block.tags && (block.tags as string[]).length > 0 ? (
                 (block.tags as string[]).map((tag) => (
-                  <Chip key={tag} label={tag} variant="outlined" className="font-mono text-xs" />
+                  <Chip key={tag} label={tag} variant="outlined" />
                 ))
               ) : (
                 <Typography
                   text={t.noTags}
                   variant="p"
-                  className="font-mono text-neutral-600 dark:text-neutral-500"
+                  className="font-tertiary text-neutral-600 dark:text-neutral-700"
                 />
               )}
             </div>
@@ -221,7 +221,7 @@ export default function BlockDetailView({ block, locale }: BlockDetailViewProps)
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={cn(
-                    'px-4 py-2 text-xs font-mono transition-colors cursor-pointer border-b-2 -mb-px',
+                    'px-4 py-2 text-sm font-tertiary transition-colors cursor-pointer border-b-2 -mb-px',
                     activeTab === tab
                       ? 'border-primary-500 text-primary-500'
                       : 'border-transparent text-neutral-500 dark:text-neutral-600 hover:text-neutral-100 dark:hover:text-neutral-900',

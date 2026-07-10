@@ -74,10 +74,10 @@ export const queryBlocksByCategory = cache(async (category: string) => {
 
 export const queryBlocksPaginated = cache(async (page: number = 1) => {
   const payload = await getPayload({ config: configPromise })
-
+  const cardsPerPage = 8
   const result = await payload.find({
     collection: 'blocks',
-    limit: 9,
+    limit: cardsPerPage,
     page,
     pagination: true,
     where: {

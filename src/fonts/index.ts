@@ -20,3 +20,9 @@ export const SpaceGrotesk = localFont({
   ],
   variable: '--font-space-grotesk',
 })
+
+export const StackSansNotch = localFont({
+  src: './stack-sans-notch/StackSansNotch-VariableFont_wght.ttf',
+  weight: '200 700',
+  variable: '--font-stack-sans-notch',
+})

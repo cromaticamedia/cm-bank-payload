@@ -44,7 +44,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BlocksPage({ params, searchParams }: PageProps) {
   const { locale } = await params
   const { page } = await searchParams
-  const currentPage = Math.max(1, parseInt(page ?? '1', 10))
+  const cardsPerPageFallback = 8
+  const currentPage = Math.max(1, parseInt(page ?? '1', cardsPerPageFallback))
   const data = await queryBlocksPaginated(currentPage)
 
   return <BlocksView locale={locale as LocaleCode} data={data} currentPage={currentPage} />

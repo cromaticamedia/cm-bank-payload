@@ -102,7 +102,7 @@ const BlocksView = ({ locale, data, currentPage }: BlocksViewProps) => {
             </div>
 
             {totalDocs > 0 && (
-              <div className="flex items-center justify-center gap-10 pb-4">
+              <div className="flex items-center justify-center gap-3 pb-4">
                 <PaginationLink
                   href={`/${locale}/blocks?page=${currentPage - 1}`}
                   disabled={!hasPrevPage}
@@ -143,7 +143,7 @@ function PaginationLink({
 }) {
   if (disabled) {
     return (
-      <span className="w-8 h-8 flex items-center justify-center rounded-sm text-sm font-mono text-neutral-700 dark:text-neutral-600 cursor-not-allowed">
+      <span className="w-fit px-3 h-9 flex items-center justify-center text-sm font-mono text-neutral-700 dark:text-neutral-600 cursor-not-allowed font-tertiary">
         {label}
       </span>
     )
@@ -152,7 +152,7 @@ function PaginationLink({
   return (
     <NavLink
       href={href}
-      className={`w-8 h-8 flex items-center justify-center rounded-sm text-sm font-mono transition-colors ${
+      className={`w-fit px-3 min-w-9 h-9 flex items-center justify-center text-sm font-mono font-tertiary transition-colors ${
         active
           ? 'bg-primary-600 text-white'
           : 'text-neutral-400 dark:text-neutral-700 hover:bg-neutral-800 dark:hover:bg-neutral-300 hover:text-neutral-100 dark:hover:text-neutral-900'

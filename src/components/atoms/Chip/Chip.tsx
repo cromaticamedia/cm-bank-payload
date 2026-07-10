@@ -33,7 +33,7 @@ const ChipVariants = cva('inline-flex items-center gap-1.5 transition-colors sel
   },
   defaultVariants: {
     variant: 'outlined',
-    size: 'md',
+    size: 'sm',
   },
 })
 
@@ -84,7 +84,7 @@ const Chip = ({
   dismissible = false,
   onDismiss,
   variant,
-  size = 'md',
+  size,
   className,
 }: ChipVariantsType) => {
   const Icon = icon ? (PhosphorIcons[icon] as React.ElementType) : null
@@ -99,7 +99,7 @@ const Chip = ({
       {!avatar && Icon && <Icon size={iconSize} className="shrink-0" />}
 
       {/* Label */}
-      <Typography text={label} htmlTag="p" className="leading-none font-medium" />
+      <Typography text={label} variant="label6" className="leading-none font-medium font-body" />
 
       {/* Dismiss */}
       {dismissible && (

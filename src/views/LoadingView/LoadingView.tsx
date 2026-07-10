@@ -9,7 +9,7 @@ interface LoadingViewProps {
 export default function LoadingView({ visible = true }: LoadingViewProps) {
   return (
     <section
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white dark:bg-gradient-dark overflow-hidden transition-opacity duration-300 ease-in-out"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white dark:bg-gradient-dark-2 overflow-hidden transition-opacity duration-300 ease-in-out"
       style={{ opacity: visible ? 1 : 0 }}
     >
       <div

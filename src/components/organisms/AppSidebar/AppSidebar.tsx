@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/utils/styles'
 import { usePathname, useRouter } from 'next/navigation'
@@ -9,6 +8,7 @@ import type { LocaleCode } from '@/config/locales'
 import { useState, useEffect } from 'react'
 import Typography from '@/components/atoms/Typography'
 import { Separator } from '@/components/atoms/Separator'
+import NavLink from '@/components/atoms/NavLink'
 import NavSection, { type NavItem } from '@/components/molecules/NavSection/NavSection'
 import PreferencesSection from '@/components/molecules/PreferencesSection/PreferencesSection'
 import { useTranslations } from '@/hooks/useTranslations'
@@ -114,7 +114,7 @@ export default function AppSidebar({ locale, theme, onApplyTheme }: AppSidebarPr
       </button>
 
       {/* Logo */}
-      <Link
+      <NavLink
         href={`/${locale}`}
         className={cn(
           'flex items-center shrink-0 overflow-hidden w-full pt-4',
@@ -147,7 +147,7 @@ export default function AppSidebar({ locale, theme, onApplyTheme }: AppSidebarPr
           </div>
           {!collapsed && <Typography text="Bank" variant="label6" className="font-secondary" />}
         </section>
-      </Link>
+      </NavLink>
 
       <Separator />
 

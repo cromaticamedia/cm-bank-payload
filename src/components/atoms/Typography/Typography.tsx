@@ -33,14 +33,14 @@ const Typography = ({
   const Tag = htmlTag || defaultTagMap[variant] || 'p'
   const commonClass = 'w-fit'
   const variants = {
-    label1: 'leading-5 text-size-6 md:text-size-7 lg:text-size-8 w-full',
-    label2: 'leading-4 text-size-6 lg:text-size-7 w-full',
-    label3: 'leading-3 text-size-5 lg:text-size-6 w-full',
-    label4: 'leading-2 text-size-4 lg:text-size-5',
-    label5: 'leading-2 text-size-3 lg:text-size-4',
-    label6: 'leading-1 text-size-2 lg:text-size-2',
-    p: 'leading-2 text-size-1',
-    span: 'leading-2 text-size-1',
+    label1: 'leading-11 text-size-8 md:text-size-8 lg:text-size-9 md:leading-14 lg:leading-16', // Title
+    label2: 'leading-10 text-size-5 md:text-size-6 lg:text-size-7', // Title Section
+    label3: 'leading-9 text-size-4 md:text-size-5 lg:text-size-5', // Title Cards
+    label4: 'leading-8 text-size-3 md:text-size-4 lg:text-size-5',
+    label5: 'leading-6 text-size-2 md:text-size-3 lg:text-size-3', // Descriptions under title
+    label6: 'leading-5 text-size-1 md:text-size-1 lg:text-size-1', // Tagline
+    p: 'leading-5 text-size-1',
+    span: 'leading-5 text-size-1',
   }
 
   const currentVariant = variants[variant] || variants.p

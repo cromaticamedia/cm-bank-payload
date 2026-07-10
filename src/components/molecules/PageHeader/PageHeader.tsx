@@ -43,22 +43,22 @@ const PageHeader = ({
         <Typography
           text={tagline}
           variant="label6"
-          className="text-primary-600 uppercase dark:text-primary-600"
+          className="text-primary-600 uppercase dark:text-primary-600 font-tertiary"
         />
         {children}
       </div>
       <Typography
         text={title}
-        variant="label2"
+        variant="label1"
         htmlTag="h1"
-        className="font-primary text-neutral-100 dark:text-neutral-1000 leading-1"
+        className="font-primary text-neutral-100 dark:text-white leading-1 font-primary font-bold"
       />
       {subtitle && (
         <Typography
           text={subtitle}
-          variant="label6"
+          variant="label5"
           htmlTag="p"
-          className="text-neutral-600 dark:text-neutral-800"
+          className="text-neutral-600 dark:text-neutral-900 font-body"
         />
       )}
     </div>

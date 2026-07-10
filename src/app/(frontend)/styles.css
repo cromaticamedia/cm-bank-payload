@@ -100,13 +100,15 @@
 
   --font-primary: var(--project-font-primary), sans-serif;
   --font-secondary: var(--project-font-secondary), sans-serif;
+  --font-tertiary: var(--project-font-tertiary), sans-serif;
   --font-body: var(--project-font-body), system-ui, sans-serif;
 
-  --text-size-8: 64px;
-  --text-size-7: 48px;
+  --text-size-9: 64px;
+  --text-size-8: 48px;
+  --text-size-7: 36px;
   --text-size-6: 32px;
-  --text-size-5: 24px;
-  --text-size-4: 20px;
+  --text-size-5: 20px;
+  --text-size-4: 18px;
   --text-size-3: 16px;
   --text-size-2: 14px;
   --text-size-1: 12px;
@@ -251,8 +253,9 @@
   --project-neutral-900: #c3c7cc;
   --project-neutral-1000: #ffffff;
 
-  --project-font-primary: var(--font-microgramma);
-  --project-font-secondary: var(--font-michroma);
+  --project-font-primary: var(--font-stack-sans-notch);
+  --project-font-secondary: var(--font-microgramma);
+  --project-font-tertiary: var(--font-michroma);
   --project-font-body: var(--font-space-grotesk);
 
   --gradient-primary: linear-gradient(to right, #00a6fb, #006494);
@@ -396,9 +399,6 @@ svg {
   }
   body {
     @apply bg-neutral-900 text-foreground dark:bg-neutral-200;
-  }
-  html {
-    @apply font-mono;
   }
   button {
     @apply outline-none focus:outline-none focus-visible:outline-none;
@@ -621,13 +621,36 @@ svg {
   );
 }
 
+@utility bg-gradient-dark-2 {
+  background-image:
+    linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 166, 251, 0.05) 1px, transparent 1px),
+    linear-gradient(
+      120deg,
+      var(--color-secondary-300) 0%,
+      var(--color-neutral-100) 35%,
+      var(--color-tertiary-300) 100%
+    );
+  background-size:
+    35px 35px,
+    35px 35px,
+    100% 100%;
+}
+
 @utility bg-gradient-light {
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, var(--color-neutral-1000) 100%, transparent),
-    color-mix(in srgb, var(--color-secondary-900) 100%, transparent),
-    color-mix(in srgb, var(--color-primary-600) 20%, transparent)
-  );
+  background-image:
+    linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 166, 251, 0.05) 1px, transparent 1px),
+    linear-gradient(
+      120deg,
+      color-mix(in srgb, var(--color-neutral-1000) 100%, transparent),
+      color-mix(in srgb, var(--color-secondary-900) 100%, transparent),
+      color-mix(in srgb, var(--color-primary-600) 20%, transparent)
+    );
+  background-size:
+    50px 50px,
+    50px 50px,
+    100% 100%;
 }
 
 /* ─────────────────────────────────────────────

@@ -82,12 +82,14 @@ export default function BlockCard({ block, locale }: BlockCardProps) {
         )}
         <Typography
           text={block.label as string}
-          className="text-neutral-100 dark:text-neutral-1000 font-medium text-size-4"
+          variant="label3"
+          className="text-neutral-100 dark:text-neutral-1000 font-bold font-primary"
         />
         {block.description && (
           <Typography
             text={block.description as string}
-            className="text-neutral-400 dark:text-neutral-700 line-clamp-2 text-sm"
+            variant="label6"
+            className="text-neutral-400 dark:text-neutral-700 line-clamp-3 leading-5"
           />
         )}
       </CardBody>
@@ -95,8 +97,8 @@ export default function BlockCard({ block, locale }: BlockCardProps) {
       <CardFooter className="py-0 px-0 w-full justify-between">
         <Typography
           text={installCommand}
-          variant="p"
-          className="text-neutral-400 dark:text-neutral-700 font-mono text-[11px] truncate max-w-[70%]"
+          variant="label6"
+          className="text-neutral-400 dark:text-neutral-700 truncate max-w-[90%]"
         />
         <Button
           isIcon

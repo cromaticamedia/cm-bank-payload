@@ -180,7 +180,7 @@ export interface Block {
     mockData?: string | null;
   };
   /**
-   * Screenshot del bloque renderizado
+   * Screenshot del bloque renderizado, 4.5 MB max allowed, otherwise use https://squoosh.app/
    */
   preview?: (number | null) | Media;
   /**
@@ -188,7 +188,7 @@ export interface Block {
    */
   dependencies?: string[] | null;
   /**
-   * Tags to help categorize and filter this block.
+   * Tags to help categorize and filter this block. Hit Enter ↵ to add a new tag.
    */
   tags?: string[] | null;
   updatedAt: string;
@@ -351,7 +351,7 @@ export interface Template {
    */
   authorName?: string | null;
   category: 'brochure' | 'ecommerce' | 'portfolio' | 'saas' | 'blog' | 'landing' | 'other';
-  tier: 'free' | 'pro' | 'enterprise';
+  tier: 'launch' | 'growth' | 'scale';
   status: 'draft' | 'published' | 'deprecated';
   tags?:
     | {
