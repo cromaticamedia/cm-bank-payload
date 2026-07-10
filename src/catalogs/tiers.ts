@@ -1,6 +1,6 @@
 import type { ConfiguratorSchema } from '@/components/organisms/ConfiguratorForm/schema'
 
-export const TIER_DEFAULTS: Record<string, Partial<ConfiguratorSchema>> = {
+export const TIERS: Record<string, Partial<ConfiguratorSchema>> = {
   launch: {
     tier: 'launch',
     name: '',

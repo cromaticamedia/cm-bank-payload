@@ -15,9 +15,9 @@
     "byCategory": "By Category",
     "byStatus": "By Status",
     "byTier": "By Tier",
-    "free": "Free",
-    "pro": "Pro",
-    "enterprise": "Enterprise"
+    "launch": "Launch",
+    "growth": "Growth",
+    "scale": "Scale"
   },
   "es": {
     "description": "Repositorio de bloques y templates reutilizables para el equipo y clientes de Cromatica.",
@@ -35,8 +35,8 @@
     "byCategory": "Por Categoría",
     "byStatus": "Por Estado",
     "byTier": "Por Tier",
-    "free": "Gratis",
-    "pro": "Pro",
-    "enterprise": "Enterprise"
+    "launch": "Launch",
+    "growth": "Growth",
+    "scale": "Scale"
   }
 }

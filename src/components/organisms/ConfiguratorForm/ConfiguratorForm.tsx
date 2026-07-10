@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState, useMemo, useCallback, useEffect } from 'react'
 import { type ConfiguratorSchema } from './schema'
 import { AVAILABLE_LOCALES } from '@/catalogs/locales'
-import { TIER_DEFAULTS } from '@/catalogs/websites-tier-defaults'
+import { TIERS } from '@/catalogs/tiers'
 import { generateProjectConfig } from './generate-config'
 import { useTranslations } from '@/hooks/useTranslations'
 import { slugify } from '@/utils/string'
@@ -200,7 +200,7 @@ const ConfiguratorForm = ({ locale }: ConfiguratorFormProps) => {
 
   const handleTierChange = useCallback(
     (value: string) => {
-      const defaults = TIER_DEFAULTS[value]
+      const defaults = TIERS[value]
       if (!defaults) return
       Object.entries(defaults).forEach(([key, val]) => {
         setValue(key as keyof ConfiguratorSchema, val as never, { shouldValidate: false })

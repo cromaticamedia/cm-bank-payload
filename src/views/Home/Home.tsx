@@ -71,11 +71,19 @@ const Home = async ({ locale }: HomeProps) => {
           <BreakdownCard
             title={`${t.totalTemplates} — ${t.byTier}`}
             items={[
-              { label: t.free, value: analytics.templates.byTier.free, color: 'bg-neutral-400' },
-              { label: t.pro, value: analytics.templates.byTier.pro, color: 'bg-primary-500' },
               {
-                label: t.enterprise,
-                value: analytics.templates.byTier.enterprise,
+                label: t.launch,
+                value: analytics.templates.byTier.launch,
+                color: 'bg-neutral-400',
+              },
+              {
+                label: t.growth,
+                value: analytics.templates.byTier.growth,
+                color: 'bg-primary-500',
+              },
+              {
+                label: t.scale,
+                value: analytics.templates.byTier.scale,
                 color: 'bg-secondary-500',
               },
             ]}

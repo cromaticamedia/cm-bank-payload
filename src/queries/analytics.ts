@@ -41,9 +41,9 @@ export const getAnalytics = cache(async () => {
 
   // Templates por tier
   const templatesByTier = {
-    free: templates.docs.filter((t) => t.tier === 'free').length,
-    pro: templates.docs.filter((t) => t.tier === 'pro').length,
-    enterprise: templates.docs.filter((t) => t.tier === 'enterprise').length,
+    launch: templates.docs.filter((t) => t.tier === 'launch').length,
+    growth: templates.docs.filter((t) => t.tier === 'growth').length,
+    scale: templates.docs.filter((t) => t.tier === 'scale').length,
   }
 
   return {
