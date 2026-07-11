@@ -2,9 +2,11 @@ import { cn } from '@/utils/styles'
 import { themeScript, langScript } from '@/lib/scripts'
 import { Toaster } from 'sonner'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import LoadingView from '@/views/LoadingView'
 import { Analytics } from '@vercel/analytics/next'
 import { MiChroma, Microgramma, SpaceGrotesk, StackSansNotch } from '@/fonts'
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import './styles.css'
 
 export const metadata: Metadata = {
@@ -68,9 +70,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         />
       </head>
       <body className="min-h-screen w-full flex flex-col justify-between items-center bg-gradient-light-2 dark:bg-gradient-dark-2">
+        <Suspense fallback={<LoadingView />}>{children}</Suspense>
         <SpeedInsights />
         <Analytics />
-        {children}
         <Toaster position="bottom-right" richColors />
       </body>
     </html>

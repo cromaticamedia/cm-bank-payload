@@ -102,7 +102,7 @@ const BlocksView = ({ locale, data, currentPage }: BlocksViewProps) => {
             </div>
 
             {totalDocs > 0 && (
-              <div className="flex items-center justify-center gap-3 pb-4">
+              <div className="flex items-center justify-center gap-3 pb-4 pt-5">
                 <PaginationLink
                   href={`/${locale}/blocks?page=${currentPage - 1}`}
                   disabled={!hasPrevPage}

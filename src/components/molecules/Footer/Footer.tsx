@@ -4,6 +4,8 @@ import type { LocaleCode } from '@/config/locales'
 import LayoutContainer from '@/components/atoms/LayoutContainer'
 import { Separator } from '@/components/atoms/Separator'
 import translations from './translations.json'
+import Link from 'next/link'
+import Icon from '@/components/atoms/Icon'
 import Typography from '@/components/atoms/Typography'
 
 interface FooterProps {
@@ -13,31 +15,42 @@ interface FooterProps {
 export default function Footer({ locale }: FooterProps) {
   const t = useTranslations(translations, locale)
   const year = new Date().getFullYear()
+  const repoLink = 'https://github.com/cromaticamedia/cm-bank-payload'
 
   return (
     <footer className="w-full flex flex-col items-center justify-center pb-3 lg:pb-0">
       <Separator className="w-[99%]" />
       <LayoutContainer className="flex-row justify-between items-center">
-        <span className="flex items-center gap-1 min-w-0">
+        <Link
+          className="group flex items-center justify-center gap-2 w-fit"
+          href={repoLink}
+          target="_blank"
+        >
+          <Icon
+            name="GitBranchIcon"
+            size={20}
+            weight="bold"
+            className="transition-colors group-hover:text-primary-500 dark:group-hover:text-primary-600"
+          />
           <Typography
             variant="label5"
             htmlTag="span"
-            className="font-primary text-neutral-200 dark:text-neutral-1000 shrink-0"
+            className="font-primary text-neutral-200 dark:text-neutral-1000 shrink-0 transition-colors group-hover:text-primary-500 dark:group-hover:text-primary-600"
             text={pkg.name}
           />
           <Typography
             variant="label2"
             htmlTag="span"
-            className="font-primary text-neutral-200 dark:text-neutral-1000 shrink-0 font-bold mx-1"
+            className="font-primary text-neutral-200 dark:text-neutral-1000 shrink-0 font-bold transition-colors group-hover:text-primary-500 dark:group-hover:text-primary-600"
             text="·"
           />
           <Typography
             variant="label5"
             htmlTag="span"
-            className="font-primary text-neutral-200 dark:text-neutral-1000 shrink-0"
-            text={`v${pkg.version}`}
+            className="font-primary text-neutral-200 dark:text-neutral-1000 shrink-0 transition-colors group-hover:text-primary-500 dark:group-hover:text-primary-600"
+            text={`v.${pkg.version}`}
           />
-        </span>
+        </Link>
 
         <Typography
           variant="label5"

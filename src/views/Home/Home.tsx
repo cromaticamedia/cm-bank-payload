@@ -24,8 +24,6 @@ const Home = async ({ locale }: HomeProps) => {
     cards: 'bg-blue-400',
   }
 
-  console.log('analytics.blocks.byCategory', analytics.blocks.byCategory)
-
   return (
     <main className="w-full flex flex-col relative overflow-hidden">
       <LayoutContainer>

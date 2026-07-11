@@ -51,7 +51,7 @@ const PageHeader = ({
         text={title}
         variant="label1"
         htmlTag="h1"
-        className="font-primary text-neutral-100 dark:text-white leading-1 font-primary font-bold"
+        className="font-primary text-neutral-100 dark:text-white leading-1 font-primary font-bold text-shadow-lg dark:text-shadow-neutral-100/80"
       />
       {subtitle && (
         <Typography

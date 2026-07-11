@@ -621,7 +621,7 @@ svg {
   );
 }
 
-@utility bg-gradient-dark-2 {
+/* @utility bg-gradient-dark-2 {
   background-image:
     linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 166, 251, 0.05) 1px, transparent 1px),
@@ -633,6 +633,25 @@ svg {
       var(--color-tertiary-300) 100%
     );
   background-size:
+    35px 35px,
+    35px 35px,
+    100% 100%;
+} */
+
+@utility bg-gradient-dark-2 {
+  background-image:
+    radial-gradient(circle, rgba(0, 166, 251, 0.2) 0.8px, transparent 1px),
+    linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 166, 251, 0.1) 1px, transparent 1px),
+    linear-gradient(
+      120deg,
+      var(--color-secondary-300) 0%,
+      var(--color-neutral-100) 33.3%,
+      var(--color-neutral-100) 66.6%,
+      var(--color-tertiary-300) 100%
+    );
+  background-size:
+    35px 35px,
     35px 35px,
     35px 35px,
     100% 100%;
