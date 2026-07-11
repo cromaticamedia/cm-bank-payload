@@ -16,7 +16,7 @@ export default function Footer({ locale }: FooterProps) {
 
   return (
     <footer className="w-full flex flex-col items-center justify-center pb-3 lg:pb-0">
-      <Separator className="w-[99%] dark:bg-neutral-700 bg-neutral-700" />
+      <Separator className="w-[99%]" />
       <LayoutContainer className="flex-row justify-between items-center">
         <span className="flex items-center gap-1 min-w-0">
           <Typography

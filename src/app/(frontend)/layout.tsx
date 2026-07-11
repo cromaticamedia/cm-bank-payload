@@ -67,7 +67,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           suppressHydrationWarning
         />
       </head>
-      <body className="min-h-screen w-full flex flex-col justify-between items-center bg-gradient-light dark:bg-gradient-dark-2">
+      <body className="min-h-screen w-full flex flex-col justify-between items-center bg-gradient-light-2 dark:bg-gradient-dark-2">
         <SpeedInsights />
         <Analytics />
         {children}

@@ -628,7 +628,8 @@ svg {
     linear-gradient(
       120deg,
       var(--color-secondary-300) 0%,
-      var(--color-neutral-100) 35%,
+      var(--color-neutral-100) 33.3%,
+      var(--color-neutral-100) 66.6%,
       var(--color-tertiary-300) 100%
     );
   background-size:
@@ -646,6 +647,23 @@ svg {
       color-mix(in srgb, var(--color-neutral-1000) 100%, transparent),
       color-mix(in srgb, var(--color-secondary-900) 100%, transparent),
       color-mix(in srgb, var(--color-primary-600) 20%, transparent)
+    );
+  background-size:
+    50px 50px,
+    50px 50px,
+    100% 100%;
+}
+
+@utility bg-gradient-light-2 {
+  background-image:
+    linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 166, 251, 0.05) 1px, transparent 1px),
+    linear-gradient(
+      120deg,
+      var(--color-secondary-800) 0%,
+      var(--color-neutral-1000) 30%,
+      var(--color-neutral-1000) 85%,
+      var(--color-primary-800) 100%
     );
   background-size:
     50px 50px,
