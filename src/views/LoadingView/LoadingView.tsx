@@ -13,15 +13,6 @@ export default function LoadingView({ visible = true }: LoadingViewProps) {
       style={{ opacity: visible ? 1 : 0 }}
     >
       <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0,166,251,0.05) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(0,166,251,0.05) 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-        }}
-      />
-
-      <div
         className="relative z-10 flex flex-col items-center gap-2 transition-all duration-500 ease-out"
         style={{
           transform: visible ? 'translateY(0)' : 'translateY(12px)',

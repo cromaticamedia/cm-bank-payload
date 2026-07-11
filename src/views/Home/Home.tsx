@@ -5,6 +5,8 @@ import { getAnalytics } from '@/queries/analytics'
 import LayoutContainer from '@/components/atoms/LayoutContainer'
 import PageHeader from '@/components/molecules/PageHeader/PageHeader'
 import translations from './translations.json'
+import { Card, CardHeader, CardBody } from '@/components/atoms/Card'
+import Typography from '@/components/atoms/Typography'
 
 interface HomeProps {
   locale: LocaleCode
@@ -13,6 +15,16 @@ interface HomeProps {
 const Home = async ({ locale }: HomeProps) => {
   const t = useTranslations(translations, locale)
   const analytics = await getAnalytics()
+
+  const categoryColorMap: Record<string, string> = {
+    hero: 'bg-red-400',
+    form: 'bg-yellow-300',
+    cta: 'bg-success-400',
+    perks: 'bg-purple-400',
+    cards: 'bg-blue-400',
+  }
+
+  console.log('analytics.blocks.byCategory', analytics.blocks.byCategory)
 
   return (
     <main className="w-full flex flex-col relative overflow-hidden">
@@ -37,15 +49,20 @@ const Home = async ({ locale }: HomeProps) => {
           <BreakdownCard
             title={`${t.totalBlocks} — ${t.byStatus}`}
             items={[
-              { label: t.stable, value: analytics.blocks.byStatus.stable, color: 'bg-primary-500' },
-              { label: t.draft, value: analytics.blocks.byStatus.draft, color: 'bg-neutral-500' },
+              {
+                label: t.stable,
+                value: analytics.blocks.byStatus.stable,
+                color: 'bg-success-500',
+              },
+              { label: t.draft, value: analytics.blocks.byStatus.draft, color: 'bg-warning-500' },
               {
                 label: t.deprecated,
                 value: analytics.blocks.byStatus.deprecated,
-                color: 'bg-red-500',
+                color: 'bg-error-500',
               },
             ]}
             total={analytics.blocks.total}
+            locale={locale}
           />
           <BreakdownCard
             title={`${t.totalTemplates} — ${t.byStatus}`}
@@ -53,20 +70,31 @@ const Home = async ({ locale }: HomeProps) => {
               {
                 label: t.published,
                 value: analytics.templates.byStatus.published,
-                color: 'bg-primary-500',
+                color: 'bg-success-500',
               },
               {
                 label: t.draft,
                 value: analytics.templates.byStatus.draft,
-                color: 'bg-neutral-500',
+                color: 'bg-warning-500',
               },
               {
                 label: t.deprecated,
                 value: analytics.templates.byStatus.deprecated,
-                color: 'bg-red-500',
+                color: 'bg-error-500',
               },
             ]}
             total={analytics.templates.total}
+            locale={locale}
+          />
+          <BreakdownCard
+            title={`${t.totalBlocks} — ${t.byCategory}`}
+            items={Object.entries(analytics.blocks.byCategory).map(([key, value]) => ({
+              label: key,
+              value,
+              color: categoryColorMap[key] ?? 'bg-neutral-900',
+            }))}
+            total={analytics.blocks.total}
+            locale={locale}
           />
           <BreakdownCard
             title={`${t.totalTemplates} — ${t.byTier}`}
@@ -74,29 +102,21 @@ const Home = async ({ locale }: HomeProps) => {
               {
                 label: t.launch,
                 value: analytics.templates.byTier.launch,
-                color: 'bg-neutral-400',
+                color: 'bg-success-500',
               },
               {
                 label: t.growth,
                 value: analytics.templates.byTier.growth,
-                color: 'bg-primary-500',
+                color: 'bg-warning-500',
               },
               {
                 label: t.scale,
                 value: analytics.templates.byTier.scale,
-                color: 'bg-secondary-500',
+                color: 'bg-error-500',
               },
             ]}
             total={analytics.templates.total}
-          />
-          <BreakdownCard
-            title={`${t.totalBlocks} — ${t.byCategory}`}
-            items={Object.entries(analytics.blocks.byCategory).map(([key, value]) => ({
-              label: key,
-              value,
-              color: 'bg-primary-500',
-            }))}
-            total={analytics.blocks.total}
+            locale={locale}
           />
         </div>
       </LayoutContainer>
@@ -109,14 +129,20 @@ function StatCard({ label, value, href }: { label: string; value: number; href: 
   return (
     <Link
       href={href}
-      className="flex flex-col gap-1 p-5 border border-neutral-900 dark:border-neutral-300 bg-neutral-1000 dark:bg-neutral-100/20 hover:border-primary-600 dark:hover:border-primary-600 transition-colors group"
+      className="flex flex-col gap-4 p-5 border border-neutral-800 dark:border-neutral-500 bg-neutral-1000 dark:bg-neutral-100/20 hover:border-primary-600 dark:hover:border-primary-600 transition-colors group backdrop-blur-xs shadow-xs"
     >
-      <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700">
-        {label}
-      </span>
-      <span className="text-4xl font-bold text-neutral-100 dark:text-neutral-1000 group-hover:text-primary-500 transition-colors">
-        {value}
-      </span>
+      <Typography
+        text={label}
+        variant="label6"
+        htmlTag="span"
+        className="font-tertiary text-neutral-500 dark:text-neutral-900 tracking-wide"
+      />
+      <Typography
+        text={String(value)}
+        variant="label2"
+        htmlTag="span"
+        className="font-bold font-secondary text-neutral-100 dark:text-neutral-1000 group-hover:text-primary-500 transition-colors"
+      />
     </Link>
   )
 }
@@ -126,45 +152,68 @@ function BreakdownCard({
   title,
   items,
   total,
+  locale,
 }: {
   title: string
+  locale: LocaleCode
   items: { label: string; value: number; color: string }[]
   total: number
 }) {
+  const t = useTranslations(translations, locale)
+  const totalEntries = items.reduce((sum, element) => sum + element.value, 0)
   return (
-    <div className="flex flex-col gap-4 p-5 border border-neutral-900 dark:border-neutral-300 bg-neutral-1000 dark:bg-neutral-100/20">
-      <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-700">
-        {title}
-      </span>
+    <Card className="border border-neutral-800 dark:border-neutral-500 bg-neutral-1000 dark:bg-neutral-100/20 justify-start backdrop-blur-xs shadow-xs">
+      <CardHeader className="pt-4 px-4 pb-0">
+        <Typography
+          text={title}
+          variant="label6"
+          htmlTag="span"
+          className="font-tertiary text-neutral-500 dark:text-neutral-900 tracking-wide"
+        />
+      </CardHeader>
 
-      {/* Bar */}
-      <div className="flex h-1.5 w-full rounded-full overflow-hidden gap-px">
-        {items.map((item) => (
-          <div
-            key={item.label}
-            className={`${item.color} transition-all`}
-            style={{ width: total > 0 ? `${(item.value / total) * 100}%` : '0%' }}
-          />
-        ))}
-      </div>
-
-      {/* Legend */}
-      <div className="flex flex-col gap-2">
-        {items.map((item) => (
-          <div key={item.label} className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${item.color}`} />
-              <span className="text-xs capitalize text-neutral-500 dark:text-neutral-700">
-                {item.label}
-              </span>
-            </div>
-            <span className="text-xs font-mono font-medium text-neutral-300 dark:text-neutral-800">
-              {item.value}
-            </span>
+      <CardBody className="px-4 py-3 gap-4">
+        {/* Bar */}
+        {totalEntries !== 0 ? (
+          <div className="flex h-3 w-full rounded-full overflow-hidden my-2 bg-neutral-500 dark:bg-white border-1 dark:border-neutral-200">
+            {items.map((item) => (
+              <div
+                key={item.label}
+                className={`${item.color} transition-all`}
+                style={{ width: total > 0 ? `${(item.value / total) * 100}%` : '0%' }}
+              />
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        ) : (
+          <Typography
+            text={t.noEntries}
+            variant="label6"
+            className="text-neutral-600 dark:text-neutral-900"
+          />
+        )}
+
+        {/* Legend */}
+        <div className="flex flex-col gap-2">
+          {items.map((item) => (
+            <div key={item.label} className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className={`w-3 h-3 rounded-full ${item.color}`} />
+                <Typography
+                  text={item.label}
+                  variant="label6"
+                  className="capitalize text-xs text-neutral-600 dark:text-neutral-900"
+                />
+              </div>
+              <Typography
+                text={String(item.value)}
+                variant="label6"
+                className="text-xs font-primary text-neutral-600 dark:text-neutral-900"
+              />
+            </div>
+          ))}
+        </div>
+      </CardBody>
+    </Card>
   )
 }
 
