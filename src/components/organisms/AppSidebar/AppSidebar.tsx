@@ -103,7 +103,7 @@ export default function AppSidebar({ locale, theme, onApplyTheme }: AppSidebarPr
       {/* Toggle */}
       <button
         onClick={toggleCollapsed}
-        className="absolute -right-6 top-13 z-10 flex h-6 w-6 items-center justify-center rounded-tr-sm rounded-br-sm border border-neutral-900 dark:border-neutral-400 bg-white dark:bg-neutral-200 text-neutral-600 dark:text-neutral-700 hover:text-neutral-200 dark:hover:text-white shadow-xs transition-colors cursor-pointer"
+        className="absolute -right-6 top-13 z-10 flex h-6 w-6 items-center justify-center rounded-tr-sm rounded-br-sm border border-neutral-900 dark:border-neutral-400 bg-white dark:bg-neutral-200 text-neutral-600 dark:text-neutral-900 hover:text-neutral-200 dark:hover:text-white shadow-xs transition-colors cursor-pointer"
         aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
         {collapsed ? (
@@ -123,29 +123,36 @@ export default function AppSidebar({ locale, theme, onApplyTheme }: AppSidebarPr
       >
         <section
           className={cn(
-            'flex items-center gap-2 w-full hover:bg-neutral-900/50 dark:hover:bg-neutral-300 py-2 rounded-sm justify-center transition-colors',
+            'flex items-center gap-2 w-full hover:bg-neutral-900/50 dark:hover:bg-neutral-300 py-2 rounded-[4px] justify-center transition-colors',
             !collapsed && 'justify-start',
           )}
         >
-          <div className={cn('shrink-0 dark:hidden', !collapsed && 'ml-1')}>
+          <div className={cn('shrink-0 dark:hidden ml-[10px]', !collapsed && 'ml-1')}>
             <Image
               src="/c-light.png"
               alt="Cromatica"
-              width={28}
-              height={28}
+              width={collapsed ? 32 : 42}
+              height={collapsed ? 32 : 42}
               className="object-contain"
             />
           </div>
-          <div className={cn('shrink-0 hidden dark:block', !collapsed && 'ml-1')}>
+          <div className={cn('shrink-0 hidden dark:block ml-[10px]', !collapsed && 'ml-1')}>
             <Image
               src="/c-dark.png"
               alt="Cromatica"
-              width={28}
-              height={28}
+              width={collapsed ? 32 : 42}
+              height={collapsed ? 32 : 42}
               className="object-contain"
             />
           </div>
-          {!collapsed && <Typography text="Bank" variant="label6" className="font-secondary" />}
+          <div>
+            {!collapsed && (
+              <Typography text="Cromatica" variant="label5" className="font-tertiary" />
+            )}
+            {!collapsed && (
+              <Typography text="Bank" variant="label5" className="font-primary text-primary-600" />
+            )}
+          </div>
         </section>
       </NavLink>
 
