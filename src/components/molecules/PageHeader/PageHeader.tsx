@@ -43,7 +43,7 @@ const PageHeader = ({
         <Typography
           text={tagline}
           variant="label6"
-          className="text-primary-600 uppercase dark:text-primary-600 font-tertiary"
+          className="text-primary-600 uppercase dark:text-primary-600 font-tertiary text-shadow-sm text-shadow-neutral-800/40 dark:text-shadow-neutral-100/80"
         />
         {children}
       </div>

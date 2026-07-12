@@ -20,7 +20,7 @@ export default function Footer({ locale }: FooterProps) {
   return (
     <footer className="w-full flex flex-col items-center justify-center pb-3 lg:pb-0">
       <Separator className="w-[99%]" />
-      <LayoutContainer className="flex-row justify-between items-center">
+      <LayoutContainer className="flex-row justify-center sm:justify-between items-center py-3 sm:py-4 lg:py-5">
         <Link
           className="group flex items-center justify-center gap-2 w-fit"
           href={repoLink}
@@ -28,7 +28,7 @@ export default function Footer({ locale }: FooterProps) {
         >
           <Icon
             name="GitBranchIcon"
-            size={20}
+            size={21}
             weight="bold"
             className="transition-colors group-hover:text-primary-500 dark:group-hover:text-primary-600"
           />
@@ -41,7 +41,7 @@ export default function Footer({ locale }: FooterProps) {
           <Typography
             variant="label2"
             htmlTag="span"
-            className="font-primary text-neutral-200 dark:text-neutral-1000 shrink-0 font-bold transition-colors group-hover:text-primary-500 dark:group-hover:text-primary-600"
+            className="font-primary text-neutral-200 dark:text-neutral-1000 shrink-0 font-bold transition-colors group-hover:text-primary-500 dark:group-hover:text-primary-600 -mx-[3px]"
             text="·"
           />
           <Typography

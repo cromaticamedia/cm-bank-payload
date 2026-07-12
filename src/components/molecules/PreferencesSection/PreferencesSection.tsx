@@ -55,8 +55,8 @@ export default function PreferencesSection({
   }, [])
 
   return (
-    <div className="relative mb-3 w-full" ref={popoverRef}>
-      <Separator className="mb-2" />
+    <div className="relative mb-4 w-full" ref={popoverRef}>
+      <Separator className="mb-[11.9px]" />
       <button
         onClick={() => setPrefsOpen((p) => !p)}
         className={cn(
