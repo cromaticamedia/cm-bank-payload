@@ -612,82 +612,46 @@ svg {
   animation: fadeUp 0.5s ease-out both;
 }
 
-@utility bg-gradient-dark {
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, var(--color-secondary-200) 100%, transparent),
-    color-mix(in srgb, var(--color-neutral-100) 100%, transparent),
-    color-mix(in srgb, var(--color-neutral-200) 100%, transparent)
-  );
-}
-
-/* @utility bg-gradient-dark-2 {
+@utility bg-gradient-light {
   background-image:
-    linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 166, 251, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(0, 166, 251, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 166, 251, 0.15) 1px, transparent 1px),
+    radial-gradient(circle, rgba(0, 166, 251, 0.4) 1px, transparent 1px),
     linear-gradient(
       120deg,
-      var(--color-secondary-300) 0%,
-      var(--color-neutral-100) 33.3%,
-      var(--color-neutral-100) 66.6%,
-      var(--color-tertiary-300) 100%
+      var(--color-secondary-900) 0%,
+      var(--color-neutral-1000) 30%,
+      var(--color-neutral-1000) 85%,
+      var(--color-primary-900) 100%
     );
   background-size:
     35px 35px,
     35px 35px,
+    35px 35px,
     100% 100%;
-} */
+  background-repeat: repeat, repeat, repeat, no-repeat;
+  background-attachment: scroll, scroll, scroll, fixed;
+}
 
-@utility bg-gradient-dark-2 {
+@utility bg-gradient-dark {
   background-image:
     radial-gradient(circle, rgba(0, 166, 251, 0.2) 0.8px, transparent 1px),
     linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 166, 251, 0.1) 1px, transparent 1px),
     linear-gradient(
       120deg,
-      var(--color-secondary-300) 0%,
+      var(--color-secondary-100) 0%,
       var(--color-neutral-100) 33.3%,
       var(--color-neutral-100) 66.6%,
-      var(--color-tertiary-300) 100%
+      var(--color-tertiary-100) 100%
     );
   background-size:
     35px 35px,
     35px 35px,
     35px 35px,
     100% 100%;
-}
-
-@utility bg-gradient-light {
-  background-image:
-    linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 166, 251, 0.05) 1px, transparent 1px),
-    linear-gradient(
-      120deg,
-      color-mix(in srgb, var(--color-neutral-1000) 100%, transparent),
-      color-mix(in srgb, var(--color-secondary-900) 100%, transparent),
-      color-mix(in srgb, var(--color-primary-600) 20%, transparent)
-    );
-  background-size:
-    50px 50px,
-    50px 50px,
-    100% 100%;
-}
-
-@utility bg-gradient-light-2 {
-  background-image:
-    linear-gradient(rgba(0, 166, 251, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 166, 251, 0.05) 1px, transparent 1px),
-    linear-gradient(
-      120deg,
-      var(--color-secondary-800) 0%,
-      var(--color-neutral-1000) 30%,
-      var(--color-neutral-1000) 85%,
-      var(--color-primary-800) 100%
-    );
-  background-size:
-    50px 50px,
-    50px 50px,
-    100% 100%;
+  background-repeat: repeat, repeat, repeat, no-repeat;
+  background-attachment: scroll, scroll, scroll, fixed;
 }
 
 /* ─────────────────────────────────────────────
